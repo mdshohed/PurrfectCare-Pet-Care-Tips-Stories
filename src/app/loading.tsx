@@ -1,6 +1,7 @@
-
-export default function LoadingPage() {
+export default function loading() {
   return (
-    <div>Loading...</div>
-  )
+    <div>
+      <h1> Global Loading.... </h1>
+    </div>
+  );
 }
