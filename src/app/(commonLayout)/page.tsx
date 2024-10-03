@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div>
+    <div className="">
       PurrfectCare - Pet Care Tips and Stories.
     </div>
   );

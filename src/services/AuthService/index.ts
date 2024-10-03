@@ -3,8 +3,8 @@
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
-
 import axiosInstance from "@/lib/AxiosInstance";
+
 
 export const registerUser = async (userData: FieldValues) => {
   try {

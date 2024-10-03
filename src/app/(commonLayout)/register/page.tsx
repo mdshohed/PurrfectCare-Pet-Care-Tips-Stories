@@ -5,8 +5,8 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
-import FXForm from "../components/form/FXForm";
-import FXInput from "../components/form/FXInput";
+import FXForm from "../../../components/form/FXForm";
+import FXInput from "../../../components/form/FXInput";
 // import { useUserRegistration } from "@/src/hooks/auth.hook";
 // import registerValidationSchema from "@/src/schemas/register.schema";
 

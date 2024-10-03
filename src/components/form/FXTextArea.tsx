@@ -1,7 +1,7 @@
 import { Textarea } from "@nextui-org/input";
 import { useFormContext, useWatch } from "react-hook-form";
 
-import { IInput } from "@/src/types";
+import { IInput } from "@/types";
 
 interface IProps extends IInput {
   type?: string;

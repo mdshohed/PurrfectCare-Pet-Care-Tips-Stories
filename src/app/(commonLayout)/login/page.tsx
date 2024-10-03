@@ -12,9 +12,9 @@ import { useEffect } from "react";
 
 
 import { useUser } from "@/context/user.provider";
-import Loading from "../components/page/shared/Loading";
-import FXForm from "../components/form/FXForm";
-import FXInput from "../components/form/FXInput";
+import Loading from "../../../components/page/shared/Loading";
+import FXForm from "../../../components/form/FXForm";
+import FXInput from "../../../components/form/FXInput";
 
 const LoginPage = () => {
   const searchParams = useSearchParams();
