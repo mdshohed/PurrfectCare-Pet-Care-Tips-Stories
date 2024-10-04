@@ -1,7 +1,10 @@
+import Container from '@/components/UI/Container'
 import React from 'react'
 
 export default function AboutUsPage() {
   return (
-    <div>AboutUsPage</div>
+    <Container>
+      <div>AboutUsPage Coming Soon...</div>
+    </Container>
   )
 }

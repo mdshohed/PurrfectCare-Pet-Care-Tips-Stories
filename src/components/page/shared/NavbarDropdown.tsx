@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import {
   Dropdown,
@@ -12,13 +12,19 @@ import { Avatar } from "@nextui-org/avatar";
 import { logout } from "@/services/AuthService";
 import { useUser } from "@/context/user.provider";
 import { protectedRoutes } from "@/constant";
+import { useDispatch } from "react-redux";
+// import { getCurrentUser, logout } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hooks";
 
 export default function NavbarDropdown() {
   const router = useRouter();
   const pathname = usePathname();
   const { user, setIsLoading: userLoading } = useUser();
+  // const user = useAppSelector(getCurrentUser)
+  const dispatch = useDispatch(); 
 
   const handleLogout = () => {
+    // dispatch(logout());
     logout();
     userLoading(true);
 

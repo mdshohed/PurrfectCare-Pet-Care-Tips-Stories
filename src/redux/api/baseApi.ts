@@ -1,3 +1,4 @@
+
 import {
   BaseQueryApi,
   BaseQueryFn,
@@ -12,7 +13,7 @@ import envConfig from '@/config/envConfig';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: envConfig.baseApi, 
-  // credentials: 'include',
+  credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
 
@@ -62,6 +63,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: 'baseApi',
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ['bikes', 'rentalBike', 'user', 'coupon'],
+  tagTypes: ['post','bikes', 'rentalBike', 'user', 'coupon'],
   endpoints: () => ({}),
 });

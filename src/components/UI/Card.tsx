@@ -3,7 +3,7 @@ import { Button } from "@nextui-org/button";
 import { Image } from "@nextui-org/image";
 import { format } from "date-fns";
 
-import { IPost } from "@/src/types";
+import { IPost } from "@/types";
 
 const Card = ({ post }: { post: IPost }) => {
   const { title, category, images, city, dateFound, _id } = post || {};

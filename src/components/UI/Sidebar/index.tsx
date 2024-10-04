@@ -6,13 +6,13 @@ import Image from "next/image";
 import { SidebarOptions } from "./SidebarOptions";
 import { adminLinks, userLinks } from "./constants";
 
-import { useUser } from "@/src/context/user.provider";
+import { useUser } from "@/context/user.provider";
 
 const Sidebar = () => {
   const { user } = useUser();
 
   return (
-    <div>
+    <div className="sticky top-0"> {/* Added top-0 to make the sidebar sticky */}
       <div className="rounded-xl bg-default-100 p-2">
         <div className="h-[330px] w-full rounded-md">
           <Image

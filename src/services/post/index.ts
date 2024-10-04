@@ -47,3 +47,11 @@ export const getMyPosts = async () => {
 
   return res.data;
 };
+
+export const gePremiumPosts = async () => {
+  const user = await getCurrentUser();
+
+  const res = await axiosInstance.get(`/items`);
+
+  return res.data;
+};

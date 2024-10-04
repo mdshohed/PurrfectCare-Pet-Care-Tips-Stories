@@ -5,7 +5,8 @@ import envConfig from "@/config/envConfig";
 import { getNewAccessToken } from "@/services/AuthService";
 
 const axiosInstance = axios.create({
-  baseURL: envConfig.baseApi,
+  // baseURL: envConfig.baseApi,
+  baseURL:  envConfig.baseApi,
 });
 
 axiosInstance.interceptors.request.use(

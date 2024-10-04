@@ -1,7 +1,7 @@
 export default function page() {
   return (
     <div>
-      <h1> About </h1>
+      <h1> AboutPage Coming...</h1>
     </div>
   );
 }

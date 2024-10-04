@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
 import clsx from "clsx";
 
-import { MoonFilledIcon, SunFilledIcon } from "@/src/assets/icons";
+import { MoonFilledIcon, SunFilledIcon } from "@/assets/icons";
 
 export interface ThemeSwitchProps {
   className?: string;

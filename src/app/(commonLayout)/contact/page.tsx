@@ -1,8 +1,10 @@
-import React from 'react'
+import Container from "@/components/UI/Container";
+import React from "react";
 
 export default function ContactUsPage() {
   return (
-    <div>ContactUsPage 
-    </div>
-  )
+    <Container>
+      <div>ContactUsPage</div>
+    </Container>
+  );
 }

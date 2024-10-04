@@ -20,20 +20,23 @@ import { siteConfig } from "@/config/site";
 import NavbarDropdown from "./NavbarDropdown";
 // import { Logo } from "@/assets/icons";
 import Logo from "@/assets/purrfectcare.png";
-import { useUser } from "@/context/user.provider";
+// import { useUser } from "@/context/user.provider";
 import { ThemeSwitch } from "./theme-switch";
 import Image from "next/image";
-// import SearchFilter from "./SearchFilter";
+import SearchFilter from "./SearchFilter";
+import { useAppSelector } from "@/redux/hooks";
+import { useUser } from "@/context/user.provider";
 
 export const Navbar = () => {
   const { user, isLoading } = useUser();
+  // const user = useAppSelector( (auth)=>auth.auth.user);
 
   const router = useRouter();
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       
-      {/* <SearchFilter></SearchFilter> */}
+     
 
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
       {/* <NavbarContent className="sm:hidden basis-1 pl-4" justify="start"> */}
@@ -70,6 +73,8 @@ export const Navbar = () => {
       {/* <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
       </NavbarContent> */}
+
+      <SearchFilter></SearchFilter>
 
       <NavbarContent
         className="flex basis-1/5 sm:basis-full"

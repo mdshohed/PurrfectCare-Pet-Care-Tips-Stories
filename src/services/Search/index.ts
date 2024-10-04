@@ -3,6 +3,8 @@
 import axiosInstance from "@/lib/AxiosInstance";
 
 export const searchItems = async (searchTerm: string) => {
+  console.log(searchTerm);
+  
   try {
     const res = await axiosInstance.get(
       `/search-items?searchTerm=${searchTerm}`
