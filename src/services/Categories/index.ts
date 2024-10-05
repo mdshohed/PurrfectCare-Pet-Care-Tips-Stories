@@ -5,7 +5,7 @@ import axiosInstance from "@/lib/AxiosInstance";
 
 export const getCategories = async () => {
   try {
-    const { data } = await axiosInstance.get("/item-categories");
+    const { data } = await axiosInstance.get("/post-categories");
 
     return data;
   } catch (error: any) {

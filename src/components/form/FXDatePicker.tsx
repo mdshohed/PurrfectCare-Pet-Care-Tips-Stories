@@ -1,7 +1,7 @@
 import { DatePicker } from "@nextui-org/date-picker";
 import { Controller } from "react-hook-form";
 
-import { IInput } from "@/src/types";
+import { IInput } from "@/types";
 
 interface IProps extends IInput {}
 

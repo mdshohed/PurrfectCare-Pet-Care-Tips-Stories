@@ -24,7 +24,6 @@ import Logo from "@/assets/purrfectcare.png";
 import { ThemeSwitch } from "./theme-switch";
 import Image from "next/image";
 import SearchFilter from "./SearchFilter";
-import { useAppSelector } from "@/redux/hooks";
 import { useUser } from "@/context/user.provider";
 
 export const Navbar = () => {

@@ -8,7 +8,7 @@ export const getRecentPosts = async () => {
   };
 
   const res = await fetch(
-    `${envConfig.baseApi}/items?sortBy=-createdAt&limit=9`,
+    `${envConfig.baseApi}/posts?sortBy=-createdAt&limit=9`,
     fetchOption,
   );
 

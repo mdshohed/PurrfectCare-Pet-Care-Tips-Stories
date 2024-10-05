@@ -1,3 +1,4 @@
+
 import { IPost } from "@/types";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
@@ -10,7 +11,7 @@ export default function PremiumPost({
   return (
     <div>
       {premiumPosts?.map((premiumPost) => (
-        <div className="flex items-center justify-between mb-4">
+        <div key={premiumPost._id} className="flex items-center justify-between mb-4">
           {/* <Image
             src={user?.profilePhoto}
             alt={user?.profilePhoto}
@@ -30,7 +31,21 @@ export default function PremiumPost({
               <div>
                 <h3 className="font-semibold">{premiumPost.title}</h3>
                 <h3 className="font-normal text-sm">
-                  {premiumPost.description.slice(0, 30) + "..."}
+                <div className="post-preview">
+                {premiumPost.description.length > 20 ? (
+                  <div 
+                    dangerouslySetInnerHTML={{ 
+                      __html: `${premiumPost.description.slice(0, 20)}` 
+                    }} 
+                  />
+                ) : (
+                  <div 
+                    dangerouslySetInnerHTML={{ 
+                      __html: premiumPost.description 
+                    }} 
+                  />
+                )}
+              </div>
                 </h3>
               </div>
             </div>

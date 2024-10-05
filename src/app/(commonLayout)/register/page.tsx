@@ -7,25 +7,41 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 
 import FXForm from "../../../components/form/FXForm";
 import FXInput from "../../../components/form/FXInput";
+import { useUserRegistration } from "@/hooks/auth.hook";
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 // import { useUserRegistration } from "@/src/hooks/auth.hook";
 // import registerValidationSchema from "@/src/schemas/register.schema";
 
 export default function RegisterPage() {
-  // const { mutate: handleUserRegistration, isPending } = useUserRegistration();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+  const { mutate: handleUserRegistration, isPending, isSuccess } = useUserRegistration();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-  //   const userData = {
-  //     ...data,
-  //     profilePhoto:
-  //       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-  //   };
+    const userData = {
+      ...data,
+      profilePhoto:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    };
 
-  //   handleUserRegistration(userData);
+    handleUserRegistration(userData);
   };
 
-  // if (isPending) {
-  //   //  handle loading state
-  // }
+  if (isPending) {
+    //  handle loading state
+  }
+  useEffect(() => {
+    if (!isPending && isSuccess) {
+      if (redirect) {
+        router.push(redirect);
+      } else {
+        router.push("/");
+      }
+    }
+  }, [isPending, isSuccess]);
+  
 
   return (
     <div className="flex h-[calc(100vh-100px)] flex-col items-center justify-center">
@@ -33,14 +49,7 @@ export default function RegisterPage() {
       <p className="mb-4">Help Pet tips and Stories for purrfectcare </p>
       <div className="w-[35%]">
         <FXForm
-          //! Only for development
-          // defaultValues={{
-          //   name: "Mir Hussain",
-          //   email: "mir@gmail.com",
-          //   mobileNumber: "01711223344",
-          //   password: "123456",
-          // }}
-          // resolver={zodResolver(registerValidationSchema)}
+
           onSubmit={onSubmit}
         >
           <div className="py-3">

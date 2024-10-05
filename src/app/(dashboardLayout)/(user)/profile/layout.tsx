@@ -9,7 +9,7 @@ export default function layout({ children }: { children: ReactNode }) {
     <div>
       <Navbar></Navbar>
       <Container>
-        <div className="my-3 flex w-full gap-12">
+        <div className="my-3 flex w-full gap-4">
           <div className="w-2/5 ">
             <Sidebar />
           </div>

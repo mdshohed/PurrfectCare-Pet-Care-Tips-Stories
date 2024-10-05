@@ -3,7 +3,6 @@
 import axiosInstance from "@/lib/AxiosInstance";
 
 export const searchItems = async (searchTerm: string) => {
-  console.log(searchTerm);
   
   try {
     const res = await axiosInstance.get(
@@ -12,6 +11,6 @@ export const searchItems = async (searchTerm: string) => {
 
     return res.data;
   } catch (error) {
-    throw new Error("Failed to search items");
+    throw new Error("Failed to search items" );
   }
 };

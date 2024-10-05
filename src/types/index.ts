@@ -4,22 +4,47 @@ export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
 
+export type TReplyComment = {
+  text: string, 
+  user: IUser; 
+}
+
+export type TComment = {
+  text: string, 
+  user: IUser; 
+  reply?: TReplyComment; 
+}
+
+export type TComments = {
+  count: number, 
+  comment: TComment[]
+}
+
+export type TPremium = {
+  subscriptionFee: number;
+  isPending: boolean; 
+}
+
+export type TLikes = {
+  count: number,
+  user: IUser[]
+}
+
 export interface IPost {
   _id: string;
-  title: string;
+  title?: string;
   description: string;
   images: string[];
-  location: string;
-  city: string;
-  dateFound: string;
-  status: string;
-  isReported: boolean;
-  reportCount: number;
-  category: ICategory;
+  date?: Date;
   user: IUser;
-  questions: string[];
-  createdAt: string;
-  updatedAt: string;
+  category: ICategory;
+  likes?: TLikes;
+  comments?: TComments
+  status?: boolean;
+  isPremium?: boolean,
+  PremiumDetails?: TPremium, 
+  createdAt: Date;
+  updatedAt?: Date;
   __v: number;
 }
 

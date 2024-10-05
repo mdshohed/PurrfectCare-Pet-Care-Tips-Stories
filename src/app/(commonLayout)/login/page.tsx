@@ -8,10 +8,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useUser } from "@/context/user.provider";
 import FXForm from "../../../components/form/FXForm";
 import FXInput from "../../../components/form/FXInput";
-import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
-import { setUser } from "@/redux/features/auth/authSlice";
+
 import { delay } from "@/utils/delay";
 import { verifyToken } from "@/utils/verifyToken";
 import { IUser } from "@/types";
@@ -24,11 +23,9 @@ import Loading from "@/app/loading";
 const LoginPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { setIsLoading: userLoading } = useUser();
+  const { setIsLoading: userLoading, isLoading } = useUser();
 
   const redirect = searchParams.get("redirect");
-  const [login, {isLoading}] = useLoginMutation();
-  const dispatch = useDispatch(); 
   const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -45,36 +42,6 @@ const LoginPage = () => {
       }
     }
   }, [isPending, isSuccess]);
-
-  // const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-  //   const toastId = toast.loading("Loading...")
-  //   try {
-  //     userLoading(true);
-  //     const res = await login(data).unwrap()
-  //     console.log("user", res);
-
-  //     if(res.success){
-  //       const user = verifyToken(res?.data?.accessToken) as IUser;
-  //       await delay(); 
-  //       dispatch(setUser({ user: user, token: res.data.accessToken }));
-
-  //       cookies().set("accessToken", data?.data?.accessToken);
-  //       cookies().set("refreshToken", data?.data?.refreshToken);
-
-  //       toast.success("Login Success...", {id: toastId, duration: 1000})
-  //       if (redirect) {
-  //         router.push(redirect);
-  //       } else {
-  //         router.push("/");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     toast.error((error as { message: string })?.message ?? 'Login Error', {id:toastId, duration: 1000});
-  //   } finally {
-  //     userLoading(false);
-  //   }
-  // };
-  
 
   return (
     <>

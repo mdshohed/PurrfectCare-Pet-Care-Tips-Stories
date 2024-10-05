@@ -1,6 +1,7 @@
 export const userLinks = [
   { href: "/profile", label: "Posts" },
-  { href: "/profile/received-claim-requests", label: "Received Claim Request" },
+  { href: "/profile/find-friends", label: "Find Friends" },
+  { href: "/profile/view-profile", label: "Profile" },
   { href: "/profile/settings", label: "Settings" },
 ];
 

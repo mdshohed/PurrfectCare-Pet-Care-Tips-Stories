@@ -6,14 +6,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import UserProvider from "@/context/user.provider";
 import { Provider } from "react-redux";
-import { store } from "@/redux/store";
+// import { store } from "@/redux/store";
 import { Toaster } from "sonner";
 
 function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient();
 
   return (
-    <Provider store={store}>
+    // <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <UserProvider>
           <NextUIProvider>
@@ -24,7 +24,7 @@ function Providers({ children }: { children: React.ReactNode }) {
           </NextUIProvider>
         </UserProvider>
       </QueryClientProvider>
-    </Provider>
+    // </Provider>
   );
 }
 

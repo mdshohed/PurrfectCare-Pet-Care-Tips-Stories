@@ -3,13 +3,13 @@
 import { getAllUser } from "@/services/user";
 import React from "react";
 import { FollowLink } from "./FollowLink";
-import { gePremiumPosts } from "@/services/post";
 import PremiumPost from "./PremiumPost";
+import { getPremiumPosts } from "@/services/post";
 
 export default async function PublicSidebar() {
   const { data: users } = await getAllUser();
-  const { data: premiumPosts } = await gePremiumPosts();
-
+  const {data: premiums} = await getPremiumPosts();
+  
   return (
     <div className="sticky top-0">
       <div className="rounded-xl bg-default-100 p-2">
@@ -19,7 +19,7 @@ export default async function PublicSidebar() {
         </div>
         <div className=" p-4 rounded-lg">
           <h1 className="text-xl font-bold mb-3">Premium Post</h1>
-          <PremiumPost premiumPosts={premiumPosts}></PremiumPost>
+          <PremiumPost premiumPosts={premiums}></PremiumPost>
         </div>
 
         <div className=" px-4 rounded-lg ">

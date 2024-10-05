@@ -1,9 +1,10 @@
+
 import Post from "@/components/UI/Post";
 import { getMyPosts } from "@/services/post";
 import { IPost } from "@/types";
 
 export default async function page() {
-  const { data } = await getMyPosts();
+  const { data } = await getMyPosts();  
 
   return (
     <>

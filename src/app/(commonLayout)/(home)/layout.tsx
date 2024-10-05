@@ -1,6 +1,5 @@
 import Container from "@/components/page/shared/Container";
 import PublicSidebar from "@/components/UI/PublicSidebar";
-import Sidebar from "@/components/UI/Sidebar";
 import { ReactNode } from "react";
 
 export default function layout({
@@ -13,7 +12,7 @@ export default function layout({
   return (
     <Container>
       {children}
-      <div className="my-3 flex w-full gap-12">
+      <div className="my-3 flex w-full gap-4">
         <div className="w-4/5">{recentPosts}</div>
         <div className="w-2/5 ">
           <PublicSidebar />

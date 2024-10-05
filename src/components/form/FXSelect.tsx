@@ -1,7 +1,7 @@
 import { Select, SelectItem } from "@nextui-org/select";
 import { useFormContext } from "react-hook-form";
 
-import { IInput } from "@/src/types";
+import { IInput } from "@/types";
 
 interface IProps extends IInput {
   options: {
