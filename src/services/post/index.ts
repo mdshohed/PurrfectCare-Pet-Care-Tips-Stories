@@ -25,7 +25,7 @@ export const createPost = async (formData: FormData): Promise<any> => {
   }
 };
 
-export const updateLikes = async (formData: {userId: string, postId: string}): Promise<any> => {
+export const updateLikes = async (formData: { postId: string}): Promise<any> => {
   try {
     const user = await getCurrentUser();
     const { data } = await axiosInstance.put(`/posts/likes/${formData.postId}`, {userId:user?._id}, {

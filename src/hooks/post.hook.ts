@@ -35,7 +35,7 @@ export const useGetPremiumPosts = () => {
 };
 
 export const useUpdatePostLike = () => {
-  return useMutation<any, Error, {userId: string, postId: string}>({
+  return useMutation<any, Error,  {postId: string}>({
     mutationKey: ["UPDATE_LIKE"],
     mutationFn: async (postData) => await updateLikes(postData),
     // onSuccess: () => {

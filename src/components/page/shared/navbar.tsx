@@ -25,10 +25,18 @@ import { ThemeSwitch } from "./theme-switch";
 import Image from "next/image";
 import SearchFilter from "./SearchFilter";
 import { useUser } from "@/context/user.provider";
+import { useEffect, useState } from "react";
+import { IUser } from "@/types";
 
 export const Navbar = () => {
   const { user, isLoading } = useUser();
+  const [ currentUser, setUser] = useState<IUser>({} as IUser) 
   // const user = useAppSelector( (auth)=>auth.auth.user);
+  useEffect(()=>{
+    if(user){
+      setUser(user); 
+    }
+  },[isLoading])
 
   const router = useRouter();
 
@@ -82,7 +90,7 @@ export const Navbar = () => {
         <NavbarItem className="flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        {user?.email ? (
+        {currentUser?.email ? (
           <NavbarItem className=" flex gap-2">
             <NavbarDropdown />
           </NavbarItem>

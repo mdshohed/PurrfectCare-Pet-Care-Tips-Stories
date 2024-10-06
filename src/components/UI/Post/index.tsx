@@ -17,9 +17,11 @@ import ImageGallery from "./ImageGallery";
 import { useUser } from "@/context/user.provider";
 import { IPost, IUser } from "@/types";
 import dateToISO from "@/utils/dateToISO";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { timeDiff } from "@/utils/common";
 import { useUpdatePostLike } from "@/hooks/post.hook";
+import { useRouter } from "next/navigation";
+import { loginUser } from "@/services/AuthService";
 
 interface IProps {
   post: IPost;
@@ -29,6 +31,7 @@ interface IProps {
 export default function Post({ post, postKey }: IProps) {
   const { title, description, _id, images, likes, comments, user, createdAt } =
     post || {};
+    const route = useRouter(); 
 
   const { name, profilePhoto } = (user as IUser) || {};
 
@@ -40,18 +43,17 @@ export default function Post({ post, postKey }: IProps) {
     isPending: createPostPending,
     isSuccess,
   } = useUpdatePostLike();
-  const liked = likes?.user.find((user)=>user._id===user._id)
-  console.log("liked", liked, loggedInUser);
+
+
+  const liked = likes?.user?.some((u) => String(u) == String(loggedInUser?._id));
   
-  // const onSubmitLikes = () => {
-  //   handleUpdateLike({ userId: "", postId: "" });
-  // };
-
-  // const [likes, setLikes] = useState(3000);
-  // const [comments, setComments] = useState(49);
-
-  // const handleLike = () => setLikes(likes + 1);
-  // const handleComment = () => setComments(comments + 1);
+  const onSubmitLikes = (id: string) => {
+    if(!loggedInUser?.role){
+      route.push('/login')
+      return;
+    }
+    handleUpdateLike({ postId: id });
+  };
 
   return (
     <div key={postKey} className="mb-2 rounded-md bg-default-100 p-4">
@@ -73,7 +75,7 @@ export default function Post({ post, postKey }: IProps) {
         <div className="border-b border-default-200 py-4">
           <div className="mb-4 flex items-start justify-between">
             <div>
-              <h1 className="cursor-pointer text-2xl">{title}</h1>
+              <h1 className="text-2xl">{title}</h1>
             </div>
           </div>
           <p className=" text-md">
@@ -113,7 +115,7 @@ export default function Post({ post, postKey }: IProps) {
             <div className=" flex justify-center gap-5">
               <div
                 className="flex items-center space-x-1 cursor-pointer"
-                onClick={()=>handleUpdateLike({ userId: loggedInUser!?._id, postId: _id })}
+                onClick={()=>onSubmitLikes(_id)}
               >
                 {
                   liked ? (
