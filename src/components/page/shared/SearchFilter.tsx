@@ -30,7 +30,7 @@ const SearchFilter = () => {
 
   const handleSeeAll = (query: string) => {
     const queryString = query.trim().split(" ").join("+");
-    router.push(`/found-items?query=${queryString}`);
+    router.push(`/found-post?query=${queryString}`);
   };
 
   useEffect(() => {

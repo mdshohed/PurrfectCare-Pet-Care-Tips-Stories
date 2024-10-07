@@ -27,6 +27,7 @@ import generateDescription from "@/services/ImageDescription";
 
 import ReactQuill from 'react-quill'; 
 import 'react-quill/dist/quill.snow.css'; 
+import { Checkbox, Input } from "@nextui-org/react";
 
 const cityOptions = allDistict()
   .sort()
@@ -43,6 +44,8 @@ export default function CreatePost() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [ descriptionQuill, setDescriptionQuill] = useState('')
+  const [ isPremium, setIsPremium] = useState(false);
+  const [subscription, setSubscription] = useState<number>( 0);
 
   const router = useRouter();
 
@@ -75,19 +78,30 @@ export default function CreatePost() {
 
   const { control, handleSubmit } = methods;
 
-  // const { fields, append, remove } = useFieldArray({
-  //   control,
-  //   name: "questions",
-  // });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "questions",
+  });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const formData = new FormData();
 
-    const postData = {
+    let postData = {
       ...data,
       user: user!._id,
       description: descriptionQuill, 
+      isPremium: isPremium, 
     };
+    if(isPremium) {
+      const newPostData = {
+        ...postData, 
+        premiumDetails: {
+          isPending: false, 
+          subscriptionFee: subscription, 
+        }
+      }
+      postData = {...newPostData}
+    }
     formData.append("data", JSON.stringify(postData));
 
     for (let image of imageFiles) {
@@ -100,9 +114,14 @@ export default function CreatePost() {
     handleCreatePost(formData);
   };
 
-  // const handleFieldAppend = () => {
-  //   append({ name: "questions" });
-  // };
+  const handleFieldAppend = () => {
+    //  const entries = Array.from(formData.entries());
+    // // console.log(entries);
+    if( fields.length==0){
+      append({ name: "questions" });
+    }
+
+  };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
@@ -207,8 +226,30 @@ export default function CreatePost() {
                 />
               </div>
             </div>
-            <Divider className="my-5" />
 
+            <div className="flex justify-between items-center my-5">
+              <h1 className="text-xl">Want to add as Premium Post?</h1>
+              <Checkbox checked={isPremium} onClick={() => setIsPremium(e=>!e)} size="md"></Checkbox>
+              {/* <Button isIconOnly >
+              </Button> */}
+            </div>
+
+            <div className="space-y-5">
+                { isPremium ? 
+                <div  className="flex gap-2 items-start flex-col">
+                  <p className="text-md">Subscription Fee</p>
+                  <Input
+                    label={""}
+                    required={true}
+                    placeholder="Fee"
+                    type='number'
+                    onChange={(e)=>setSubscription(parseInt(e.target.value))}
+                  />
+                </div> : null
+              }
+            </div>
+
+            <Divider className="my-5" />
 
             {/* <Divider className="my-5" /> */}
             <div className="flex justify-end">

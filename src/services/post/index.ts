@@ -76,7 +76,7 @@ export const getPremiumPosts = async (): Promise<any> => {
   };
 
   const res = await fetch(
-    `${envConfig.baseApi}/posts`,
+    `${envConfig.baseApi}/posts/premium`,
     fetchOption,
   );
 

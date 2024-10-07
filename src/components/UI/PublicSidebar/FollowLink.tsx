@@ -7,8 +7,8 @@ import { Button } from "@nextui-org/button";
 export const FollowLink = ({ users }: { users: IUser[] }) => {
   return (
     <>
-      {users?.map((user) => (
-        <div className="flex items-center justify-between mb-4">
+      {users?.map((user, index) => (
+        <div key={index} className="flex items-center justify-between mb-4">
           {/* <Image
             src={user?.profilePhoto}
             alt={user?.profilePhoto}
@@ -22,7 +22,7 @@ export const FollowLink = ({ users }: { users: IUser[] }) => {
               <img
                 src={user.profilePhoto}
                 alt={user.profilePhoto}
-                className="w-[30px] rounded-full me-2"
+                className="w-[30px] h-[30px] rounded-full me-2"
               ></img>
 
               <h3 className="font-semibold">{user.name}</h3>

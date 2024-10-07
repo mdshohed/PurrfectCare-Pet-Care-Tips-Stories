@@ -8,9 +8,9 @@ import CardSkeleton from "@/components/UI/CardSkeleton";
 export default async function RecentPosts() {
   return (
     <Container>
-      <div className="my-8 grid justify-center gap-10 sm:grid-cols-1">
-        {[...Array(9)]?.map(() => (
-          <CardSkeleton />
+      <div className=" grid justify-center gap-4 sm:grid-cols-1">
+        {[...Array(9)]?.map(( _, index) => (
+          <CardSkeleton key={index} />
         ))}
       </div>
       <div className="flex justify-center">

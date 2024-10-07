@@ -42,7 +42,7 @@ export interface IPost {
   comments?: TComments
   status?: boolean;
   isPremium?: boolean,
-  PremiumDetails?: TPremium, 
+  premiumDetails?: TPremium, 
   createdAt: Date;
   updatedAt?: Date;
   __v: number;

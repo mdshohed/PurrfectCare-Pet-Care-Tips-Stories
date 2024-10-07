@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { IPost } from "@/types";
 
 const Card = ({ post }: { post: IPost }) => {
-  const { title, category, images, city, dateFound, _id } = post || {};
+  const { title, category, images, _id } = post || {};
 
   return (
     <NextUiCard isFooterBlurred className="h-[300px] w-full">
@@ -27,10 +27,10 @@ const Card = ({ post }: { post: IPost }) => {
       />
       <CardFooter className="absolute bottom-0 z-10 justify-between border-t-1 border-zinc-100/50 bg-white/30">
         <div>
-          <p className="text-tiny text-black">{city}</p>
-          <p className="text-tiny text-black">
+          {/* <p className="text-tiny text-black">{city}</p> */}
+          {/* <p className="text-tiny text-black">
             {format(new Date(dateFound), "dd MMMM, yyyy")}
-          </p>
+          </p> */}
         </div>
 
         <Button

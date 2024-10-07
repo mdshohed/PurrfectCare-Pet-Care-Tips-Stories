@@ -25,10 +25,10 @@ import { loginUser } from "@/services/AuthService";
 
 interface IProps {
   post: IPost;
-  postKey: string;
+  key: string;
 }
 
-export default function Post({ post, postKey }: IProps) {
+export default function Post({ post, key }: IProps) {
   const { title, description, _id, images, likes, comments, user, createdAt } =
     post || {};
     const route = useRouter(); 
@@ -56,16 +56,16 @@ export default function Post({ post, postKey }: IProps) {
   };
 
   return (
-    <div key={postKey} className="mb-2 rounded-md bg-default-100 p-4">
+    <div key={key} className="mb-2 rounded-md bg-default-100 p-4">
       <div className="border-b border-default-200 pb-2">
         <div className="flex items-center justify-between border-b border-default-200 pb-4">
           <div className="flex items-center gap-3">
-            <Avatar isBordered name={name} radius="sm" src={profilePhoto} />
+            <Avatar isBordered name={name} radius="full" src={profilePhoto} />
             <div>
               <p>{name}</p>
               {/* <p className="text-xs">{email}</p> */}
               <p className="flex items-center gap-1 text-xs">
-                Found on: <Calendar width={14} />
+                <Calendar width={14} />
                 {/* {format(new Date(dateFound), "dd MMM, yyyy")} */}
                 {timeDiff(createdAt)}
               </p>
@@ -94,7 +94,7 @@ export default function Post({ post, postKey }: IProps) {
                     __html: `${description.slice(
                       0,
                       200
-                    )}... <a href="/found-items/${_id}">see more</a>`,
+                    )}... <a href="/found-post/${_id}">see more</a>`,
                   }}
                 />
               ) : (

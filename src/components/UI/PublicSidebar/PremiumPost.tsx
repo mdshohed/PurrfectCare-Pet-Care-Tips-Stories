@@ -25,7 +25,7 @@ export default function PremiumPost({
               <img
                 src={premiumPost.images[0]}
                 alt={premiumPost.images[0]}
-                className="w-[30px] rounded-full me-2"
+                className="w-[30px] h-[30px] rounded-full me-2"
               ></img>
 
               <div>

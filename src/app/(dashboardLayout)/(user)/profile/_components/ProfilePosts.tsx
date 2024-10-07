@@ -11,12 +11,9 @@ type TProps = {
 
 export default function ProfilePosts({ post }: TProps) {
   const {
-    claimRequests,
+
     title,
-    dateFound,
     description,
-    location,
-    city,
     _id,
     images,
   } = post || {};
@@ -32,13 +29,6 @@ export default function ProfilePosts({ post }: TProps) {
               </Link>
               <p className="flex items-center gap-1 text-xs">
                 Found on: <Calendar width={14} />
-                {format(new Date(dateFound), "dd MMM, yyyy")}
-              </p>
-            </div>
-            <div>
-              <p className="flex items-center gap-1">
-                <MapPin width={18} />
-                {location}, {city}
               </p>
             </div>
           </div>

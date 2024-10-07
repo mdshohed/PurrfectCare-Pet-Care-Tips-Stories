@@ -15,7 +15,6 @@ const roleBasedRoutes = {
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  console.log("pathName",pathname);
   
   const user = await getCurrentUser();
 
@@ -29,10 +28,13 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  
   if (user?.role && roleBasedRoutes[user?.role as Role]) {
+
     const routes = roleBasedRoutes[user?.role as Role];
 
     if (routes.some((route) => pathname.match(route))) {
+      
       return NextResponse.next();
     }
   }
@@ -42,5 +44,12 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/profile", "/profile/:page*", "/admin", "/login", "/register"],
+  matcher: [
+    "/profile", 
+    "/profile/:page*", 
+    "/admin", 
+    "/admin/:page*", 
+    "/login", 
+    "/register"
+  ],
 };
