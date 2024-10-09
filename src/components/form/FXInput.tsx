@@ -13,6 +13,8 @@ export default function FXInput({
   required = false,
   type = "text",
   label,
+  isDisable,
+  currentValue, 
   name,
 }: IProps) {
   const {
@@ -27,6 +29,8 @@ export default function FXInput({
       isInvalid={!!errors[name]}
       label={label}
       required={required}
+      value={currentValue}
+      disabled={isDisable}
       size={size}
       type={type}
       variant={variant}

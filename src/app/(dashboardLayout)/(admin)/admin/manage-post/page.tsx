@@ -36,8 +36,9 @@ export default async function ManagePost() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen w-full rounded-md bg-default-100 p-5">
-      <h1 className="text-xl py-5">Manage Premium Post</h1>
+    <div className=" min-h-screen w-full rounded-md bg-default-100 p-5">
+      <h1 className="text-xl py-1">Manage Premium Post</h1>
+      <hr className="my-2 border-purple-500 mb-4" />
 
       <div>
         <Table aria-label="Example empty table">

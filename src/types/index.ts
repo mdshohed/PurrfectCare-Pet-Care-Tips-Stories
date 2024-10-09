@@ -58,7 +58,7 @@ export interface ICategory {
   __v: number;
 }
 
-export interface IUser {
+export interface TUser {
   _id: string;
   name: string;
   role: string;
@@ -71,13 +71,31 @@ export interface IUser {
   __v?: number;
 }
 
+export interface IUser {
+  _id: string;
+  name: string;
+  role: string;
+  email: string;
+  status: string;
+  mobileNumber: string;
+  profilePhoto: string;
+  follower: IUser[],
+  following: IUser[],
+  createdAt?: string;
+  updatedAt?: string;
+  __v?: number;
+}
+
+
 export interface IInput {
   variant?: "flat" | "bordered" | "faded" | "underlined";
   size?: "sm" | "md" | "lg";
   required?: boolean;
   type?: string;
-  label: string;
+  label?: string;
   name: string;
+  isDisable?: boolean, 
+  currentValue?: string
   disabled?: boolean;
 }
 

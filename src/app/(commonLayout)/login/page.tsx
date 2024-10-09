@@ -8,12 +8,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useUser } from "@/context/user.provider";
 import FXForm from "../../../components/form/FXForm";
 import FXInput from "../../../components/form/FXInput";
-import { toast } from "sonner";
-import { useDispatch } from "react-redux";
-
-import { delay } from "@/utils/delay";
-import { verifyToken } from "@/utils/verifyToken";
-import { IUser } from "@/types";
 // import Loading from "@/components/page/shared/Loading";
 import { useEffect } from "react";
 import { cookies } from "next/headers";
@@ -45,7 +39,7 @@ const LoginPage = () => {
 
   return (
     <>
-          {isLoading && <Loading />}
+          {isPending && <Loading />}
 
       <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center">
         <h3 className="my-2 text-2xl font-bold">Login with PurrfectCare</h3>

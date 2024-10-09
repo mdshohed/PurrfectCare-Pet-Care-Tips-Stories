@@ -10,6 +10,7 @@ import FXInput from "../../../components/form/FXInput";
 import { useUserRegistration } from "@/hooks/auth.hook";
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useGetProfile } from "@/hooks/profile.hook";
 // import { useUserRegistration } from "@/src/hooks/auth.hook";
 // import registerValidationSchema from "@/src/schemas/register.schema";
 

@@ -36,7 +36,6 @@ export default function Post({ post, key }: IProps) {
   const { name, profilePhoto } = (user as IUser) || {};
 
   const { user: loggedInUser } = useUser();
-  console.log("loggedInUser", loggedInUser);
   
   const {
     mutate: handleUpdateLike,

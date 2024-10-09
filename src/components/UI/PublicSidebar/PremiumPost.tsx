@@ -1,13 +1,25 @@
-
+'use client'
+import { useUser } from "@/context/user.provider";
 import { IPost } from "@/types";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function PremiumPost({
-  premiumPosts,
-}: {
-  premiumPosts: IPost[];
-}) {
+export default function PremiumPost({ premiumPosts}: { premiumPosts: IPost[]}) {
+  const { user } = useUser(); 
+  const route = useRouter(); 
+
+  const handleAccessPremiumContent = (id: string) => {
+    const url = `found-post/${id}`
+    console.log(id);
+    
+    if(!user){
+      route.push(`login?redirect=${url}`);
+    }
+    else {
+      route.push(url); 
+    }
+  }
   return (
     <div>
       {premiumPosts?.map((premiumPost) => (
@@ -55,9 +67,9 @@ export default function PremiumPost({
             radius="full"
             size="sm"
           >
-            <Link key={premiumPost._id} href={premiumPost._id}>
+            <p onClick={()=>handleAccessPremiumContent(premiumPost._id)} >
               See
-            </Link>
+            </p>
           </Button>
         </div>
       ))}
