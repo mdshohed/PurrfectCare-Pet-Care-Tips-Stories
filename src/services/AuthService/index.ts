@@ -42,6 +42,10 @@ export const logout = () => {
 };
 
 export const getCurrentUser = async () => {
+  // const newData = await getNewAccessToken(); 
+  // if(newData){
+    
+  // }
   const accessToken = cookies().get("accessToken")?.value;
 
   let decodedToken = null;

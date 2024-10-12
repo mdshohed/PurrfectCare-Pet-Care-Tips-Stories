@@ -10,7 +10,6 @@ import FXForm from "../../../components/form/FXForm";
 import FXInput from "../../../components/form/FXInput";
 // import Loading from "@/components/page/shared/Loading";
 import { useEffect } from "react";
-import { cookies } from "next/headers";
 import { useUserLogin } from "@/hooks/auth.hook";
 import Loading from "@/app/loading";
 

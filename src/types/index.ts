@@ -41,8 +41,8 @@ export interface IPost {
   likes?: TLikes;
   comments?: TComments
   status?: boolean;
-  isPremium?: boolean,
-  premiumDetails?: TPremium, 
+  isPremium?: boolean;
+  premiumDetails?: TPremium;
   createdAt: Date;
   updatedAt?: Date;
   __v: number;

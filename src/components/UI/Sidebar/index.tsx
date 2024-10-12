@@ -7,10 +7,14 @@ import { SidebarOptions } from "./SidebarOptions";
 import { adminLinks, userLinks } from "./constants";
 
 import { useUser } from "@/context/user.provider";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const { user } = useUser();
-
+  const route = useRouter(); 
+  const handleRoute = ( params: string) =>{
+    route.push(`/profile/friends?default=${params}`);
+  }
   return (
     <div className="sticky top-0">
       {" "}
@@ -32,11 +36,11 @@ const Sidebar = () => {
         {user?.role === "USER" ? (
           <div>
             <div className="flex justify-center items-center gap-3">
-              <div className="flex gap-1 hover:underline text-blue-500">
+              <div onClick={()=>handleRoute('following')} className="flex gap-1 cursor-pointer hover:underline text-blue-500">
                 <p className="font-semibold text-small">{user?.following ? user?.following?.length : 0}</p>
                 <p className=" text-small">Following</p>
               </div>
-              <div className="flex gap-1 hover:underline text-blue-500">
+              <div onClick={()=>handleRoute('follower')} className="flex gap-1 cursor-pointer hover:underline text-blue-500">
                 <p className="font-semibold  text-small">
                 {user?.follower ? user?.follower?.length : 0}
                 </p>

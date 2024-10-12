@@ -17,6 +17,8 @@ export const getAllUser = async () => {
 }
 
 export const getSingleUser = async (params: string) => {
+  console.log("params", params);
+  
   const fetchOption = {
     next: {
       tags: ["users"],

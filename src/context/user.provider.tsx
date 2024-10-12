@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 import {
   createContext,
   Dispatch,
@@ -27,6 +27,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const handleUser = async () => {
     const user = await getCurrentUser();
+    console.log("context", user);
+    
     setUser(user);
     setIsLoading(false);
   };

@@ -9,6 +9,10 @@ export const siteConfig = {
       href: "/",
     },
     {
+      label: "Find Friends",
+      href: "/find-friends",
+    },
+    {
       label: "About",
       href: "/about",
     },
@@ -22,6 +26,10 @@ export const siteConfig = {
     {
       label: "News Feed",
       href: "/",
+    },
+    {
+      label: "Find Friends",
+      href: "/find-friends",
     },
     {
       label: "About",

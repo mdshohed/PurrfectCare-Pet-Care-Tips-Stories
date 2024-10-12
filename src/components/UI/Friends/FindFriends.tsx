@@ -41,11 +41,9 @@ export default function FindFriends({
     <div>
       <div className="gap-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {users?.map((user: IUser) =>{ 
-          console.log("check", following?.some((u) => String(u) == String(user?._id)));
-          
           if( user?.role==='USER' && user?._id !==currentUser){
           return(
-          <Card className="">
+          <Card  className="">
             <CardHeader className="justify-start items-start flex-col">
               <div className="flex gap-5">
                 <Avatar
