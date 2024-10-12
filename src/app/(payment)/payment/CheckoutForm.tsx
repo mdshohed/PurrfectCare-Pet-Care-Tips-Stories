@@ -1,6 +1,7 @@
 'use client'
 
 import { useAddPayment } from "@/hooks/payment.hook";
+import { addPayment } from "@/services/Payment";
 import { Input } from "@nextui-org/react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useSearchParams } from "next/navigation";
@@ -36,11 +37,11 @@ const CheckoutForm = () => {
   useEffect(() => {
     const initiatePayment = async () => {
       try {
-        const response = submitPayment(
+        const response = addPayment(
           parseFloat((paymentAmount !== null && paymentAmount !== undefined) ? paymentAmount.toString() : '0')
         );
         
-        setClientSecret(response?.clientSecret);
+        // setClientSecret(response?.clientSecret);
       } catch (error) {
         console.error("Payment error:", error);
       }
