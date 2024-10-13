@@ -7,21 +7,15 @@ import FindFriends from "@/components/UI/Friends/FindFriends";
 import { useEffect, useState } from "react";
 import { IUser } from "@/types";
 import { useUser } from "@/context/user.provider";
-import { useUpdateUserFollowing } from "@/hooks/user.hook";
+import { useGetAllUsers, useUpdateUserFollowing } from "@/hooks/user.hook";
 import Container from "@/components/UI/Container";
 import { getAllUser, getSingleUser } from "@/services/user";
 // import { useRouter } from "next/navigation";
 
 export default function FriendsPage() {
   const { user, isLoading } = useUser();
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-  // console.log("user-first", user);
-
-  // const route = useRouter();
-  // const user = await getCurrentUser();
+  console.log("user", user);
+  
 
   const [users, setUsers] = useState<IUser[]>([]);
   const [following, setFollowing] = useState<IUser[]>([]);
@@ -33,13 +27,15 @@ export default function FriendsPage() {
     isSuccess,
   } = useUpdateUserFollowing();
 
-  const handleSetConnection = async (id: string) => {
-    // if(!user){
-    //   route.push('/login?redirect=/find-friends')
-    //   return ;
-    // }
-    handleUpdateFollowing(id); // Ensure this returns a boolean
+  const {
+    data: usersData,
+    isLoading: usersLoading,
+    isSuccess: usersSuccess,
+  } = useGetAllUsers(); 
+  
 
+  const handleSetConnection = async (id: string) => {
+    handleUpdateFollowing(id); 
     if (isSuccess) {
       await fetchAllUsers();
       await fetchCurrentUser();
@@ -121,7 +117,7 @@ export default function FriendsPage() {
 
             <Tab key="find-friends" title="Find Friends">
               <FindFriends
-                users={users}
+                users={usersData?.data}
                 following={following}
                 currentUser={user!?._id}
                 handleSetConnection={handleSetConnection}

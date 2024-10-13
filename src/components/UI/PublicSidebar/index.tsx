@@ -8,7 +8,7 @@ import { getPremiumPosts } from "@/services/post";
 import { useGetAllUsers } from "@/hooks/user.hook";
 import { useGetPremiumPosts } from "@/hooks/post.hook";
 
-export default async function PublicSidebar() {
+export default function PublicSidebar() {
   const {
     data: premiumData,
     isLoading: premiumLoading,

@@ -44,7 +44,7 @@ export default function Post({ post, key }: IProps) {
     premiumDetails,
   } = post || {};
   const route = useRouter();
-
+  
   const { name, profilePhoto } = (user as IUser) || {};
 
   const { user: loggedInUser } = useUser();
@@ -124,7 +124,7 @@ export default function Post({ post, key }: IProps) {
               description
             )} */}
               <div className="post-preview">
-                {description.length > 200 ? (
+                {description?.length > 200 ? (
                   <div
                     dangerouslySetInnerHTML={{
                       __html: `${description.slice(
@@ -206,7 +206,7 @@ export default function Post({ post, key }: IProps) {
               description
             )} */}
               <div className="post-preview">
-                {description.length > 200 ? (
+                {description?.length > 200 ? (
                   <div
                     dangerouslySetInnerHTML={{
                       __html: `${description.slice(

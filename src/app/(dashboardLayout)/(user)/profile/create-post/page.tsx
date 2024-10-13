@@ -16,8 +16,6 @@ import { useRouter } from "next/navigation";
 import FXInput from "@/components/form/FXInput";
 import FXSelect from "@/components/form/FXSelect";
 import { useGetCategories } from "@/hooks/categoreis.hook";
-import FXTextarea from "@/components/form/FXTextArea";
-import { AddIcon, TrashIcon } from "@/assets/icons";
 import { useUser } from "@/context/user.provider";
 import { useCreatePost } from "@/hooks/post.hook";
 import Loading from "@/app/loading";

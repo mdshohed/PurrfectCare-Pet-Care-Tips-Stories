@@ -1,23 +1,26 @@
-'use client'
+"use client"
 
 import { IPost } from "@/types";
 import Post from "@/components/UI/Post";
-import { getAllPosts } from "@/services/post";
 import { useGetAllPosts } from "@/hooks/post.hook";
+import Loading from "@/app/loading";
 
-export default async function RecentPosts() {
+export default function RecentPosts() {
   // const { data } = await getAllPosts();
   const {
     data: postData,
-    isLoading: categoryLoading,
-    isSuccess: categorySuccess,
+    isLoading: postsLoading,
+    isSuccess: postsSuccess,
   } = useGetAllPosts();  
-  console.log(postData);
+
+  if(postsLoading) {
+    return <Loading></Loading>
+  }
   
   return (
     // <Container>
       <>
-      {postData?.data?.length ? (
+      {postData?.data?.length && postsSuccess ? (
         postData?.data?.map((post: IPost) => <Post key={post._id} post={post}/>)
       ) : (
         <div className="flex min-h-screen w-full items-center justify-center rounded-md bg-default-100">

@@ -35,7 +35,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     handleUser(); // Only called once on mount
-  }, []); // Empty dependency array
+  }, [children]); // Empty dependency array
   
   return (
     <UserContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>

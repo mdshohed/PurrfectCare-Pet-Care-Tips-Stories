@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { createPost, getAllPosts, getPremiumPosts, updateLikes } from "../services/post";
+import { createPost, getAllPosts, getMyPosts, getPremiumPosts, updateLikes } from "../services/post";
 
 export const useCreatePost = () => {
   return useMutation<any, Error, FormData>({
@@ -21,6 +21,13 @@ export const useGetAllPosts = () => {
   return useQuery({
     queryKey: ["GET_POST"],
     queryFn: async () => await getAllPosts(),
+  });
+};
+
+export const useGetMyPosts = () => {
+  return useQuery({
+    queryKey: ["GET_MY_POST"],
+    queryFn: async () => await getMyPosts(),
   });
 };
 

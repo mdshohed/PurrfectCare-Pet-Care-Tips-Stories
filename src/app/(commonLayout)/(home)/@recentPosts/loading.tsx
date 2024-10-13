@@ -1,3 +1,4 @@
+'use client'
 
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
@@ -5,7 +6,7 @@ import Link from "next/link";
 import Container from "@/components/UI/Container";
 import CardSkeleton from "@/components/UI/CardSkeleton";
 
-export default async function RecentPosts() {
+export default function RecentPosts() {
   return (
     <Container>
       <div className=" grid justify-center gap-4 sm:grid-cols-1">

@@ -86,6 +86,13 @@ export interface IUser {
   __v?: number;
 }
 
+export interface IUserUpdate {
+  name?: string;
+  email?: string;
+  mobileNumber?: string;
+  profilePhoto?: File;
+}
+
 
 export interface IInput {
   variant?: "flat" | "bordered" | "faded" | "underlined";

@@ -8,7 +8,9 @@ import { Button, Input } from "@nextui-org/react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useUserRegistration } from "@/hooks/auth.hook";
 import { getProfile } from "@/services/profile";
-import { IUser } from "@/types";
+import { IUser, IUserUpdate } from "@/types";
+import Loading from "@/app/loading";
+import { useUpdateProfile } from "@/hooks/profile.hook";
 
 export default  function Profile({user}: {user: IUser}) {
   const [update, setUpdate] = useState(false);
@@ -25,15 +27,22 @@ export default  function Profile({user}: {user: IUser}) {
     isPending,
     isSuccess,
   } = useUserRegistration();
+
+  const {
+    mutate: handleUpdateProfile,
+    isPending: updateProfileLoading, 
+    isSuccess: updateProfileSuccess
+  } = useUpdateProfile();
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
     
-    const userData = {
+    const userData: IUserUpdate = {
       name: userDetail.name, 
       mobileNumber: userDetail.mobileNumber, 
       profilePhoto: imageFiles
     };
-    handleUserRegistration(userData);
+    handleUpdateProfile(userData);
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +59,7 @@ export default  function Profile({user}: {user: IUser}) {
 
   return (
     <div className="p-2">
+      {isPending && <Loading></Loading>}
       <div className="flex justify-between items-center pe-10">
         <h1 className="text-xl">My Profile</h1>
         <span
@@ -77,7 +87,7 @@ export default  function Profile({user}: {user: IUser}) {
                   <Mail className="w-4" />
                   Email
                 </span>
-                <Input type="text" name="email" variant="bordered" value={user?.email}  />
+                <Input type="text" name="email" disabled variant="bordered" value={user?.email}  />
 
               </div>
               <div className="py-3">
@@ -85,7 +95,7 @@ export default  function Profile({user}: {user: IUser}) {
                   <IdCard className="w-4" />
                   User ID
                 </span>
-                <Input type="text" variant="bordered" value={user?._id}  />
+                <Input type="text" disabled variant="bordered" value={user?._id}  />
 
               </div>
               <div className="py-3">

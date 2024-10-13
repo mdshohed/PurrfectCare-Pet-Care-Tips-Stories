@@ -18,7 +18,7 @@ export default function UserProfile() {
     fetchPosts();
   }, []);
   return (
-    <div className=" w-full p-5 min-h-screen rounded-md bg-default-100">
+    <div className=" w-full p-5 rounded-md bg-default-100">
       <Profile user={user}></Profile>
     </div>
   );
