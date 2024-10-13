@@ -10,7 +10,7 @@ import { useUserRegistration } from "@/hooks/auth.hook";
 import { getProfile } from "@/services/profile";
 import { IUser, IUserUpdate } from "@/types";
 import Loading from "@/app/loading";
-import { useUpdateProfile } from "@/hooks/profile.hook";
+// import { useUpdateProfile } from "@/hooks/profile.hook";
 
 export default  function Profile({user}: {user: IUser}) {
   const [update, setUpdate] = useState(false);
@@ -28,11 +28,11 @@ export default  function Profile({user}: {user: IUser}) {
     isSuccess,
   } = useUserRegistration();
 
-  const {
-    mutate: handleUpdateProfile,
-    isPending: updateProfileLoading, 
-    isSuccess: updateProfileSuccess
-  } = useUpdateProfile();
+  // const {
+  //   mutate: handleUpdateProfile,
+  //   isPending: updateProfileLoading, 
+  //   isSuccess: updateProfileSuccess
+  // } = useUpdateProfile();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
@@ -42,7 +42,7 @@ export default  function Profile({user}: {user: IUser}) {
       mobileNumber: userDetail.mobileNumber, 
       profilePhoto: imageFiles
     };
-    handleUpdateProfile(userData);
+    // handleUpdateProfile(userData);
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -2,21 +2,15 @@
 
 import Post from "@/components/UI/Post";
 import { useGetMyPosts } from "@/hooks/post.hook";
-import { getMyPosts } from "@/services/post";
 import { IPost } from "@/types";
 
-export default function page() {
-  // const { data } = await getMyPosts();  
-
+export default function Page() { // Changed 'page' to 'Page'
   const {
     data: postData,
     isLoading: postLoading,
     isSuccess: postSuccess,
   } = useGetMyPosts(); 
-
-  console.log("post", postData?.data);
   
-
   return (
     <>
       {postData?.data?.length && postSuccess ? (
