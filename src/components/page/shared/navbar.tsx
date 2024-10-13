@@ -56,7 +56,7 @@ export const Navbar = () => {
               <Image src={Logo} alt="Purrfect Care" className="w-[30px] me-4" />
             </div>
 
-            <p className="font-bold text-inherit">PurrfectCare</p>
+            <p className="font-bold text-inherit hidden sm:flex">PurrfectCare</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden sm:flex gap-4 justify-start ml-2">
@@ -81,12 +81,13 @@ export const Navbar = () => {
         <ThemeSwitch />
       </NavbarContent> */}
 
-      <SearchFilter></SearchFilter>
 
       <NavbarContent
         className="flex basis-1/5 sm:basis-full"
         justify="end"
       >
+        <SearchFilter></SearchFilter>
+
         <NavbarItem className="flex gap-2">
           <ThemeSwitch />
         </NavbarItem>

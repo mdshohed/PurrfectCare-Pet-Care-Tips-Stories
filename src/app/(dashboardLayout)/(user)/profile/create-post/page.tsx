@@ -14,8 +14,6 @@ import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import FXInput from "@/components/form/FXInput";
-import FXDatePicker from "@/components/form/FXDatePicker";
-import dateToISO from "@/utils/dateToISO";
 import FXSelect from "@/components/form/FXSelect";
 import { useGetCategories } from "@/hooks/categoreis.hook";
 import FXTextarea from "@/components/form/FXTextArea";

@@ -43,7 +43,7 @@ export default function FindFriends({
         {users?.map((user: IUser) =>{ 
           if( user?.role==='USER' && user?._id !==currentUser){
           return(
-          <Card  className="">
+          <Card key={user._id} className="">
             <CardHeader className="justify-start items-start flex-col">
               <div className="flex gap-5">
                 <Avatar

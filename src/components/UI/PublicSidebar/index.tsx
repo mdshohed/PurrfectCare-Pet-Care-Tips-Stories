@@ -1,25 +1,38 @@
-"use server";
+"use client";
 
 import { getAllUser } from "@/services/user";
 import React from "react";
 import { FollowLink } from "./FollowLink";
 import PremiumPost from "./PremiumPost";
 import { getPremiumPosts } from "@/services/post";
+import { useGetAllUsers } from "@/hooks/user.hook";
+import { useGetPremiumPosts } from "@/hooks/post.hook";
 
 export default async function PublicSidebar() {
-  const { data: users } = await getAllUser();
-  const {data: premiums} = await getPremiumPosts();
+  const {
+    data: premiumData,
+    isLoading: premiumLoading,
+    isSuccess: premiumDataSuccess,
+  } = useGetPremiumPosts();
+
+  const {
+    data: usersData,
+    isLoading: usersLoading,
+    isSuccess: usersSuccess,
+  } = useGetAllUsers();
+  // const { data: users } = await getAllUser();
+  // const {data: premiums} = await getPremiumPosts();
   
   return (
     <div className="sticky top-0">
       <div className="rounded-xl bg-default-100 p-2">
         <div className=" p-4 rounded-lg">
           <h2 className="text-xl font-bold mb-3">Who to follow</h2>
-          <FollowLink users={users}></FollowLink>
+          <FollowLink users={usersData?.data}></FollowLink>
         </div>
         <div className=" p-4 rounded-lg">
-          <h1 className="text-xl font-bold mb-3">Premium Post</h1>
-          <PremiumPost premiumPosts={premiums}></PremiumPost>
+          <h1 className="text-xl font-bold mb-3 dark:text-black">Premium Post</h1>
+          <PremiumPost premiumPosts={premiumData?.data}></PremiumPost>
         </div>
 
         <div className=" px-4 rounded-lg ">

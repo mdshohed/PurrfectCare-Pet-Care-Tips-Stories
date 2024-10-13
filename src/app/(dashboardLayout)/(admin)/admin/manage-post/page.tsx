@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
-export default async function ManagePost() {
+export default function ManagePost() {
   const [posts, setPosts] = useState<IPost[]>([]);
 
   useEffect(() => {

@@ -1,17 +1,24 @@
-// 'use client'
+'use client'
 
 import { IPost } from "@/types";
 import Post from "@/components/UI/Post";
 import { getAllPosts } from "@/services/post";
+import { useGetAllPosts } from "@/hooks/post.hook";
 
 export default async function RecentPosts() {
-  const { data } = await getAllPosts();  
-
+  // const { data } = await getAllPosts();
+  const {
+    data: postData,
+    isLoading: categoryLoading,
+    isSuccess: categorySuccess,
+  } = useGetAllPosts();  
+  console.log(postData);
+  
   return (
     // <Container>
       <>
-      {data?.length ? (
-        data?.map((post: IPost) => <Post key={post._id} post={post}/>)
+      {postData?.data?.length ? (
+        postData?.data?.map((post: IPost) => <Post key={post._id} post={post}/>)
       ) : (
         <div className="flex min-h-screen w-full items-center justify-center rounded-md bg-default-100">
           <h1 className="text-4xl">No Post Found!</h1>

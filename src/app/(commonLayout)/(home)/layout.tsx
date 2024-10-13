@@ -12,7 +12,7 @@ export default function layout({
   return (
     <Container>
       {children}
-      <div className="my-3 flex w-full gap-4">
+      <div className="my-2 flex w-full gap-4">
         <div className="w-4/5">{recentPosts}</div>
         <div className="w-2/6">
           <PublicSidebar />

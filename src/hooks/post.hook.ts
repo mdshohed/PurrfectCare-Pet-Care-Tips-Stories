@@ -17,7 +17,7 @@ export const useCreatePost = () => {
   });
 };
 
-export const useGetPosts = () => {
+export const useGetAllPosts = () => {
   return useQuery({
     queryKey: ["GET_POST"],
     queryFn: async () => await getAllPosts(),

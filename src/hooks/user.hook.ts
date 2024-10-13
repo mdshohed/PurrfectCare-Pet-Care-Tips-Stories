@@ -1,5 +1,5 @@
-import { updateUserFollowing } from "@/services/user";
-import { useMutation } from "@tanstack/react-query";
+import { getAllUser, updateUserFollowing } from "@/services/user";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const useUpdateUserFollowing = () => {
@@ -15,5 +15,11 @@ export const useUpdateUserFollowing = () => {
   });
 };
 
+export const useGetAllUsers = () => {
+  return useQuery({
+    queryKey: ["GET_ALL_USER"],
+    queryFn: async () => await getAllUser(),
+  });
+};
 
 

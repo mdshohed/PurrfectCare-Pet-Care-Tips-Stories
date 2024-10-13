@@ -16,7 +16,7 @@ export default function Follower({follower}: {follower: IUser[]}) {
       <div className="gap-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {follower?.map((user: IUser) =>{ 
           return(
-          <Card className="">
+          <Card key={user._id} className="">
             <CardHeader className="justify-start items-start flex-col">
               <div className="flex gap-5">
                 <Avatar

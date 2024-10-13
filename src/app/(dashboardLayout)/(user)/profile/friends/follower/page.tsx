@@ -1,6 +1,6 @@
-import React from 'react'
 
-export const FollowerPage = () => {
+
+export default function FollowerPage() {
   return (
     <div>FollowerPage</div>
   )

@@ -4,7 +4,7 @@ import { getProfile } from "@/services/profile";
 import { IUser } from "@/types";
 import React, { useEffect, useState } from "react";
 
-export default async function AdminProfile() {
+export default function AdminProfile() {
   const [user, setUser] = useState<IUser>({} as IUser)
 
 
