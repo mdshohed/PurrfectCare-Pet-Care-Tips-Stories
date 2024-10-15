@@ -7,7 +7,8 @@ export const userLinks = [
 
 export const adminLinks = [
   { href: "/admin", label: "Dashboard" },
-  { href: "/admin/manage-post", label: "Premium Post" },
+  { href: "/admin/manage-post", label: "All Post" },
+  { href: "/admin/manage-premium-post", label: "Premium Post" },
   { href: "/admin/manage-user", label: "All User" },
   { href: "/admin/manage-payment", label: "Payment Details" },
   { href: "/admin/profile", label: "Profile" },

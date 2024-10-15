@@ -8,9 +8,16 @@ import { adminLinks, userLinks } from "./constants";
 
 import { useUser } from "@/context/user.provider";
 import { useRouter } from "next/navigation";
+import { useGetProfile } from "@/hooks/profile.hook";
+import { Avatar } from "@nextui-org/react";
 
 const Sidebar = () => {
-  const { user } = useUser();
+  // const { user } = useUser();
+  const {
+    data: user,
+    isLoading: postsLoading,
+    isSuccess: postsSuccess,
+  } = useGetProfile(); 
   const route = useRouter(); 
   const handleRoute = ( params: string) =>{
     route.push(`/profile/friends?default=${params}`);
@@ -20,14 +27,16 @@ const Sidebar = () => {
       {" "}
       {/* Added top-0 to make the sidebar sticky */}
       <div className="rounded-xl bg-default-100 p-2">
-        <div className="h-full w-[230px] mx-auto px-5 rounded-full">
-          <Image
+        <div className=" p-5 flex items-center justify-center">
+          {/* <Image
             alt="profile"
-            className="w-full h-full p-5 object-cover rounded-full"
+            className="w-full h-full p-5  "
             height={100}
             src={user?.profilePhoto as string}
             width={100}
-          />
+          /> */}
+          <Avatar src={user?.profilePhoto} className="w-32 h-32 text-large" />
+
         </div>
         <div className="my-3 px-5 flex justify-center flex-col items-center">
           <h1 className="text-2xl font-semibold">{user?.name}</h1>
@@ -54,8 +63,6 @@ const Sidebar = () => {
             >
               Create a post
             </Button>
-
-            
           </div>
         ) : null}
       </div>

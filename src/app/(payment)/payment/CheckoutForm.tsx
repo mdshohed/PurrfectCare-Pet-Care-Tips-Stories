@@ -1,10 +1,12 @@
 'use client'
 
-import { useAddPayment } from "@/hooks/payment.hook";
-import { addPayment } from "@/services/Payment";
+import { useUser } from "@/context/user.provider";
+import { useCreateClientSecret, useCreatePayment } from "@/hooks/payment.hook";
+import { TPayment } from "@/types";
+// import { addPayment } from "@/services/Payment";
 import { Input } from "@nextui-org/react";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { useEffect, useState } from "react";
 
@@ -12,15 +14,24 @@ import { toast } from "sonner";
 
 
 const CheckoutForm = () => {
+  const {user } = useUser();   
+  const route = useRouter(); 
   // const navigate = useNavigate();
   const searchParams = useSearchParams();
   const paymentAmount = searchParams.get("fee");
+  const postId = searchParams.get("PostId");
+  
 
   const [details, setDetails] = useState<{
     name: string;
     email: string;
-    totalPaid: number;
-  }>({} as {name:string, email: string, totalPaid: number});
+    totalPaid: string;
+  }>({name: user?.name||'', email: user?.email||'', totalPaid: paymentAmount||''});
+  useEffect(()=>{
+    if(user){
+      setDetails({name:user?.name, email: user?.email, totalPaid: paymentAmount||''})
+    }
+  },[user])
   const [transactionId, setTransactionId] = useState("");
   const [error, setError] = useState<string>("");
   const stripe = useStripe();
@@ -28,27 +39,41 @@ const CheckoutForm = () => {
 
 
   const [clientSecret, setClientSecret] = useState("");
-  const {
-    mutate: submitPayment,
-    isPending: createPostPending,
-    isSuccess,
-  } = useAddPayment();
 
+  const {
+    mutate: handleClientSecret,
+    data: paymentApi, 
+    isPending: clientSecretPending,
+    isSuccess,
+  } = useCreateClientSecret();
+
+  const {
+    mutate: handleCreatePayment,
+    isPending: createPostPending,
+    isSuccess: createPayment
+  } = useCreatePayment();
+  
   useEffect(() => {
     const initiatePayment = async () => {
       try {
-        const response = addPayment(
-          parseFloat((paymentAmount !== null && paymentAmount !== undefined) ? paymentAmount.toString() : '0')
-        );
-        
-        // setClientSecret(response?.clientSecret);
+        handleClientSecret(parseFloat(paymentAmount?.toString() || '0'));
       } catch (error) {
         console.error("Payment error:", error);
+        toast.error("Failed to initiate payment");
       }
     };
-
-    initiatePayment();
+  
+    if (paymentAmount) {
+      initiatePayment();
+    }
   }, [paymentAmount]);
+
+  useEffect(()=>{
+    if(paymentApi){
+      setClientSecret(paymentApi); 
+    }
+  },[isSuccess])
+  
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
@@ -72,8 +97,6 @@ const CheckoutForm = () => {
       return;
     }
 
-    const toastId = toast.loading("Rental Processing");
-
     const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
@@ -81,7 +104,6 @@ const CheckoutForm = () => {
 
     if (error) {
       console.log("[error]", error);
-      toast.error(error.message, { id: toastId, duration: 2000 });
       setError(error.message || "");
     } else {
       setError("");
@@ -92,40 +114,38 @@ const CheckoutForm = () => {
         payment_method: {
           card: card,
           billing_details: {
-            email: "mdshohed170@gmail.com",
-            name: "mdshohed",
+            email: user?.email,
+            name: user?.name,
           },
         },
       });
     if (confirmError) {
-      toast.error("confirm Error", { id: toastId, duration: 2000 });
+      console.log("confirm error");
     } else {
       console.log("payment Intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         try {
         console.log(`transaction id: ${paymentIntent.id}`);
-        // setTransactionId(paymentIntent.id);
-        //   const payload = {
-        //     bikeId: bookingId,
-        //     startTime: selectedTime,
-        //     totalPaid: details.totalPaid,
-        //     discount: discount, 
-        //   };
-        //   console.log("payload", payload);
-          
-        //   const res = await createRental(payload).unwrap();
-        //   if (res.statusCode === 200 && res.success) {
-        //     navigate(`/`);
-        //     dispatch(clearBookingDetail());
-        //     toast.success(`${res.message}`, { id: toastId, duration: 2000 });
-        //   }
-          
+        const payload: TPayment = {
+          postId: postId || '', 
+          transactionId: paymentIntent.id, 
+          userId: user?._id || '',
+          paidAmount: parseFloat(details.totalPaid)
+        }
+        handleCreatePayment(payload)
+        
         } catch (err) {
-          toast.error("Booking Error!", { id: toastId, duration: 2000 });
+          console.log("payment error");
         }
       }
     }
   };
+
+  useEffect(()=>{
+    if(!createPostPending&&createPayment){
+      route.push('/')
+    }
+  },[createPayment])
 
   return (
     <div>
@@ -153,6 +173,7 @@ const CheckoutForm = () => {
                     {/* <Input type="email" label="Email" /> */}
 
                     <Input
+                      value={details.name}
                       onChange={(e) =>
                         setDetails({ ...details, name: e.target.value })
                       }
@@ -173,6 +194,7 @@ const CheckoutForm = () => {
                       Email
                     </label>
                     <Input
+                      value={details.email}
                       onChange={(e) =>
                         setDetails({ ...details, email: e.target.value })
                       }
@@ -194,11 +216,11 @@ const CheckoutForm = () => {
                       Subscription Fee
                     </label>
                     <Input
-                      // defaultValue={details.totalPaid}
+                      value={details.totalPaid}
                       onChange={(e: any) =>
                         setDetails({
                           ...details,
-                          totalPaid: parseInt(e.target.value),
+                          totalPaid: e.target.value,
                         })
                       }
                       type="number"

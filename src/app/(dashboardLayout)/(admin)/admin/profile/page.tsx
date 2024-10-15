@@ -25,8 +25,8 @@ export default function AdminProfile() {
   // }, []);
 
   return (
-    <div className=" w-full p-5 min-h-screen rounded-md bg-default-100">
-      <Profile user={userData?.data}></Profile>
+    <div className=" w-full p-5 rounded-md bg-default-100">
+      <Profile user={userData}></Profile>
     </div>
   );
 }

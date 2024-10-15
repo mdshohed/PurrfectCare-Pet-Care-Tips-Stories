@@ -6,7 +6,6 @@ import { IUser } from "@/types";
 import React, { useEffect, useState } from "react";
 
 export default function UserProfile() {
-  const [user, setUser] = useState<IUser>({} as IUser)
   const {
     data: userData,
     isLoading: postsLoading,
@@ -27,7 +26,7 @@ export default function UserProfile() {
 
   return (
     <div className=" w-full p-5 rounded-md bg-default-100">
-      <Profile user={userData?.data}></Profile>
+      <Profile user={userData}></Profile>
     </div>
   );
 }

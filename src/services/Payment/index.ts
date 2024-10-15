@@ -1,6 +1,7 @@
 "use server";
 
 import axiosInstance from "@/lib/AxiosInstance";
+import { TPayment } from "@/types";
 
 // export const addPayment = async (postData: {}) => {
 //   try {
@@ -13,20 +14,35 @@ import axiosInstance from "@/lib/AxiosInstance";
 //   }
 // };
 
-export const addPayment = async (amount: number): Promise<any> => {
+export const createPayment = async (payload: TPayment): Promise<any> => {
   try {
-    console.log("payment", amount);
-    
-    const { data } = await axiosInstance.post("/create-payment-intent", {amount: amount}, {
+    const res = await axiosInstance.post("/payment", payload, {
       headers: {
         "Content-Type": "application/json",  
       },
     });
-    console.log('payment', data);
-    
-
-    return data;
+        return res?.data;
   } catch (error) {
-    throw new Error("Failed to create post");
+    throw new Error("Failed to create payment");
   }
+};
+
+export const createClientSecret = async (amount: number): Promise<any> => {
+  try {
+    const res = await axiosInstance.post("/payment/create-payment-intent", {price: amount}, {
+      headers: {
+        "Content-Type": "application/json",  
+      },
+    });
+    console.log("res", res.data.clientSecret);
+    
+    return res?.data;
+  } catch (error) {
+    throw new Error("Failed to create payment intent");
+  }
+};
+
+export const getAllPayment = async () => {
+  const {data} = await axiosInstance.get(`/payment`);
+  return data?.data;
 };

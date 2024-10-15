@@ -1,26 +1,43 @@
 
 
-import { addPayment } from "@/services/Payment";
+import { createClientSecret, createPayment, getAllPayment } from "@/services/Payment";
+import { TPayment } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-// export const useAddPayment = () => {
-//   return useQuery({
-//     queryKey: ["GET_PAYMENT"],
-//     queryFn: async () => await addPayment(),
-//   });
-// };
+export const useGetAllPayments = () => {
+  return useQuery({
+    queryKey: ["GET_ALL_PAYMENTS"],
+    queryFn: async () => await getAllPayment(),
+  });
+};
 
-
-export const useAddPayment = () => {
-  return useMutation<any, Error, number>({
+export const useCreatePayment = () => {
+  return useMutation<any, Error, TPayment>({
     mutationKey: ["CREATE_PAYMENT"],
-    mutationFn: async (amount) => await addPayment(amount),
+    mutationFn: async (payload) => await createPayment(payload),
     onSuccess: () => {
       toast.success("Payment created successfully");
     },
     onError: (error) => {
       toast.error(error.message);
+    },
+  });
+};
+
+
+export const useCreateClientSecret = () => {
+  return useMutation<any, Error, number>({
+    mutationKey: ["CREATE_PAYMENT"],
+    mutationFn: async (amount) => {
+      const data = await createClientSecret(amount);
+      return data.clientSecret;
+    },
+    onSuccess: () => {
+      toast.success("clientSecret created successfully");
+    },
+    onError: (error) => {
+      toast.error('clientSecret creation error');
     },
   });
 };

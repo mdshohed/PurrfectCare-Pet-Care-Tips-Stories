@@ -10,6 +10,7 @@ export default function Page() { // Changed 'page' to 'Page'
     isLoading: postLoading,
     isSuccess: postSuccess,
   } = useGetMyPosts(); 
+  console.log("data", postData);
   
   return (
     <>

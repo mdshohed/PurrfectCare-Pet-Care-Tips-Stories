@@ -1,7 +1,7 @@
 "use client";
 
 import { DeleteIcon } from "@/assets/icons";
-import { useGetAllPosts, useGetPremiumPosts } from "@/hooks/post.hook";
+import { useGetPremiumPosts } from "@/hooks/post.hook";
 import { getPremiumPosts } from "@/services/post";
 import { IPost } from "@/types";
 import {
@@ -19,7 +19,7 @@ import {
 import { useEffect, useState } from "react";
 
 export default function ManagePost() {
-  const { data: posts, isLoading, isSuccess } = useGetAllPosts();
+  const { data: posts, isLoading, isSuccess } = useGetPremiumPosts();
 
   const handleUpdate = (id: string) => {
     console.log(id);
@@ -36,6 +36,7 @@ export default function ManagePost() {
             <TableColumn>User</TableColumn>
             <TableColumn>Category</TableColumn>
             <TableColumn>Title</TableColumn>
+            <TableColumn>Fee</TableColumn>
             <TableColumn>Status</TableColumn>
             <TableColumn>Action</TableColumn>
           </TableHeader>
@@ -64,6 +65,7 @@ export default function ManagePost() {
                     ></p>
                   </div>
                 </TableCell>
+                <TableCell>${post?.premiumDetails?.subscriptionFee}</TableCell>
 
                 <TableCell>
                   {

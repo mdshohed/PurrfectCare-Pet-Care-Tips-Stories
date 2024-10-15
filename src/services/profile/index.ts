@@ -14,7 +14,7 @@ export const getProfile = async () => {
   return res.data;
 };
 
-export const updateProfile = async (payload: IUserUpdate): Promise<any> => {
+export const updateProfile = async (payload: FormData): Promise<any> => {
   try {
     const res = await axiosInstance.put(`/profile`, payload, {
       headers: {

@@ -91,7 +91,7 @@ export const Navbar = () => {
         <NavbarItem className="flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        {currentUser?.email ? (
+        {user ? (
           <NavbarItem className=" flex gap-2">
             <NavbarDropdown />
           </NavbarItem>

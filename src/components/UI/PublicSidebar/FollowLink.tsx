@@ -40,7 +40,7 @@ export const FollowLink = ({ users }: { users: IUser[] }) => {
         </div>
       ))}
       <div className="text-blue-400 text-[15px]">
-        <Link href={"post?premium=all"}>Show More</Link>
+        <Link href={'/find-friends'}>Show More</Link>
       </div>
     </>
   );

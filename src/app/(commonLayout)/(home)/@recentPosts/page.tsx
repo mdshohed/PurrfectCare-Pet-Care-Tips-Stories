@@ -12,6 +12,8 @@ export default function RecentPosts() {
     isLoading: postsLoading,
     isSuccess: postsSuccess,
   } = useGetAllPosts();  
+  console.log("post", postData?.data);
+  
 
   if(postsLoading) {
     return <Loading></Loading>
@@ -20,7 +22,7 @@ export default function RecentPosts() {
   return (
     // <Container>
       <>
-      {postData?.data?.length && postsSuccess ? (
+      {postData?.data && postsSuccess ? (
         postData?.data?.map((post: IPost) => <Post key={post._id} post={post}/>)
       ) : (
         <div className="flex min-h-screen w-full items-center justify-center rounded-md bg-default-100">

@@ -11,20 +11,20 @@ export const useGetProfile = () => {
     queryFn: async () => {
       const data = await getProfile();
       if (!data) throw new Error("Profile data is undefined");
-      return data;
+      return data?.data;
     },
   });
 };
 
-// export const useUpdateProfile = () => {
-//   return useMutation<any, Error,  IUserUpdate>({
-//     mutationKey: ["UPDATE_PROFILE"],
-//     mutationFn: async (payload) => await updateProfile(payload),
-//     onSuccess: () => {
-//       toast.success("Profile updated successfully");
-//     },
-//     onError: (error) => {
-//       toast.error(error.message);
-//     },
-//   });
-// };
+export const useUpdateProfile = () => {
+  return useMutation<any, Error,  FormData>({
+    mutationKey: ["UPDATE_PROFILE"],
+    mutationFn: async (payload) => await updateProfile(payload),
+    onSuccess: () => {
+      toast.success("Profile updated successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};

@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { loginUser } from "@/services/AuthService";
 import { Badge } from "@nextui-org/badge";
 import { CheckboxIcon } from "@nextui-org/react";
+import { toast } from "sonner";
 
 interface IProps {
   post: IPost;
@@ -67,8 +68,16 @@ export default function Post({ post, key }: IProps) {
     handleUpdateLike({ postId: id });
   };
 
-  const handlePayment = (amount: number) =>{
-    route.push(`/payment?fee=${amount}`)
+  const handlePayment = (amount: number, id: string) =>{
+    if (!loggedInUser) {
+      route.push(`/login`);
+      return;
+    }
+    else if ( loggedInUser?.role ==="ADMIN") {
+      toast.error("Your are not User!")
+      return;
+    }
+    route.push(`/payment?fee=${amount}&PostId=${id}`)
   }
 
   return (
@@ -143,7 +152,7 @@ export default function Post({ post, key }: IProps) {
               </div>
             </p>
           </div>
-                <Button  onClick={()=>handlePayment(premiumDetails.subscriptionFee)}>Pay ${premiumDetails.subscriptionFee}</Button>
+                <Button  onClick={()=>handlePayment(premiumDetails.subscriptionFee, _id)}>Pay ${premiumDetails.subscriptionFee}</Button>
         </div>
       ) : (
         <div className="border-b border-default-200 pb-2">

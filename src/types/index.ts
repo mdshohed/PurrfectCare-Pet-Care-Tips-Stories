@@ -166,3 +166,20 @@ export interface ISearchResult {
   thumbnail: string;
   id: string;
 }
+
+
+export interface TPayment {
+  _id?: string; 
+  postId: string, 
+  transactionId: string, 
+  userId: string,
+  paidAmount: number, 
+}
+
+export interface IPayment {
+  _id?: string; 
+  postId: IPost, 
+  transactionId: string, 
+  userId: IUser,
+  paidAmount: number, 
+}
