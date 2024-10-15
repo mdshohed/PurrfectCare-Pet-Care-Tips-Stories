@@ -4,13 +4,11 @@ import { useGetAllPosts, useGetPremiumPosts } from "@/hooks/post.hook";
 import { useGetAllUsers } from "@/hooks/user.hook";
 import { Card, CardBody, CardFooter } from "@nextui-org/card";
 
-export default function page() {
+export default function Page() {
   const {data: posts} = useGetAllPosts();
   const {data: users} = useGetAllUsers();
   const {data: premiums} = useGetPremiumPosts();
   const {data: transactions} = useGetAllPayments(); 
-  console.log("transacton", transactions);
-  
 
   return (
     <div className="min-h-screen w-full p-5 rounded-md bg-default-100">
