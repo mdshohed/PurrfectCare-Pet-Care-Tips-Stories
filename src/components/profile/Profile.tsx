@@ -30,7 +30,6 @@ export default  function Profile({user}: {user: IUser}) {
     isSuccess,
   } = useUpdateProfile();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
 
     const formData = new FormData(); // Ensure formData is initialized
 

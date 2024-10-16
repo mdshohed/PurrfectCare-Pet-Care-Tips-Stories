@@ -36,6 +36,17 @@ export const loginUser = async (userData: FieldValues) => {
   }
 };
 
+export const resetPasswordUser = async (email: FieldValues) => {
+  
+  try {
+    const { data } = await axiosInstance.post("/auth/forget-password", email);
+    console.log("returnData", data);
+    return data
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
 export const logout = () => {
   cookies().delete("accessToken");
   cookies().delete("refreshToken");

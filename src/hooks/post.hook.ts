@@ -2,7 +2,15 @@ import { useMutation } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { createPost, getAllPosts, getMyPosts, getPremiumPosts, updateLikes } from "../services/post";
+import {
+  addComments,
+  createPost,
+  getAllPosts,
+  getMyPosts,
+  getPremiumPosts,
+  updateLikes,
+  updatePremiumContent,
+} from "../services/post";
 
 export const useCreatePost = () => {
   return useMutation<any, Error, FormData>({
@@ -42,7 +50,7 @@ export const useGetPremiumPosts = () => {
 };
 
 export const useUpdatePostLike = () => {
-  return useMutation<any, Error,  {postId: string}>({
+  return useMutation<any, Error, { postId: string }>({
     mutationKey: ["UPDATE_LIKE"],
     mutationFn: async (postData) => await updateLikes(postData),
     // onSuccess: () => {
@@ -54,12 +62,12 @@ export const useUpdatePostLike = () => {
   });
 };
 
-export const useUpdatePostComment = () => {
-  return useMutation<any, Error, FormData>({
-    mutationKey: ["UPDATE_COMMENT"],
-    mutationFn: async (postData) => await createPost(postData),
+export const useAddPostComment = () => {
+  return useMutation<any, Error, { postId: string; userId: string; text: string }>({
+    mutationKey: ["ADD_COMMENT"],
+    mutationFn: async (payload) => await addComments(payload),
     onSuccess: () => {
-      toast.success("Post created successfully");
+      toast.success("Comment successfully");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -67,3 +75,15 @@ export const useUpdatePostComment = () => {
   });
 };
 
+export const useUpdatePremiumContent = () => {
+  return useMutation<any, Error, string>({
+    mutationKey: ["UPDATE_PremiumContent"],
+    mutationFn: async (params) => await updatePremiumContent(params),
+    onSuccess: () => {
+      toast.success("Post Updated successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};

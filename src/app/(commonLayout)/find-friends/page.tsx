@@ -14,7 +14,6 @@ import { getAllUser, getSingleUser } from "@/services/user";
 
 export default function FriendsPage() {
   const { user, isLoading } = useUser();
-  console.log("user", user);
   
 
   const [users, setUsers] = useState<IUser[]>([]);
@@ -50,7 +49,6 @@ export default function FriendsPage() {
 
   const fetchCurrentUser = async () => {
     const { data } = await getSingleUser(user!?._id);
-    console.log("friends2", data, user);
 
     setFollower(data?.follower);
     setFollowing(data?.following);
@@ -70,7 +68,6 @@ export default function FriendsPage() {
       const fetchCurrentUser = async () => {
         try {
           const { data } = await getSingleUser(user?._id);
-          console.log("friends1", data, user);
   
           setFollower(data?.follower);
           setFollowing(data?.following);

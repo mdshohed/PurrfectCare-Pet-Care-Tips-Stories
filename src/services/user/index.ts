@@ -11,16 +11,13 @@ export const getAllUser = async () => {
       tags: ["users"],
     },
   };
-  console.log("fetch");
   
   const res = await fetch(`${envConfig.baseApi}/users`,fetchOption);
-  console.log("res", res);
   
   return res.json();
 }
 
 export const getSingleUser = async (params: string) => {
-  console.log("params", params);
   
   const fetchOption = {
     next: {

@@ -4,7 +4,7 @@ import { useGetAllPosts, useGetPremiumPosts } from "@/hooks/post.hook";
 import { useGetAllUsers } from "@/hooks/user.hook";
 import { Card, CardBody, CardFooter } from "@nextui-org/card";
 
-export default function Page() {
+export default function DashboardPage() {
   const {data: posts} = useGetAllPosts();
   const {data: users} = useGetAllUsers();
   const {data: premiums} = useGetPremiumPosts();
@@ -12,7 +12,7 @@ export default function Page() {
 
   return (
     <div className="min-h-screen w-full p-5 rounded-md bg-default-100">
-      <h1 className="text-2xl py-10 text-center bg-[#dcfce7] rounded-lg my-2 shadow-sm">
+      <h1 className="text-2xl py-10 text-center bg-[#dcfce7] dark:bg-gray-700 rounded-lg my-2 shadow-sm">
         {" "}
         Welcome to PurrfeectCare - Get Tips and Stories
       </h1>

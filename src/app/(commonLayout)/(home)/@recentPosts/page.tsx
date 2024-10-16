@@ -11,9 +11,7 @@ export default function RecentPosts() {
     data: postData,
     isLoading: postsLoading,
     isSuccess: postsSuccess,
-  } = useGetAllPosts();  
-  console.log("post", postData?.data);
-  
+  } = useGetAllPosts();    
 
   if(postsLoading) {
     return <Loading></Loading>
@@ -30,17 +28,7 @@ export default function RecentPosts() {
         </div>
       )}
    
-      {/* <div className="my-8 grid justify-center gap-10 sm:grid-cols-1 md:grid-cols-3">
-        
-        {posts && posts?.data.map((post: IPost) => (
-          <Card key={post?._id} post={post} />
-        ))}
-      </div>
-      <div className="flex justify-center">
-        <Button className="rounded-md bg-default-900 text-default" size="md">
-          <Link href="/found-items">See All</Link>
-        </Button>
-      </div> */}
+
       
       </>
     // </Container>

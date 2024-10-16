@@ -76,7 +76,7 @@ const SearchFilter = () => {
               <Link
                 key={index}
                 className="text-default-900 block rounded-md from-default-200 p-2 transition-all hover:bg-gradient-to-l"
-                href={`/found-items/${item.id}`}
+                href={`/found-post/${item.id}`}
               >
                 <div>
                   <div className="flex items-center gap-2">

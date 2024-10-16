@@ -1,3 +1,4 @@
+'use server'
 import Filtering from "@/components/modules/found-post/Filtering";
 import Container from "@/components/UI/Container";
 import Post from "@/components/UI/Post";

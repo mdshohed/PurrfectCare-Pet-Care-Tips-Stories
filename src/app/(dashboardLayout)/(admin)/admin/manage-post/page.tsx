@@ -11,18 +11,15 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  getKeyValue,
   User,
   Chip,
   Button,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
 
 export default function ManagePost() {
   const { data: posts, isLoading, isSuccess } = useGetAllPosts();
 
-  const handleUpdate = (id: string) => {
-    console.log(id);
+  const handleDelete = (id: string) => {
   };
 
   return (
@@ -88,13 +85,9 @@ export default function ManagePost() {
                   )}
                 </TableCell>
                 <TableCell>
-                {
-                  post?.premiumDetails?.isPending ? (
-                    <Button color="danger" onClick={()=>handleUpdate(post._id)} size="sm">{"Unpublished"}</Button>
-                  ) : (
-                    <Button color="success" size="sm">{"Published"}</Button>
-
-                  )}
+                
+                    <Button color="danger" onClick={()=>handleDelete(post._id)} size="sm"><DeleteIcon></DeleteIcon></Button>
+                  
                 </TableCell>
               </TableRow>
             ))}

@@ -20,7 +20,7 @@ const Filtering = () => {
 
     params.set(key, value);
 
-    router.push(`/found-posts?${params.toString()}`);
+    router.push(`/found-post?${params.toString()}`);
   };
 
   return (
@@ -37,7 +37,7 @@ const Filtering = () => {
           </Button>
         ))}
         <Button className="rounded-lg" size="sm" variant="ghost">
-          <RotateCw onClick={() => router.push("/found-items")} />
+          <RotateCw onClick={() => router.push("/found-post")} />
         </Button>
       </div>
     </div>

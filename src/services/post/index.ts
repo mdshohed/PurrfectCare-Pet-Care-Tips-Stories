@@ -40,6 +40,35 @@ export const updateLikes = async (formData: { postId: string}): Promise<any> => 
   }
 };
 
+export const addComments = async (payload: {postId: string, userId: string, text:string}): Promise<any> => {
+  try {
+    console.log("payload", payload);
+    const { data } = await axiosInstance.put(`/posts/comments/${payload.postId}`, payload, {
+      headers: {
+        "Content-Type": "application/json",  
+      },
+    });
+    revalidateTag("posts");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to add comment");
+  }
+};
+
+export const updatePremiumContent = async ( params: string): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.put(`/posts/premium/${params}`, {
+      headers: {
+        "Content-Type": "application/json",  
+      },
+    });
+    revalidateTag("posts");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to Update Likes");
+  }
+};
+
 export const getPost = async (postId: string) => {
   let fetchOptions = {};
 
@@ -58,7 +87,7 @@ export const getPost = async (postId: string) => {
 
 export const getMyPosts = async () => {
   const user = await getCurrentUser();
-  const res = await axiosInstance.get(`/posts?user=${user?._id}`);
+  const res = await axiosInstance.get(`/posts/${user?._id}`);
   return res.data;
 };
 

@@ -43,7 +43,6 @@ export default function Friends() {
   
   const fetchCurrentUser = async () => {
     const { data } = await getSingleUser(user!?._id); 
-    console.log("friends", data, user);
   
     setFollower(data?.follower);
     setFollowing(data?.following); 
@@ -56,7 +55,6 @@ export default function Friends() {
     }
     async function fetchCurrentUser() {
       const {data} = await getSingleUser(user!?._id); 
-      console.log("friends", data, user);
       
       setFollower(data?.follower);
       setFollowing(data?.following); 

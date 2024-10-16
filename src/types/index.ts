@@ -23,6 +23,7 @@ export type TComments = {
 export type TPremium = {
   subscriptionFee: number;
   isPending: boolean; 
+  subscribedUser: IUser[]
 }
 
 export type TLikes = {

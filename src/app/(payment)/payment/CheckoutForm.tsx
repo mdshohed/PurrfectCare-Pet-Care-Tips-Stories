@@ -217,12 +217,13 @@ const CheckoutForm = () => {
                     </label>
                     <Input
                       value={details.totalPaid}
-                      onChange={(e: any) =>
-                        setDetails({
-                          ...details,
-                          totalPaid: e.target.value,
-                        })
-                      }
+                      readOnly
+                      // onChange={(e: any) =>
+                      //   setDetails({
+                      //     ...details,
+                      //     totalPaid: e.target.value,
+                      //   })
+                      // }
                       type="number"
                       id="paid"
                       min={0}

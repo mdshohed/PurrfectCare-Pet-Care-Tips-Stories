@@ -1,7 +1,8 @@
 "use client";
 
+import Loading from "@/app/loading";
 import { DeleteIcon } from "@/assets/icons";
-import { useGetPremiumPosts } from "@/hooks/post.hook";
+import { useGetPremiumPosts, useUpdatePremiumContent } from "@/hooks/post.hook";
 import { getPremiumPosts } from "@/services/post";
 import { IPost } from "@/types";
 import {
@@ -16,14 +17,16 @@ import {
   Chip,
   Button,
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
 
 export default function ManagePost() {
   const { data: posts, isLoading, isSuccess } = useGetPremiumPosts();
-
+  const { mutate: updatePremiumPost, isPending: isPremiumLoading} = useUpdatePremiumContent(); 
   const handleUpdate = (id: string) => {
-    console.log(id);
+    updatePremiumPost(id)
   };
+  if(isPremiumLoading){
+    return <Loading></Loading>
+  }
 
   return (
     <div className=" min-h-screen w-full rounded-md bg-default-100 p-5">

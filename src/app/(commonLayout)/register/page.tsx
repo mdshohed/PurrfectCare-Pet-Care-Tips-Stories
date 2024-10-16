@@ -72,7 +72,7 @@ export default function RegisterPage() {
           </div>
 
           <Button
-            className="my-3 w-full rounded-md bg-default-900 text-default"
+            className="my-3 w-full rounded-md bg-default-900 text-default "
             size="lg"
             type="submit"
           >
@@ -80,7 +80,7 @@ export default function RegisterPage() {
           </Button>
         </FXForm>
         <div className="text-center">
-          Already have an account ? <Link href={"/login"}>Login</Link>
+          Already have an account ? <Link href={"/login"} className="text-blue-400 hover:underline">Login</Link>
         </div>
       </div>
     </div>

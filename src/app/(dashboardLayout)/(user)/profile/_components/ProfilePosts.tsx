@@ -24,7 +24,7 @@ export default function ProfilePosts({ post }: TProps) {
         <div className="border-b border-default-200 py-4">
           <div className="mb-4 flex items-start justify-between">
             <div>
-              <Link href={`/found-items/${_id}`}>
+              <Link href={`/found-post/${_id}`}>
                 <h1 className="cursor-pointer text-2xl">{title}</h1>
               </Link>
               <p className="flex items-center gap-1 text-xs">

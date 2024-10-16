@@ -33,9 +33,6 @@ export const useCreateClientSecret = () => {
       const data = await createClientSecret(amount);
       return data.clientSecret;
     },
-    onSuccess: () => {
-      toast.success("clientSecret created successfully");
-    },
     onError: (error) => {
       toast.error('clientSecret creation error');
     },

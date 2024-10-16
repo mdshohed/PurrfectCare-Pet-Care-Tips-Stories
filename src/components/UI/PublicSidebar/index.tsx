@@ -31,7 +31,7 @@ export default function PublicSidebar() {
           <FollowLink users={usersData?.data}></FollowLink>
         </div>
         <div className=" p-4 rounded-lg">
-          <h1 className="text-xl font-bold mb-3 dark:text-black">Premium Post</h1>
+          <h1 className="text-xl font-bold mb-3 ">Premium Post</h1>
           <PremiumPost premiumPosts={premiumData?.data}></PremiumPost>
         </div>
 
