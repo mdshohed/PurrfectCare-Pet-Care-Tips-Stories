@@ -21,7 +21,6 @@ import { useEffect, useState } from "react";
 import { timeDiff } from "@/utils/common";
 import { useAddPostComment, useUpdatePostLike } from "@/hooks/post.hook";
 import { useRouter } from "next/navigation";
-import { loginUser } from "@/services/AuthService";
 import { Badge } from "@nextui-org/badge";
 import {
   CheckboxIcon,
@@ -35,7 +34,6 @@ import {
   User,
 } from "@nextui-org/react";
 import { toast } from "sonner";
-import ClaimRequestModal from "@/components/modals/ClaimRequestModal";
 
 interface IProps {
   post: IPost;
@@ -91,10 +89,14 @@ export default function Post({ post, key }: IProps) {
   };
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const {mutate: handleAddComment, isPending, isSuccess: isAddCommentSuccess} = useAddPostComment(); 
-  const [commentsText,setComments] = useState('')
+  const {
+    mutate: handleAddComment,
+    isPending,
+    isSuccess: isAddCommentSuccess,
+  } = useAddPostComment();
+  const [commentsText, setComments] = useState("");
 
-  const handleSaveComments = ( postId: string) =>{
+  const handleSaveComments = (postId: string) => {
     if (!loggedInUser) {
       route.push(`/login`);
       return;
@@ -103,18 +105,18 @@ export default function Post({ post, key }: IProps) {
       return;
     }
     const userComment = {
-      text: commentsText, 
-      userId: loggedInUser!?._id, 
-      postId: postId, 
-    }
+      text: commentsText,
+      userId: loggedInUser!?._id,
+      postId: postId,
+    };
     console.log("comment", userComment);
-    handleAddComment(userComment)
-  }
-  useEffect(()=>{
-    if(!isPending && isAddCommentSuccess){
-      setComments('')
+    handleAddComment(userComment);
+  };
+  useEffect(() => {
+    if (!isPending && isAddCommentSuccess) {
+      setComments("");
     }
-  },[isAddCommentSuccess])
+  }, [isAddCommentSuccess]);
 
   return (
     <div key={key} className="mb-2 rounded-md bg-default-100 p-4">
@@ -192,6 +194,130 @@ export default function Post({ post, key }: IProps) {
               Pay ${premiumDetails!?.subscriptionFee}
             </Button>
           )}
+          {premiumDetails?.subscribedUser?.some(
+            (u) => String(u) == String(loggedInUser?._id)
+          ) ? (
+            <div>
+              <ImageGallery images={images} />
+
+              <div className="mt-4 mx-4">
+                <div className="flex justify-between items-center flex-row mt-4 text-gray-600">
+                  <div className=" flex justify-center gap-5">
+                    <div
+                      className="flex items-center space-x-1 cursor-pointer"
+                      onClick={() => onSubmitLikes(_id)}
+                    >
+                      {liked ? (
+                        <AiFillHeart className="text-red-600" size={24} />
+                      ) : (
+                        <AiOutlineHeart
+                          className="hover:text-red-600"
+                          size={24}
+                        />
+                      )}
+                      <span className="dark:text-gray-400">{likes?.count}</span>
+                    </div>
+
+                    <div
+                      className="flex items-center space-x-1 cursor-pointer"
+                      // onClick={handleComment}
+                    >
+                      <AiOutlineComment size={24} />
+
+                      <span className="dark:text-gray-400">
+                        {comments?.count}
+                      </span>
+                      <p onClick={onOpen}>View all comments</p>
+                    </div>
+                  </div>
+
+                  <div className="cursor-pointer ">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      className="bk"
+                    >
+                      <path
+                        fill="#000"
+                        d="M17.5 1.25a.5.5 0 0 1 1 0v2.5H21a.5.5 0 0 1 0 1h-2.5v2.5a.5.5 0 0 1-1 0v-2.5H15a.5.5 0 0 1 0-1h2.5zm-11 4.5a1 1 0 0 1 1-1H11a.5.5 0 0 0 0-1H7.5a2 2 0 0 0-2 2v14a.5.5 0 0 0 .8.4l5.7-4.4 5.7 4.4a.5.5 0 0 0 .8-.4v-8.5a.5.5 0 0 0-1 0v7.48l-5.2-4a.5.5 0 0 0-.6 0l-5.2 4z"
+                      ></path>
+                    </svg>{" "}
+                    <span className="sr-only">Save</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center py-3">
+                  <Input
+                    type="text"
+                    color="secondary"
+                    placeholder="Add a comment..."
+                    labelPlacement="outside"
+                    onChange={(e) => setComments(e.target.value)}
+                  />
+                  {/* <Button >Post</Button> */}
+                  {commentsText ? (
+                    <span onClick={() => handleSaveComments(_id)}>
+                      <SendHorizontal className="text-2xl ms-2 text-gray-900 dark:text-gray-200 pointer-events-none flex-shrink-0 cursor-pointer" />
+                    </span>
+                  ) : (
+                    <span>
+                      <SendHorizontal className="text-2xl ms-2 text-gray-500 dark:text-gray-500 pointer-events-none flex-shrink-0 cursor-pointer" />
+                    </span>
+                  )}
+                </div>
+
+                {/* comment modal  */}
+
+                <Modal
+                  isOpen={isOpen}
+                  onOpenChange={onOpenChange}
+                  scrollBehavior={"inside"}
+                >
+                  <ModalContent>
+                    {(onClose) => (
+                      <>
+                        <ModalHeader className="flex flex-col gap-1 border-b ">
+                          All Comments
+                        </ModalHeader>
+                        <ModalBody>
+                          <div>
+                            {comments?.comment?.length ? (
+                              comments?.comment?.map((comment, index) => (
+                                <div
+                                  key={index}
+                                  className="flex items-center my-2 bg-default-50 rounded-lg "
+                                >
+                                  {/* <span className="me-3"><Avatar isBordered radius="full" size="md" src={comment?.user?.profilePhoto} ></Avatar></span>
+                  <p>{comment?.text}</p> */}
+                                  <User
+                                    avatarProps={{
+                                      radius: "lg",
+                                      src: comment?.user?.profilePhoto,
+                                    }}
+                                    description={comment?.text}
+                                    name={comment?.user?.name}
+                                  ></User>
+                                </div>
+                              ))
+                            ) : (
+                              <div>
+                                <p className="flex justify-center items-center">
+                                  No Comments found!
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        </ModalBody>
+                      </>
+                    )}
+                  </ModalContent>
+                </Modal>
+              </div>
+            </div>
+          ) : null}
         </div>
       ) : (
         <div className="border-b border-default-200 pb-2">
@@ -328,25 +454,26 @@ export default function Post({ post, key }: IProps) {
                 color="secondary"
                 placeholder="Add a comment..."
                 labelPlacement="outside"
-                onChange={(e)=>setComments(e.target.value)}
+                onChange={(e) => setComments(e.target.value)}
               />
               {/* <Button >Post</Button> */}
-              {
-                commentsText ? 
-                <span onClick={()=>handleSaveComments(_id)}>              
-                <SendHorizontal  className="text-2xl ms-2 text-gray-900 dark:text-gray-200 pointer-events-none flex-shrink-0 cursor-pointer" />
-              </span>
-                : 
-                <span >              
-                <SendHorizontal  className="text-2xl ms-2 text-gray-500 dark:text-gray-500 pointer-events-none flex-shrink-0 cursor-pointer" />
-              </span>
-              }
-
+              {commentsText ? (
+                <span onClick={() => handleSaveComments(_id)}>
+                  <SendHorizontal className="text-2xl ms-2 text-gray-900 dark:text-gray-200 pointer-events-none flex-shrink-0 cursor-pointer" />
+                </span>
+              ) : (
+                <span>
+                  <SendHorizontal className="text-2xl ms-2 text-gray-500 dark:text-gray-500 pointer-events-none flex-shrink-0 cursor-pointer" />
+                </span>
+              )}
             </div>
 
             {/* comment modal  */}
 
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange}         scrollBehavior={'inside'}
+            <Modal
+              isOpen={isOpen}
+              onOpenChange={onOpenChange}
+              scrollBehavior={"inside"}
             >
               <ModalContent>
                 {(onClose) => (
@@ -354,28 +481,34 @@ export default function Post({ post, key }: IProps) {
                     <ModalHeader className="flex flex-col gap-1 border-b ">
                       All Comments
                     </ModalHeader>
-                    <ModalBody >
+                    <ModalBody>
                       <div>
-                     {
-                      comments?.comment?.length ? 
-                        comments?.comment?.map( (comment, index)=>(
-                          <div key={index} className="flex items-center my-2 bg-default-50 rounded-lg ">
-                            {/* <span className="me-3"><Avatar isBordered radius="full" size="md" src={comment?.user?.profilePhoto} ></Avatar></span>
+                        {comments?.comment?.length ? (
+                          comments?.comment?.map((comment, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center my-2 bg-default-50 rounded-lg "
+                            >
+                              {/* <span className="me-3"><Avatar isBordered radius="full" size="md" src={comment?.user?.profilePhoto} ></Avatar></span>
                             <p>{comment?.text}</p> */}
-                            <User
-                              
-                              avatarProps={{ radius: "lg", src: comment?.user?.profilePhoto }}
-                              description={comment?.text}
-                              name={comment?.user?.name}
-                            ></User>
+                              <User
+                                avatarProps={{
+                                  radius: "lg",
+                                  src: comment?.user?.profilePhoto,
+                                }}
+                                description={comment?.text}
+                                name={comment?.user?.name}
+                              ></User>
+                            </div>
+                          ))
+                        ) : (
+                          <div>
+                            <p className="flex justify-center items-center">
+                              No Comments found!
+                            </p>
                           </div>
-                        ))
-                        : 
-                        <div>
-                          <p className="flex justify-center items-center">No Comments found!</p>
-                        </div>
-                     }
-                     </div>
+                        )}
+                      </div>
                     </ModalBody>
                   </>
                 )}

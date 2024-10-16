@@ -6,11 +6,14 @@ import {
   addComments,
   createPost,
   getAllPosts,
+  getAllPostsWithSearchParams,
   getMyPosts,
+  getPost,
   getPremiumPosts,
   updateLikes,
   updatePremiumContent,
 } from "../services/post";
+import axiosInstance from "@/lib/AxiosInstance";
 
 export const useCreatePost = () => {
   return useMutation<any, Error, FormData>({
@@ -32,10 +35,27 @@ export const useGetAllPosts = () => {
   });
 };
 
+// export const useGetAllPostsWithSearchParams = (searchParams: {searchTerm: string, category: string}) => {
+//   return useQuery({
+//     queryKey: ["GET_POST", searchParams], 
+//     queryFn: async () => {
+//       const data = await getAllPostsWithSearchParams(searchParams);
+//       return data; 
+//     },
+//   });
+// };
+
 export const useGetMyPosts = () => {
   return useQuery({
     queryKey: ["GET_MY_POST"],
     queryFn: async () => await getMyPosts(),
+  });
+};
+
+export const useSinglePost = (id: string) => {
+  return useQuery({
+    queryKey: ["GET_SINGLE_POST"],
+    queryFn: async () => await getPost(id),
   });
 };
 

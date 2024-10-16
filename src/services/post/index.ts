@@ -69,30 +69,30 @@ export const updatePremiumContent = async ( params: string): Promise<any> => {
   }
 };
 
-export const getPost = async (postId: string) => {
+export const getPost = async (params: string) => {
   let fetchOptions = {};
 
   fetchOptions = {
     cache: "no-store",
   };
 
-  const res = await fetch(`${envConfig.baseApi}/posts/${postId}`, fetchOptions);
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
+  const res = await fetch(`${envConfig.baseApi}/posts/${params}`, fetchOptions);  
   return res.json();
 };
 
 export const getMyPosts = async () => {
   const user = await getCurrentUser();
-  const res = await axiosInstance.get(`/posts/${user?._id}`);
+  const res = await axiosInstance.get(`/posts/me/${user?._id}`);
   return res.data;
 };
 
 export const getAllPosts = async () => {
   const res = await axiosInstance.get(`/posts`);
+  return res.data;
+};
+
+export const getAllPostsWithSearchParams = async (searchParams: {searchTerm: string, category: string}) => {
+  const res = await axiosInstance.post(`/posts/search`, searchParams);
   return res.data;
 };
 

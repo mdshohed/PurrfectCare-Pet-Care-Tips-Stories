@@ -36,11 +36,27 @@ export const loginUser = async (userData: FieldValues) => {
   }
 };
 
-export const resetPasswordUser = async (email: FieldValues) => {
+export const forgetPasswordUser = async (email: FieldValues) => {
   
   try {
     const { data } = await axiosInstance.post("/auth/forget-password", email);
     console.log("returnData", data);
+    return data
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const resetPasswordUser = async (payload: FieldValues) => {
+  
+  try {
+    cookies().set("accessToken", payload?.accessToken);
+    const { data } = await axiosInstance.post("/auth/reset-password", {email:payload.email, newPassword: payload.newPassword}); 
+    // if(data.success&&data.statusCode){
+    //   console.log("data", data);
+    //   cookies().delete("accessToken");
+    // }
+    console.log("data", data);
     return data
   } catch (error: any) {
     throw new Error(error);

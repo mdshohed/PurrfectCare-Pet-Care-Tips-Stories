@@ -1,6 +1,9 @@
+'use client'
+import Loading from "@/app/loading";
 import Container from "@/components/UI/Container";
 import Post from "@/components/UI/Post";
-import { getPost } from "@/services/post";
+import { useSinglePost } from "@/hooks/post.hook";
+import { useEffect, useState } from "react";
 
 interface IProps {
   params: {
@@ -8,13 +11,24 @@ interface IProps {
   };
 }
 
-const ItemDetailPage = async ({ params: { postId } }: IProps) => {
-  const { data: post } = await getPost(postId);
+const ItemDetailPage = ({ params: { postId } }: IProps) => {
+  const { data: post, isPending } = useSinglePost(postId);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure that the component is only rendered after it's mounted on the client side
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null; // Avoid rendering during hydration
+  }
 
   return (
     <Container>
+      {isPending && <Loading />}
       <div className="mx-auto my-3 max-w-[720px]">
-        <Post key={post?._id} post={post} />
+        {post && <Post key={'1'} post={post?.data} />}
       </div>
     </Container>
   );

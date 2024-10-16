@@ -32,7 +32,7 @@ export default function PremiumPost({ premiumPosts}: { premiumPosts: IPost[]}) {
             className="rounded-full"
           /> */}
           {/* <ImageAvatar img={user?.profilePhoto}></ImageAvatar> */}
-          <Link href={`friends/${premiumPost._id}`}>
+          <Link href={`/found-post/${premiumPost._id}`}>
             <div className="flex justify-center items-center">
               <img
                 src={premiumPost.images[0]}
