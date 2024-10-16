@@ -8,6 +8,7 @@ import {
 } from "@nextui-org/react";
 import { IUser } from "@/types";
 import { useUpdateUserFollowing } from "@/hooks/user.hook";
+import Link from "next/link";
 
 type TFindFriends = {
   following: IUser[];
@@ -45,7 +46,7 @@ export default function FindFriends({
           return(
           <Card key={user._id} className="">
             <CardHeader className="justify-start items-start flex-col">
-              <div className="flex gap-5">
+              <Link href={`find-friends/${user._id}`} className="flex gap-5">
                 <Avatar
                   isBordered
                   radius="full"
@@ -60,7 +61,7 @@ export default function FindFriends({
                     {user.email}
                   </h5>
                 </div>
-              </div>
+              </Link>
               <Button
                 className={` mt-3
                   ${following?.some((u) => String(u?._id) == String(user?._id))

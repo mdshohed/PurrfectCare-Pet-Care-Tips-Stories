@@ -51,7 +51,7 @@ export default function Home() {
           )}
         </Autocomplete> */}
       </div>
-      <div>
+      {/* <div>
         <Button
           // as={Link}
           className="mt-2 w-full rounded-md bg-green-500"
@@ -59,7 +59,7 @@ export default function Home() {
         >
           Create a post
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 }

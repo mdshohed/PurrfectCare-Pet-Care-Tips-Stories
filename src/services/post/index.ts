@@ -86,6 +86,11 @@ export const getMyPosts = async () => {
   return res.data;
 };
 
+export const getSomeOnePosts = async ( param:string) => {
+  const {data} = await axiosInstance.get(`/posts/me/${param}`);
+  return data;
+};
+
 export const getAllPosts = async () => {
   const res = await axiosInstance.get(`/posts`);
   return res.data;

@@ -10,6 +10,7 @@ import {
   getMyPosts,
   getPost,
   getPremiumPosts,
+  getSomeOnePosts,
   updateLikes,
   updatePremiumContent,
 } from "../services/post";
@@ -49,6 +50,16 @@ export const useGetMyPosts = () => {
   return useQuery({
     queryKey: ["GET_MY_POST"],
     queryFn: async () => await getMyPosts(),
+  });
+};
+
+export const useGetSomeOnePosts = (param:string) => {
+  return useQuery({
+    queryKey: ["GET_SOMEONE_POST"],
+    queryFn: async () => {
+      const res = await getSomeOnePosts(param)
+      return res.data; 
+    },
   });
 };
 

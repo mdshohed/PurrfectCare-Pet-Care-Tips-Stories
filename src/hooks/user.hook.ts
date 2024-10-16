@@ -22,6 +22,16 @@ export const useGetAllUsers = () => {
   });
 };
 
+export const useGetSingleUser = (param: string) => {
+  return useQuery({
+    queryKey: ["GET_SINGLE_USER"],
+    queryFn: async () =>{ 
+      const res = await getSingleUser(param)
+      return res?.data
+    },
+  });
+};
+
 // export const useGetProfile = () => {
 //   return useQuery({
 //     queryKey: ["GET_ALL_USER"],

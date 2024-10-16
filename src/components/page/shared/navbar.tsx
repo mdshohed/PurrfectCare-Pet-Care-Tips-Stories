@@ -27,28 +27,33 @@ import SearchFilter from "./SearchFilter";
 import { useUser } from "@/context/user.provider";
 import { useEffect, useState } from "react";
 import { IUser } from "@/types";
+import { EditIcon } from "@/assets/icons";
 
 export const Navbar = () => {
   const { user, isLoading } = useUser();
-  const [ currentUser, setUser] = useState<IUser>({} as IUser) 
+  const [currentUser, setUser] = useState<IUser>({} as IUser);
   // const user = useAppSelector( (auth)=>auth.auth.user);
-  useEffect(()=>{
-    if(user){
-      setUser(user); 
+  useEffect(() => {
+    if (user) {
+      setUser(user);
     }
-  },[isLoading])
+  }, [isLoading]);
 
   const router = useRouter();
 
+  const handleNavigate = () => {
+    if(!user){
+      router.push("/login?redirect=/profile/create-post")
+      return;
+    }
+    router.push("/profile/create-post");
+  };
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
-      
-     
-
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-      {/* <NavbarContent className="sm:hidden basis-1 pl-4" justify="start"> */}
-        <NavbarMenuToggle className="sm:hidden basis-1 mr-2"/>
-      {/* </NavbarContent> */}
+        {/* <NavbarContent className="sm:hidden basis-1 pl-4" justify="start"> */}
+        <NavbarMenuToggle className="sm:hidden basis-1 mr-2" />
+        {/* </NavbarContent> */}
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             {/* <Logo /> */}
@@ -56,7 +61,9 @@ export const Navbar = () => {
               <Image src={Logo} alt="Purrfect Care" className="w-[30px] me-4" />
             </div>
 
-            <p className="font-bold text-inherit hidden sm:flex">PurrfectCare</p>
+            <p className="font-bold text-inherit hidden sm:flex">
+              PurrfectCare
+            </p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden sm:flex gap-4 justify-start ml-2">
@@ -81,12 +88,18 @@ export const Navbar = () => {
         <ThemeSwitch />
       </NavbarContent> */}
 
-
-      <NavbarContent
-        className="flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
+      <NavbarContent className="flex basis-1/5 sm:basis-full" justify="end">
         <SearchFilter></SearchFilter>
+
+        <Button
+          onClick={handleNavigate}
+          className="flex justify-center items-center cursor-pointer"
+        >
+          <span className="text-lg  ">
+            <EditIcon></EditIcon>
+          </span>
+          Write Post
+        </Button>
 
         <NavbarItem className="flex gap-2">
           <ThemeSwitch />

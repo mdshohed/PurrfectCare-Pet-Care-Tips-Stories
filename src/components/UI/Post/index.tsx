@@ -1,7 +1,14 @@
 "use client";
 import { Avatar } from "@nextui-org/avatar";
 import { format } from "date-fns";
-import { Calendar, Lock, MailIcon, MapPin, SendHorizontal } from "lucide-react";
+import {
+  Calendar,
+  ChartColumnStacked,
+  Lock,
+  MailIcon,
+  MapPin,
+  SendHorizontal,
+} from "lucide-react";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
 
@@ -46,6 +53,7 @@ export default function Post({ post, key }: IProps) {
     description,
     _id,
     images,
+    category,
     likes,
     comments,
     user,
@@ -141,10 +149,16 @@ export default function Post({ post, key }: IProps) {
               </Badge>
               <div>
                 <p>{name}</p>
-                <p className="flex items-center gap-1 text-xs">
-                  <Calendar width={14} />
-                  {timeDiff(createdAt)}
-                </p>
+                <div className="flex gap-2">
+                  <p className="flex items-center gap-1 text-xs ">
+                    <Calendar width={14} />
+                    {timeDiff(createdAt)}
+                  </p>
+                  <p className="flex items-center gap-1 text-xs">
+                    <ChartColumnStacked width={14} />
+                    {category?.name}
+                  </p>
+                </div>
               </div>
             </div>
             <div className="bg-green-300 p-1 text-sm rounded-lg">
@@ -342,10 +356,16 @@ export default function Post({ post, key }: IProps) {
                   </Badge>
                   <div>
                     <p>{name}</p>
-                    <p className="flex items-center gap-1 text-xs">
-                      <Calendar width={14} />
-                      {timeDiff(createdAt)}
-                    </p>
+                    <div className="flex gap-2">
+                      <p className="flex items-center gap-1 text-xs ">
+                        <Calendar width={14} />
+                        {timeDiff(createdAt)}
+                      </p>
+                      <p className="flex items-center gap-1 text-xs">
+                        <ChartColumnStacked width={14} />
+                        {category?.name}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div className="bg-green-300 p-1 text-sm rounded-lg">
@@ -365,11 +385,16 @@ export default function Post({ post, key }: IProps) {
                 <div>
                   <p>{name}</p>
                   {/* <p className="text-xs">{email}</p> */}
-                  <p className="flex items-center gap-1 text-xs">
-                    <Calendar width={14} />
-                    {/* {format(new Date(dateFound), "dd MMM, yyyy")} */}
-                    {timeDiff(createdAt)}
-                  </p>
+                  <div className="flex gap-2">
+                    <p className="flex items-center gap-1 text-xs ">
+                      <Calendar width={14} />
+                      {timeDiff(createdAt)}
+                    </p>
+                    <p className="flex items-center gap-1 text-xs">
+                      <ChartColumnStacked width={14} />
+                      {category?.name}
+                    </p>
+                  </div>
                 </div>
               </div>
             )}

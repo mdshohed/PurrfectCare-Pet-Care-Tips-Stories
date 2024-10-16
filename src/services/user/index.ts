@@ -5,7 +5,17 @@ import axiosInstance from "@/lib/AxiosInstance";
 import { revalidateTag } from "next/cache";
 // import { revalidateTag } from "next/cache";
 
-export const getAllUser = async () => {
+export const getAllUserWithAdmin = async () => {
+  const fetchOption = {
+    next: {
+      tags: ["users"],
+    },
+  };
+  
+  const res = await fetch(`${envConfig.baseApi}/users/admin`,fetchOption);
+  return res.json();
+}
+export const getAllUser = async (): Promise<any> => {
   const fetchOption = {
     next: {
       tags: ["users"],
