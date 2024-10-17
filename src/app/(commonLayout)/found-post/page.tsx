@@ -19,6 +19,7 @@ export default async function FoundItems({
     },
   });
 
+
   return (
     <Container>
       <Filtering />

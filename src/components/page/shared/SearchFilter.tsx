@@ -4,25 +4,28 @@ import { Input } from "@nextui-org/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import useDebounce from "@/hooks/debounce.hook";
 import { useSearchItems } from "@/hooks/search.hook";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IPost } from "@/types";
 import { Link } from "@nextui-org/link";
 import { useRouter } from "next/navigation";
 import { SearchIcon } from "@/assets/icons";
-import { Button } from "@nextui-org/react";
+import { Button, input } from "@nextui-org/react";
 
 const SearchFilter = () => {
   const { register, handleSubmit, watch } = useForm();
   const { mutate: handleSearch, data, isPending, isSuccess } = useSearchItems();
   const [searchResults, setSearchResults] = useState<IPost[] | []>([]);
   const router = useRouter();
-
+  const inputRef = useRef<HTMLInputElement>(null);
   const searchTerm = useDebounce(watch("search"));
+  // const [isDropdownVisible, setDropdownVisible] = useState(false); // Manage dropdown visibility
 
   useEffect(() => {
     if (searchTerm) {
       handleSearch(searchTerm);
     }
+    console.log(searchTerm);
+    
   }, [searchTerm]);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -51,11 +54,34 @@ const SearchFilter = () => {
     }
   }, [isPending, isSuccess, data, searchTerm]);
 
+
+  // useEffect(() => {
+  //   // Detect clicks outside the dropdown or input field
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     console.log("value", 2);
+      
+  //     if (
+  //       inputRef.current &&
+  //       !inputRef.current.contains(event.target as Node) 
+        
+  //     ) {
+  //       setDropdownVisible(false); // Hide the dropdown when clicking outside
+  //     }
+  //   };
+
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   console.log("value", isDropdownVisible);
+    
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [searchResults]);
+
   return (
     // <div className="  bg-cover bg-center">
     <div className="static mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex-1">
+        <div id="inputField" className="flex-1">
           <Input
             {...register("search")}
             aria-label="Search"
@@ -65,6 +91,7 @@ const SearchFilter = () => {
             }}
             placeholder="Search..."
             size="lg"
+            
             startContent={
               <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
             }
@@ -72,7 +99,7 @@ const SearchFilter = () => {
           />
         </div>
       </form>
-      {searchResults.length > 0 && (
+      { searchResults.length > 0 && (
         <div className="absolute rounded-xl bg-default-100 p-3 max-w-sm">
           <div className="space-y-3">
             {searchResults.map((item, index) => (

@@ -45,6 +45,34 @@ export const DiscordIcon: React.FC<IconSvgProps> = ({
   );
 };
 
+export const UpArrow: React.FC<IconSvgProps> = ({
+  size = 24,
+  width,
+  height,
+  ...props
+}) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="m4.5 18.75 7.5-7.5 7.5 7.5"
+      />
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="m4.5 12.75 7.5-7.5 7.5 7.5"
+      />
+    </svg>
+  );
+};
+
 export const TwitterIcon: React.FC<IconSvgProps> = ({
   size = 24,
   width,
@@ -258,7 +286,6 @@ export const TrashIcon = () => {
   );
 };
 
-
 export const EyeIcon = (props: IconSvgProps) => (
   <svg
     aria-hidden="true"
@@ -324,7 +351,6 @@ export const EditIcon = (props: IconSvgProps) => (
     />
   </svg>
 );
-
 
 export const DeleteIcon = (props: IconSvgProps) => (
   <svg

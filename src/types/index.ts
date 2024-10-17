@@ -28,7 +28,9 @@ export type TPremium = {
 
 export type TLikes = {
   count: number,
-  user: IUser[]
+  user: IUser[],
+  upVote: IUser[], 
+  downVote: IUser[], 
 }
 
 export interface IPost {

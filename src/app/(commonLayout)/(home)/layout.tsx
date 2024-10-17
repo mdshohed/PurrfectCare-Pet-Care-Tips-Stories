@@ -13,8 +13,8 @@ export default function layout({
     <Container>
       {children}
       <div className="my-2 flex w-full gap-4">
-        <div className="w-4/5">{recentPosts}</div>
-        <div className="w-2/6">
+        <div className="md:w-4/5 w-full">{recentPosts}</div>
+        <div className="md:w-2/6 hidden md:block">
           <PublicSidebar />
         </div>
       </div>

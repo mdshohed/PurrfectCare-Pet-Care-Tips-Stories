@@ -50,7 +50,7 @@ export const Navbar = () => {
   };
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 md:basis-full" justify="start">
+      <NavbarContent style={{ flexGrow: 0 }} className="basis-1/5 md:basis-full" justify="start">
         {/* <NavbarContent className="sm:hidden basis-1 pl-4" justify="start"> */}
         <NavbarMenuToggle className="md:hidden basis-1 mr-2" />
         {/* </NavbarContent> */}
@@ -95,7 +95,7 @@ export const Navbar = () => {
           onClick={handleNavigate}
           className="flex justify-center  items-center cursor-pointer"
         >
-          <span className="text-lg  ">
+          <span className="text-lg ">
             <EditIcon></EditIcon>
           </span>
           Write Post

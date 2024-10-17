@@ -20,6 +20,9 @@ export default function RecentPosts() {
   //   return <Loading></Loading>;
   // }
 
+  console.log("dta", postData);
+  
+
   return (
     // <Container>
     <>

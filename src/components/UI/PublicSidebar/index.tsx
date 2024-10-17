@@ -24,7 +24,7 @@ export default function PublicSidebar() {
   // const {data: premiums} = await getPremiumPosts();
   
   return (
-    <div className="sticky top-0">
+    <div className="sticky top-0 min-w-[250px]">
       <div className="rounded-xl bg-default-100 p-2">
         <div className=" p-4 rounded-lg">
           <h2 className="text-xl font-bold mb-3">Who to follow</h2>

@@ -9,8 +9,8 @@ export default function layout({ children }: { children: ReactNode }) {
     <div>
       <Navbar></Navbar>
       <Container>
-        <div className="my-3 flex w-full gap-4">
-          <div className="w-[300px] ">
+        <div className="my-3 flex flex-col md:flex-row w-full gap-4">
+          <div className="min-w-[300px]">
             <Sidebar />
           </div>
           <div className="w-full">{children}</div>

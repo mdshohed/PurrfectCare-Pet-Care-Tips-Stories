@@ -24,21 +24,6 @@ export const createPost = async (formData: FormData): Promise<any> => {
   }
 };
 
-export const updateLikes = async (formData: { postId: string}): Promise<any> => {
-  try {
-    const user = await getCurrentUser();
-    const { data } = await axiosInstance.put(`/posts/likes/${formData.postId}`, {userId:user?._id}, {
-      headers: {
-        "Content-Type": "application/json",  
-      },
-    });
-    revalidateTag("posts");
-    return data;
-  } catch (error) {
-    throw new Error("Failed to Update Likes");
-  }
-};
-
 export const addComments = async (payload: {postId: string, userId: string, text:string}): Promise<any> => {
   try {
     console.log("payload", payload);
@@ -54,19 +39,6 @@ export const addComments = async (payload: {postId: string, userId: string, text
   }
 };
 
-export const updatePremiumContent = async ( params: string): Promise<any> => {
-  try {
-    const { data } = await axiosInstance.put(`/posts/premium/${params}`, {
-      headers: {
-        "Content-Type": "application/json",  
-      },
-    });
-    revalidateTag("posts");
-    return data;
-  } catch (error) {
-    throw new Error("Failed to Update Likes");
-  }
-};
 
 export const getPost = async (params: string) => {
   let fetchOptions = {};
@@ -124,3 +96,33 @@ export const getPremiumPosts = async (): Promise<any> => {
 
   return res.json();
 }
+
+export const updateLikes = async (formData: { postId: string, type: string}): Promise<any> => {
+  try {
+    const user = await getCurrentUser();
+    const { data } = await axiosInstance.put(`/posts/likes/${formData.postId}`, {userId:user?._id, type: formData.type}, {
+      headers: {
+        "Content-Type": "application/json",  
+      },
+    });
+    revalidateTag("posts");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to Update Likes");
+  }
+};
+
+
+export const updatePremiumContent = async ( params: string): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.put(`/posts/premium/${params}`, {
+      headers: {
+        "Content-Type": "application/json",  
+      },
+    });
+    revalidateTag("posts");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to Update Likes");
+  }
+};
