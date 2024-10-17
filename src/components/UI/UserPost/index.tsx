@@ -1,9 +1,12 @@
 "use client";
 import { Avatar } from "@nextui-org/avatar";
+import { format } from "date-fns";
 import {
   Calendar,
   ChartColumnStacked,
   Lock,
+  MailIcon,
+  MapPin,
   SendHorizontal,
 } from "lucide-react";
 import Link from "next/link";

@@ -1,8 +1,7 @@
 "use client";
 
-import { DeleteIcon } from "@/assets/icons";
-import { useGetAllPosts, useGetAllPostsForAdmin } from "@/hooks/post.hook";
-import { getPremiumPosts } from "@/services/post";
+import { DeleteIcon, EditIcon } from "@/assets/icons";
+import { useGetAllPosts, useGetMyPosts, useGetPremiumPosts } from "@/hooks/post.hook";
 import { IPost } from "@/types";
 import {
   Table,
@@ -11,16 +10,22 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  User,
   Chip,
   Button,
 } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 export default function ManagePost() {
-  const { data: posts, isLoading, isSuccess } = useGetAllPostsForAdmin();
-
-  const handleDelete = (id: string) => {
+  const route = useRouter(); 
+  const {
+    data: posts,
+    isLoading: postLoading,
+    isSuccess: postSuccess,
+  } = useGetMyPosts();
+  const handleUpdate = (id: string) => {
+    route.push(`/profile/update-post?postId=${id}`)
   };
+  const handleDelete = (id: string) => {};
 
   return (
     <div className=" min-h-screen w-full rounded-md bg-default-100 p-5">
@@ -30,9 +35,8 @@ export default function ManagePost() {
       <div>
         <Table aria-label="Example empty table">
           <TableHeader>
-            <TableColumn>User</TableColumn>
-            <TableColumn>Category</TableColumn>
             <TableColumn>Title</TableColumn>
+            <TableColumn>Category</TableColumn>
             <TableColumn>Premium</TableColumn>
             <TableColumn>Status</TableColumn>
             <TableColumn>Action</TableColumn>
@@ -41,16 +45,6 @@ export default function ManagePost() {
             {posts?.data?.map((post: IPost) => (
               <TableRow key={post._id}>
                 {/* {(columnKey) => <TableCell>{getKeyValue(post, columnKey)}</TableCell>} */}
-                <TableCell>
-                  <User
-                    avatarProps={{ radius: "lg", src: post.user.profilePhoto }}
-                    description={post.user.email}
-                    name={post.user.name}
-                  >
-                    {/* {post.user.email} */}
-                  </User>
-                </TableCell>
-                <TableCell>{post.category.name}</TableCell>
                 <TableCell>
                   <div className="flex flex-col">
                     <p className="text-bold text-sm capitalize">{post.title}</p>
@@ -62,7 +56,7 @@ export default function ManagePost() {
                     ></p>
                   </div>
                 </TableCell>
-
+                <TableCell>{post.category.name}</TableCell>
                 <TableCell>
                   {post?.isPremium ? (
                     <Chip
@@ -85,8 +79,7 @@ export default function ManagePost() {
                   )}
                 </TableCell>
                 <TableCell>
-                  {
-                  post?.premiumDetails?.isPending ? (
+                  {post?.premiumDetails?.isPending ? (
                     <Chip
                       className="capitalize"
                       color="danger"
@@ -107,9 +100,25 @@ export default function ManagePost() {
                   )}
                 </TableCell>
                 <TableCell>
-                
-                    <Button color="danger" onClick={()=>handleDelete(post._id)} size="sm"><DeleteIcon></DeleteIcon></Button>
-                  
+                  <div className="">
+                     <Button
+                    color="primary"
+                    className="mx-1"
+                    onClick={() => handleUpdate(post._id)}
+                    size="sm"
+                  >
+                    <EditIcon ></EditIcon>
+                  </Button>
+
+                  <Button
+                    color="danger"
+                    onClick={() => handleDelete(post._id)}
+                    size="sm"
+                  >
+                    <DeleteIcon></DeleteIcon>
+                  </Button>
+                  </div>
+                 
                 </TableCell>
               </TableRow>
             ))}

@@ -68,7 +68,7 @@ const Sidebar = () => {
       </div>
       <div className="mt-3 space-y-2 rounded-xl bg-default-100 p-2">
         <SidebarOptions
-          links={user?.role === "USER" ? userLinks : adminLinks}
+          links={user?.role === "ADMIN" ? adminLinks : userLinks }
         />
       </div>
     </div>

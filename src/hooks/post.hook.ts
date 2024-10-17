@@ -6,6 +6,7 @@ import {
   addComments,
   createPost,
   getAllPosts,
+  getAllPostsForAdmin,
   getAllPostsWithSearchParams,
   getMyPosts,
   getPost,
@@ -26,6 +27,13 @@ export const useCreatePost = () => {
     onError: (error) => {
       toast.error(error.message);
     },
+  });
+};
+
+export const useGetAllPostsForAdmin = () => {
+  return useQuery({
+    queryKey: ["GET_POST_ADMIN"],
+    queryFn: async () => await getAllPostsForAdmin(),
   });
 };
 

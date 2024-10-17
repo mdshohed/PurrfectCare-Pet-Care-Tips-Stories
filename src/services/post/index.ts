@@ -15,7 +15,6 @@ export const createPost = async (formData: FormData): Promise<any> => {
         "Content-Type": "multipart/form-data",
       },
     });
-    
 
     revalidateTag("posts");
 
@@ -98,6 +97,10 @@ export const getAllPostsWithScroll = async (page: number,limit: number) => {
 
 export const getAllPosts = async () => {
   const res = await axiosInstance.get(`/posts`);
+  return res.data;
+};
+export const getAllPostsForAdmin = async () => {
+  const res = await axiosInstance.get(`/posts/admin`);
   return res.data;
 };
 

@@ -9,6 +9,7 @@ import { IPost } from "@/types";
 import { Link } from "@nextui-org/link";
 import { useRouter } from "next/navigation";
 import { SearchIcon } from "@/assets/icons";
+import { Button } from "@nextui-org/react";
 
 const SearchFilter = () => {
   const { register, handleSubmit, watch } = useForm();
@@ -105,12 +106,13 @@ const SearchFilter = () => {
             ))}
           </div>
           <div className="mt-3 flex justify-center border-t-1 border-default-50 pt-3">
-            <button
+            <Button
               className="flex items-center justify-center gap-1"
+              color="primary"
               onClick={() => handleSeeAll(searchTerm)}
             >
               <span>See All</span>
-            </button>
+            </Button>
           </div>
         </div>
       )}
