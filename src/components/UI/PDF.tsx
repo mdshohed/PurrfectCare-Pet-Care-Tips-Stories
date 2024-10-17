@@ -8,7 +8,7 @@ const FeedingChart = () => {
   const generatePDF = async () => {
     const element = chartRef.current ;
 
-    const canvas = await html2canvas(element);
+    const canvas = await html2canvas(element!);
     const imgData = canvas.toDataURL('image/png');
 
     const pdf = new jsPDF();
