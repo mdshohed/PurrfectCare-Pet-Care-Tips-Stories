@@ -61,7 +61,7 @@ export default function ManagePost() {
                   <div className="flex flex-col">
                     <p className="text-bold text-sm capitalize">{post.title}</p>
                     <p
-                      className="text-bold text-sm capitalize text-default-400"
+                      className="text-bold text-sm capitalize text-default-400 line-clamp-1	"
                       dangerouslySetInnerHTML={{
                         __html: post.description.slice(0, 20),
                       }}

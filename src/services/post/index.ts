@@ -91,6 +91,11 @@ export const getSomeOnePosts = async ( param:string) => {
   return data;
 };
 
+export const getAllPostsWithScroll = async (page: number,limit: number) => {
+  const res = await axiosInstance.get(`/posts?page=${page}&limit=${limit}`);
+  return res.data;
+};
+
 export const getAllPosts = async () => {
   const res = await axiosInstance.get(`/posts`);
   return res.data;

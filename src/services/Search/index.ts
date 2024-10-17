@@ -6,7 +6,7 @@ export const searchItems = async (searchTerm: string) => {
   
   try {
     const res = await axiosInstance.get(
-      `/search-items?searchTerm=${searchTerm}`
+      `/posts/search-post?searchTerm=${searchTerm}`
     );
 
     return res.data;

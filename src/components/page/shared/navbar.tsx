@@ -50,9 +50,9 @@ export const Navbar = () => {
   };
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+      <NavbarContent className="basis-1/5 md:basis-full" justify="start">
         {/* <NavbarContent className="sm:hidden basis-1 pl-4" justify="start"> */}
-        <NavbarMenuToggle className="sm:hidden basis-1 mr-2" />
+        <NavbarMenuToggle className="md:hidden basis-1 mr-2" />
         {/* </NavbarContent> */}
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -61,12 +61,12 @@ export const Navbar = () => {
               <Image src={Logo} alt="Purrfect Care" className="w-[30px] me-4" />
             </div>
 
-            <p className="font-bold text-inherit hidden sm:flex">
+            <p className="font-bold text-inherit hidden md:flex">
               PurrfectCare
             </p>
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden sm:flex gap-4 justify-start ml-2">
+        <ul className="hidden md:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -88,12 +88,12 @@ export const Navbar = () => {
         <ThemeSwitch />
       </NavbarContent> */}
 
-      <NavbarContent className="flex basis-1/5 sm:basis-full" justify="end">
+      <NavbarContent className="flex basis-1/5 md:basis-full" justify="end">
         <SearchFilter></SearchFilter>
 
         <Button
           onClick={handleNavigate}
-          className="flex justify-center items-center cursor-pointer"
+          className="flex justify-center  items-center cursor-pointer"
         >
           <span className="text-lg  ">
             <EditIcon></EditIcon>
