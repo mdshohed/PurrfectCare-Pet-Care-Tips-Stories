@@ -1,10 +1,10 @@
 # BikeShare - BD Bike Rental Store
 
-[![Live URL](https://img.shields.io/badge/Live%20URL-Visit-green)](https://bd-bike-rental-reservation-system.vercel.app/)
+[![Live URL](https://img.shields.io/badge/Live%20URL-Visit-green)](https://purrfect-care-pet-care-tips-stories.vercel.app)
 
 ## Overview
 
-**bike-rental-reservation-system** is a user-friendly web application designed to simplify the process of bike rental system. The platform allows users to browse Rent A bike, view details, Booking for Rental and Cost will be Per Hours. Administrators are provided with a powerful dashboard to manage Bike Return, Bike manage, coupon code set, and user manage. The platform offers a seamless experience for both regular users and administrators with an intuitive, modern design.
+**Purrfect Care: Pet Care Tips & Stories** is an engaging platform designed for pet lovers to share their experiences and insights. After logging in, users can create posts, follow other members, and interact with content through likes and comments. Unique to the platform is the premium post feature, where users can charge for access, facilitating a subscription-like model for exclusive content. Administrators play a crucial role in managing the community, with the ability to review and publish premium posts, block or unblock users, and oversee payment transactions. Additionally, they can delete posts that violate community standards, ensuring a safe and vibrant environment for all pet enthusiasts. With its user-friendly interface and robust administrative controls, Purrfect Care fosters a supportive community dedicated to sharing knowledge and tips about pet care.
 
 ## Table of Contents
 
@@ -82,14 +82,14 @@
 
 - **Frontend**:
 
-  - React, Redux Toolkit, TypeScript, Ant Design, Tailwind CSS
-  - **Live Demo**: [bike-rental-reservation-system](https://bd-bike-rental-reservation-system.vercel.app/)
-  - **Client Repository**: [GitHub - bike-rental-reservation-system](https://github.com/mdshohed/bike-rental-reservation-system)
+  - Next.js, NextUI, TypeScript, Tailwind CSS
+  - **Live Demo**: [Purrfect Care: Pet Care Tips & Stories](https://purrfect-care-pet-care-tips-stories.vercel.app)
+  - **Client Repository**: [GitHub -Purrfect Care: Pet Care Tips & Stories](https://github.com/mdshohed/PurrfectCare-Pet-Care-Tips-Stories.git)
 
 - **Backend**:
 
-  - Node.js, Express.js, Typescript, MongoDB, JWT for Authentication
-  - **Server Repository**: [GitHub - bike-rental-reservation-system-backend](https://bike-rental-reservation-system-server-seven.vercel.app/)
+  - Node.js, Express.js, Typescript, MongoDB, Cloudinary, Multer, JWT for Authentication
+  - **Server Repository**: [GitHub - bike-rental-reservation-system-backend](https://github.com/mdshohed/pet-care-tips-and-stories-server.git)
 
 - **Payment Gateway**:
 
@@ -97,7 +97,7 @@
 
 - **State Management**:
 
-  - Redux Toolkit, RTK Query for efficient API interaction.
+  - React Context API and tanstack/react-query for efficient API interaction.
 
 - **Styling**:
   - Tailwind CSS and Ant Design for consistent, responsive, and modern design components.
@@ -107,40 +107,34 @@
 1. **Clone the Repositories**
 
    ```bash
-   git clone https://github.com/mdshohed/bike-rental-reservation-system-backend.git
-   git clone https://github.com/mdshohed/bike-rental-reservation-system.git
+   git clonehttps://github.com/mdshohed/pet-care-tips-and-stories-server.git
+   git clone https://github.com/mdshohed/PurrfectCare-Pet-Care-Tips-Stories.git
    ```
 
 2. **Install Dependencies**
 
    For the client:
 
+  ```bash
+   cd pet-care-tips-and-stories-server
+   npm install
+   ```
+
    ```bash
-   cd bike-rental-reservation-system
+   cd PurrfectCare-Pet-Care-Tips-Stories
    npm install
    ```
 
    For the server:
-
-   ```bash
-   cd bike-rental-reservation-system-backend
-   npm install
-   ```
+ 
 
 3. **Environment Variables**
 
    Create a `.env` file in the root directory In server:
 
    ```bash
-    NODE_ENV=development 
-    PORT=5000
-    DATABASE_URL=database url
-    BCRYPT_SALT_ROUNDS=10
-    DEFAULT_PASS=usingYourPassword
-    JWT_ACCESS_SECRET=yourSecretKey
-    JWT_REFRESH_SECRET=yourSecretKey
-    JWT_ACCESS_EXPIRES_IN=1d
-    JWT_REFRESH_EXPIRES_IN=365d
+    NEXT_PUBLIC_BASE_API=<you-server-start-api>
+    NEXT_PUBLIC_PAYMENT_GATEWAY_PK=<your-payment-gateway-pk>
    ```
 
 4. **Start the Development Servers**
@@ -155,8 +149,8 @@
 
 
    ```bash
-   Email: mdshohed@gmail.com
-   Password: 12345
+   Email: mdshohed170@gmail.com
+   Password: 123456
    ```
 
 6. **Build for Production**
