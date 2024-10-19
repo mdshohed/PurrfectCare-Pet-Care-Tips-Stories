@@ -6,7 +6,7 @@ import Post from "@/components/UI/Post";
 import { useUser } from "@/context/user.provider";
 import { useGetSomeOnePosts, useSinglePost } from "@/hooks/post.hook";
 import { useGetSingleUser } from "@/hooks/user.hook";
-import { IPost } from "@/types";
+import { IPost, IUser } from "@/types";
 import { Avatar, Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
@@ -21,6 +21,8 @@ const UserDetailPage = ({ params: { userId } }: IProps) => {
   const { data: user, isPending } = useGetSingleUser(userId);
   const { data: posts, isPending: isPostPending } = useGetSomeOnePosts(userId);
   const [isMounted, setIsMounted] = useState(false);
+  
+  
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -58,33 +60,26 @@ const UserDetailPage = ({ params: { userId } }: IProps) => {
                 </div>
               </div>
               <div className="flex justify-center">
-                <Button
-                  className={` mt-3
-                  ${
-                    currentUser?.following?.some(
-                      (u: any) => String(u) == String(user?._id)
-                    )
-                      ? "bg-transparent text-foreground border-default-200"
-                      : ""
-                  }`}
-                  color="primary"
-                  radius="full"
-                  size="sm"
-                  variant={
-                    currentUser?.following?.some(
-                      (u: any) => String(u) == String(user?._id)
-                    )
-                      ? "bordered"
-                      : "solid"
-                  }
-                  // onPress={() => handleSetConnection(user._id)}
-                >
-                  {currentUser?.following?.some(
-                    (u: any) => String(u) == String(user?._id)
-                  )
-                    ? "Unfollow"
-                    : "Follow"}
-                </Button>
+              <Button
+                className={` mt-3
+                  ${user?.following?.some((u:IPost) => String(u?._id) == String(user?._id))
+                    ? "bg-transparent text-foreground border-default-200"
+                    : ""}`
+                }
+                color="primary"
+                radius="full"
+                size="sm"
+                variant={
+                  user.following?.some((u: IPost) => String(u?._id) == String(user?._id))
+                    ? "bordered"
+                    : "solid"
+                }
+                // onPress={() => handleSetConnection(user._id)}
+              >
+                {user.following?.some((u: IPost) => String(u?._id) == String(user?._id))
+                  ? "Unfollow"
+                  : "Follow"}
+              </Button>
               </div>
             </div>
           ) : null}

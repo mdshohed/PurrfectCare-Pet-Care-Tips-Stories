@@ -11,6 +11,7 @@ import { getProfile } from "@/services/profile";
 import { IUser, IUserUpdate } from "@/types";
 import Loading from "@/app/loading";
 import { useUpdateProfile } from "@/hooks/profile.hook";
+// import { useQueryClient } from "@tanstack/react-query";
 // import { useUpdateProfile } from "@/hooks/profile.hook";
 
 export default  function Profile({user}: {user: IUser}) {
@@ -29,30 +30,35 @@ export default  function Profile({user}: {user: IUser}) {
     isPending, 
     isSuccess,
   } = useUpdateProfile();
+
+  // const queryClient = useQueryClient(); 
+  
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 
-    const formData = new FormData(); // Ensure formData is initialized
+      const formData = new FormData(); // Ensure formData is initialized
 
-    const userData = {
-      name: userDetail.name,
-      mobileNumber: userDetail.mobileNumber,
-      // profilePhoto: imageFile (not needed in the object, handled by FormData)
-    };
+      const userData = {
+        name: userDetail.name,
+        mobileNumber: userDetail.mobileNumber,
+        // profilePhoto: imageFile (not needed in the object, handled by FormData)
+      };
 
-    formData.append("data", JSON.stringify(userData));
+      formData.append("data", JSON.stringify(userData));
 
-    // Ensure imageFile is a valid File or Blob before appending
-    if (imageFile && imageFile instanceof File) {
-      formData.append("profilePhoto", imageFile); // Append the file
-    } else {
-      console.warn("imageFile is not a valid File");
-    }
+      // Ensure imageFile is a valid File or Blob before appending
+      if (imageFile && imageFile instanceof File) {
+        formData.append("profilePhoto", imageFile); // Append the file
+      } else {
+        console.warn("imageFile is not a valid File");
+      }
 
-    const entries = Array.from(formData.entries());
-    console.log(entries);
+      const entries = Array.from(formData.entries());
+      console.log(entries);
 
-    handleUpdateProfile(formData); // Call the update function with formData
-};
+
+      handleUpdateProfile(formData); // Call the update function with formData
+      // queryClient.invalidateQueries(["GET_PROFILE"])
+  };
 
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {

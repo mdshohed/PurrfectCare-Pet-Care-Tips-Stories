@@ -15,7 +15,6 @@ import { getAllUser, getSingleUser } from "@/services/user";
 export default function FriendsPage() {
   const { user, isLoading } = useUser();
   
-
   const [users, setUsers] = useState<IUser[]>([]);
   const [following, setFollowing] = useState<IUser[]>([]);
   const [follower, setFollower] = useState<IUser[]>([]);

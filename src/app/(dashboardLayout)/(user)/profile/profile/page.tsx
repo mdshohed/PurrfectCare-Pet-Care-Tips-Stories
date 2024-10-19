@@ -11,7 +11,7 @@ export default function UserProfile() {
     isLoading: postsLoading,
     isSuccess: postsSuccess,
   } = useGetProfile(); 
-  // console.log("userData", userData);
+  console.log("Profile Data", userData);
   
 
   // useEffect(() => {

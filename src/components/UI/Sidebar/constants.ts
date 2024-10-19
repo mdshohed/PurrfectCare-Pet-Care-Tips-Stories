@@ -2,6 +2,7 @@ export const userLinks = [
   { href: "/profile", label: "Posts" },
   { href: "/profile/manage-post", label: "Manage Post" },
   { href: "/profile/friends", label: "Friends" },
+  { href: "/profile/outlining-nutrition", label: "Outlining Nutrition" },
   { href: "/profile/profile", label: "Profile" },
   // { href: "/profile/settings", label: "Settings" },
 ];

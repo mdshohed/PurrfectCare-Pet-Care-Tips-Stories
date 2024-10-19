@@ -9,8 +9,14 @@ import { Provider } from "react-redux";
 // import { store } from "@/redux/store";
 import { Toaster } from "sonner";
 
+// const queryClient = useQueryClient(); 
+
+// // queryClient.invalidateQueries(["GET_PROFILE"])
+
+export const queryClient = new QueryClient();
+
+
 function Providers({ children }: { children: React.ReactNode }) {
-  const queryClient = new QueryClient();
 
   return (
     // <Provider store={store}>

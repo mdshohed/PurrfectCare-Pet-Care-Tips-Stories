@@ -6,17 +6,6 @@ import { useUpdateUserFollowing } from "@/hooks/user.hook";
 
 export default function Following({following, handleSetConnection}: {following: IUser[], handleSetConnection: (id: string) => void}) {
 
-  // const {
-  //   mutate: handleUpdateFollowing,
-  //   isPending: createUserPending,
-  //   isSuccess,
-  // } = useUpdateUserFollowing();
-  
-  
-  // const handleSetConnection = (id: string) => {
-  //   handleUpdateFollowing(id);
-  // };
-
   return (
     <div>
       <div className="gap-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

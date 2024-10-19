@@ -1,5 +1,6 @@
 
 
+import { queryClient } from "@/lib/Providers";
 import { createClientSecret, createPayment, getAllPayment } from "@/services/Payment";
 import { TPayment } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -18,6 +19,7 @@ export const useCreatePayment = () => {
     mutationFn: async (payload) => await createPayment(payload),
     onSuccess: () => {
       toast.success("Payment created successfully");
+      queryClient.invalidateQueries({queryKey:["GET_ALL_PAYMENTS"]})
     },
     onError: (error) => {
       toast.error(error.message);

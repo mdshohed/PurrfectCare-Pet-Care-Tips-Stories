@@ -95,3 +95,30 @@ const FeedingChart = () => {
 };
 
 export default FeedingChart;
+
+// import React, { PureComponent } from 'react'
+// import  jsPDF  from 'jspdf';
+
+// export default class PDF extends PureComponent {
+//   constructor(props: any){
+//     super(props)
+
+//     this.state = {
+
+//     }
+//   }
+
+//   jsPdfGenerator = () =>{
+//     var doc = new jsPDF('p', 'pt')
+//     doc.text( 20, 20, 'this is default ext')
+//   }
+
+//   render(){
+//     return (
+//       <button onClick={this.jsPdfGenerator}>
+//         Generate PDF
+//       </button>
+//     )
+//   }
+  
+// }

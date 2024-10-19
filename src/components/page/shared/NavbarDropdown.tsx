@@ -12,6 +12,7 @@ import { Avatar } from "@nextui-org/avatar";
 import { logout } from "@/services/AuthService";
 import { useUser } from "@/context/user.provider";
 import { protectedRoutes } from "@/constant";
+import { useGetProfile } from "@/hooks/profile.hook";
 
 // import { getCurrentUser, logout } from "@/redux/features/auth/authSlice";
 // import { useAppSelector } from "@/redux/hooks";
@@ -20,6 +21,8 @@ export default function NavbarDropdown() {
   const router = useRouter();
   const pathname = usePathname();
   const { user, setIsLoading: userLoading } = useUser();
+  const {data} = useGetProfile(); 
+  
   // const user = useAppSelector(getCurrentUser)
 
   const handleLogout = () => {
@@ -39,7 +42,7 @@ export default function NavbarDropdown() {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Avatar className="cursor-pointer" src={user?.profilePhoto} />
+        <Avatar className="cursor-pointer" src={data?.profilePhoto} />
       </DropdownTrigger>
       <DropdownMenu aria-label="Static Actions">
         <DropdownItem onClick={() => handleNavigation(`/${user?.role==="USER" ? 'profile' : 'admin'}`)}>

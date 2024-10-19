@@ -1,3 +1,4 @@
+import { queryClient } from "@/lib/Providers";
 import { getAllUser, getSingleUser, updateUserFollowing } from "@/services/user";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -7,7 +8,9 @@ export const useUpdateUserFollowing = () => {
     mutationKey: ["UPDATE_USER"],
     mutationFn: async (connectUser) => await updateUserFollowing(connectUser),
     onSuccess: () => {
-      toast.success("Success");
+      queryClient.invalidateQueries({queryKey:[ "GET_ALL_USER"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_USER"]})
+      // toast.success("Success");
     },
     onError: (error) => {
       toast.error(error.message);

@@ -16,26 +16,11 @@ export const createPost = async (formData: FormData): Promise<any> => {
       },
     });
 
-    revalidateTag("posts");
+    // revalidateTag("posts");
 
     return data;
   } catch (error) {
     throw new Error("Failed to create post");
-  }
-};
-
-export const addComments = async (payload: {postId: string, userId: string, text:string}): Promise<any> => {
-  try {
-    console.log("payload", payload);
-    const { data } = await axiosInstance.put(`/posts/comments/${payload.postId}`, payload, {
-      headers: {
-        "Content-Type": "application/json",  
-      },
-    });
-    revalidateTag("posts");
-    return data;
-  } catch (error) {
-    throw new Error("Failed to add comment");
   }
 };
 
@@ -62,15 +47,48 @@ export const getSomeOnePosts = async ( param:string) => {
   return data;
 };
 
-export const getAllPostsWithScroll = async (page: number,limit: number) => {
-  const res = await axiosInstance.get(`/posts?page=${page}&limit=${limit}`);
+// export const getAllPostsWithScroll = async (payload: {page: number,limit: number}) => {
+//   const res = await axiosInstance.post(`/posts/scroll?page=${payload.page}&limit=${payload.limit}`);
+//   return res.data;
+// };
+export const getAllPostsWithScroll = async (payload: {page: number,limit: number}) => {
+  const res = await axiosInstance.post(`/posts/scroll?page=${payload.page}&limit=${payload.limit}`);
+  console.log("data", res);
+  
   return res.data;
 };
 
 export const getAllPosts = async () => {
-  const res = await axiosInstance.get(`/posts`);
-  return res.data;
+  let fetchOptions = {};
+
+  fetchOptions = {
+    // cache: "no-store",
+    next: {
+      tags: ["posts"],
+    },
+  };
+
+  const res = await fetch(`${envConfig.baseApi}/posts`, 
+    // fetchOptions
+  );  
+  return res.json();
 };
+
+export const getAllPostsWithParams = async (params: {searchTerm: string, category: string}) => {
+  let fetchOptions = {};
+
+  fetchOptions = {
+    // cache: "no-store",
+    next: {
+      tags: ["posts"],
+    },
+  };
+  const { data } = await axiosInstance.get(`/posts`, {params });
+  return data;
+  // const res = await fetch(`${envConfig.baseApi}/posts`, params  );  
+  // return res.json();
+};
+
 export const getAllPostsForAdmin = async () => {
   const res = await axiosInstance.get(`/posts/admin`);
   return res.data;
@@ -85,17 +103,33 @@ export const getAllPostsWithSearchParams = async (searchParams: {searchTerm: str
 export const getPremiumPosts = async (): Promise<any> => {
   const fetchOption = {
     next: {
-      tags: ["items"],
+      tags: ["posts"],
     },
   };
 
   const res = await fetch(
     `${envConfig.baseApi}/posts/premium`,
-    fetchOption,
+    // fetchOption,
   );
 
   return res.json();
 }
+
+
+
+export const updatePremiumContent = async ( params: string): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.put(`/posts/premium/${params}`, {
+      headers: {
+        "Content-Type": "application/json",  
+      },
+    });
+    // revalidateTag("posts");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to Update Likes");
+  }
+};
 
 export const updateLikes = async (formData: { postId: string, type: string}): Promise<any> => {
   try {
@@ -113,16 +147,88 @@ export const updateLikes = async (formData: { postId: string, type: string}): Pr
 };
 
 
-export const updatePremiumContent = async ( params: string): Promise<any> => {
+// Comments Service 
+
+export const addComments = async (payload: {postId: string, userId: string, text:string}): Promise<any> => {
   try {
-    const { data } = await axiosInstance.put(`/posts/premium/${params}`, {
+    console.log("payload", payload);
+    const { data } = await axiosInstance.post(`/posts/comments/${payload.postId}`, payload, {
       headers: {
         "Content-Type": "application/json",  
       },
     });
-    revalidateTag("posts");
+    // revalidateTag("posts");
     return data;
   } catch (error) {
-    throw new Error("Failed to Update Likes");
+    throw new Error("Failed to add comment");
   }
 };
+
+export const getComments = async (param:string) => {
+  const fetchOption = {
+    next: {
+      tags: ["comments"],
+    },
+  };
+  const res = await fetch(`/posts/comments/${param}`, fetchOption);
+  return res.json();
+};
+
+export const updateComments = async ( payload: { postId:string, index: number, text: string}): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.put(`/posts/comments/${payload.postId}`, { index: payload.index, text: payload.text}, {
+      headers: {
+        "Content-Type": "application/json",  
+      },
+    });
+    // revalidateTag("comments");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to Update comments");
+  }
+};
+
+// export const deleteComments = async (payload: { postId: string; index: number }) => {
+//   // try {
+//     const { data } = await fetch(`/posts/comments/delete/:${payload.postId}`, payload);
+    
+//     console.log("delete", data);
+//   //   return data;
+//   // } catch (error) {
+//   //   console.error("Failed to delete comments:", error);
+//   //   throw new Error("Failed to delete comments");
+//   // }
+// };
+
+export const deleteComments = async ( payload: { postId: string; index: number }): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.put(`/posts/comments/delete/${payload.postId}`, { index: payload.index}, {
+      headers: {
+        "Content-Type": "application/json",  
+      },
+    });
+    // revalidateTag("comments");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to Update comments");
+  }
+};
+
+// export const deleteComments = async (payload: { postId: string; index: number }) => {
+//   try {
+//     const response = await fetch(`/posts/comments/${payload.postId}`, {
+//       method: 'DELETE', 
+//       headers: {
+//         'Content-Type': 'application/json', 
+//       },
+//       body: JSON.stringify({ index: payload.index }), 
+//     });
+    
+//     const data = await response.json();  
+//     console.log("delete", data);
+//     return data;
+//   } catch (error) {
+//     console.error("Failed to delete comments:", error);  
+//   }
+// };
+
