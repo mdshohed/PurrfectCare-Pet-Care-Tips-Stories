@@ -2,6 +2,7 @@
 import Loading from "@/app/loading";
 import Container from "@/components/UI/Container";
 import Post from "@/components/UI/Post";
+import ViewPostPage from "@/components/UI/ViewPost";
 import { useSinglePost } from "@/hooks/post.hook";
 import { useEffect, useState } from "react";
 
@@ -28,7 +29,7 @@ const ItemDetailPage = ({ params: { postId } }: IProps) => {
     <Container>
       {isPending && <Loading />}
       <div className="mx-auto my-3 max-w-[720px]">
-        {post && <Post key={'1'} post={post?.data} />}
+        {post && <ViewPostPage key={'1'} post={post?.data} />}
       </div>
     </Container>
   );

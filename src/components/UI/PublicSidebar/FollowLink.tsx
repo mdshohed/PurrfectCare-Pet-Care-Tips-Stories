@@ -31,10 +31,10 @@ export const FollowLink = ({ users }: { users: IUser[] }) => {
                     className="w-[30px] h-[30px] rounded-full me-2"
                   ></img>
 
-                  <h3 className="font-semibold">{user.name}</h3>
+                  <h3 className="font-semibold line-clamp-1">{user.name}</h3>
                 </div>
               </Link>
-              <Button
+              {/* <Button
                 className="bg-black dark:bg-white text-tiny text-white dark:text-black"
                 radius="full"
                 size="sm"
@@ -42,7 +42,7 @@ export const FollowLink = ({ users }: { users: IUser[] }) => {
                 <Link key={user._id} href={user._id}>
                   Follow
                 </Link>
-              </Button>
+              </Button> */}
             </div>
           );
         }

@@ -27,7 +27,13 @@ export const useCreatePost = () => {
     mutationFn: async (postData) => await createPost(postData),
     onSuccess: () => {
       toast.success("Post created successfully");
-      queryClient.invalidateQueries({queryKey:["GET_POST_ADMIN", "GET_POST", "GET_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_PARAMS"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_MY_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_SOMEONE_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_PREMIUM_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_SCROLL"]})
     },
     onError: (error) => {
       toast.error(error.message);

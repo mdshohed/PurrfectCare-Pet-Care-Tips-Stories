@@ -87,7 +87,7 @@ export default function CreatePost() {
       const newPostData = {
         ...postData,
         premiumDetails: {
-          isPending: false,
+          isPending: isPremium,
           subscriptionFee: subscription,
         },
       };

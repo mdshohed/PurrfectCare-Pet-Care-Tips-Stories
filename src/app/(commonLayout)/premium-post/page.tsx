@@ -2,10 +2,10 @@
 import Filtering from "@/components/modules/found-post/Filtering";
 import Container from "@/components/UI/Container";
 import Post from "@/components/UI/Post";
-import { useGetAllPostsWithParams } from "@/hooks/post.hook";
+import { useGetAllPosts } from "@/hooks/post.hook";
 // import axiosInstance from "@/lib/AxiosInstance";
 import { IPost } from "@/types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function FoundItems({
   searchParams,
@@ -19,18 +19,15 @@ export default function FoundItems({
 //   fetchOptions = {
 //     cache: "no-store",
 //   };
-  let {data: postData } = useGetAllPostsWithParams({
-    searchTerm: params.get("query") || "",
-    category: params.get("category") || "",
-  })
-  console.log("data", premiumPost);
+  let {data: postData } = useGetAllPosts()
+  const [data, setData] = useState<IPost[]>([])
   
   useEffect(()=>{
-    if(premiumPost==="all" && postData && postData.data){
-      const newPost = postData.filter( (post: IPost)=>post?.isPremium===true)
-      postData = [...newPost]
+    if(postData && postData.data){
+      const newPost = postData?.data?.filter( (post: IPost)=>post?.isPremium===true)
+      setData(newPost)
     }
-  },[premiumPost])
+  },[postData])
   
   // const { data } = await axiosInstance.get(`/posts`, {
   //   params: {
@@ -44,7 +41,7 @@ export default function FoundItems({
     <Container>
       <Filtering />
       <div className="mx-auto my-3 max-w-[720px]">
-        {postData?.data?.map((post: IPost) => <Post key={post?._id} post={post} />)}
+        {data?.map((post: IPost) => <Post key={post?._id} post={post} />)}
       </div>
     </Container>
   );

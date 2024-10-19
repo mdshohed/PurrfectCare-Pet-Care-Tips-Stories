@@ -46,7 +46,7 @@ interface IProps {
   key: string;
 }
 
-export default function Post({ post, key }: IProps) {
+export default function ViewPostPage({ post, key }: IProps) {
   const {
     title,
     description,
@@ -231,24 +231,34 @@ export default function Post({ post, key }: IProps) {
               </div>
             </div>
             <p className=" text-md">
-              <div className="post-preview">
-                {description?.length > 200 ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: `${description.slice(
-                        0,
-                        200
-                      )}... <a href="/found-post/${_id}">see more</a>`,
-                    }}
-                  />
-                ) : (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: description,
-                    }}
-                  />
-                )}
-              </div>
+              {premiumDetails?.subscribedUser?.some(
+                (u) => String(u) == String(loggedInUser?._id)
+              ) ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: description,
+                  }}
+                />
+              ) : (
+                <div className="post-preview">
+                  {description?.length > 200 ? (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: `${description.slice(
+                          0,
+                          200
+                        )}... <a href="/found-post/${_id}">see more</a>`,
+                      }}
+                    />
+                  ) : (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: description,
+                      }}
+                    />
+                  )}
+                </div>
+              )}
             </p>
           </div>
           {!premiumDetails?.subscribedUser?.some(
@@ -508,22 +518,11 @@ export default function Post({ post, key }: IProps) {
             </div>
             <p className=" text-md">
               <div className="post-preview">
-                {description?.length > 200 ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: `${description.slice(
-                        0,
-                        200
-                      )}... <a href="/found-post/${_id}">see more</a>`,
-                    }}
-                  />
-                ) : (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: description,
-                    }}
-                  />
-                )}
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: description,
+                  }}
+                />
               </div>
             </p>
           </div>
@@ -670,35 +669,47 @@ export default function Post({ post, key }: IProps) {
                                     </div>
                                     <div>
                                       <p>{comment.user.name}</p>
-                                      {
-                                        index===flag ? 
-                                        <Input 
-                                          color="secondary" 
-                                          onChange={(e)=>setUpdateComment(e.target.value)} 
+                                      {index === flag ? (
+                                        <Input
+                                          color="secondary"
+                                          onChange={(e) =>
+                                            setUpdateComment(e.target.value)
+                                          }
                                           value={updateComment}
-                                        ></Input> : 
+                                        ></Input>
+                                      ) : (
                                         <p>{comment.text}</p>
-                                      }
+                                      )}
                                     </div>
                                   </div>
                                   {hasUserComment && (
                                     <div className="flex  gap-2 mt-2">
-                                      {flag===index ? (
+                                      {flag === index ? (
                                         <p
-                                          onClick={() => handleUpdateComment(index)}
+                                          onClick={() =>
+                                            handleUpdateComment(index)
+                                          }
                                           className="text-xs bg-gray-200 px-4 py-[2px] rounded-lg cursor-pointer"
                                         >
                                           Update
                                         </p>
                                       ) : (
                                         <p
-                                          onClick={() =>{ setFlag(index), setUpdateComment(comment.text)}}
+                                          onClick={() => {
+                                            setFlag(index),
+                                              setUpdateComment(comment.text);
+                                          }}
                                           className="text-xs bg-gray-200 px-4 py-[2px] rounded-lg cursor-pointer"
                                         >
                                           Edit
                                         </p>
                                       )}
-                                      <p onClick={()=>handleDeleteComment(index)} className="text-[16px] cursor-pointer">
+                                      <p
+                                        onClick={() =>
+                                          handleDeleteComment(index)
+                                        }
+                                        className="text-[16px] cursor-pointer"
+                                      >
                                         <DeleteIcon className="text-red-500 "></DeleteIcon>
                                       </p>
                                     </div>

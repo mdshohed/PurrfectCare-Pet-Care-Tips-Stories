@@ -21,49 +21,32 @@
 ### Public Pages
 
 - **Home Page**:
-  - A hero section, a clear call-to-action button, and featured Bikes.
-  - A Key Feature of Bike renter services with user ratings and feedback.
-  - A Spin Wheel percentage board that a user can be able to get a coupon code for discount. 
-  - Navigation to key pages such as Bikes, Booking, and Login.
+  - home page has 2 part. all post with infinity scroll. and side bar user list and premium list part. 
+  - a user can perform in a post like, unlike. comment, delete, edit comment. 
+  - a user can filter category wise post. also a user can search any type of post using title and description text. 
+  - find-post showing only post.
 
 
 - **User Authentication**:
   - **Sign Up** and **Login** pages with form validation and token-based authentication.
   - Users are assigned the default "USER" role, with one initial "ADMIN" role in the database.
-
-- **Bikes Page**:
-  - Browse a list of available Bikes with filtering, sorting, and searching functionalities.
-  - Detailed Bike descriptions, prices, and Per Hours Cost. Model, Brands, and Year.
-
-- **Bike Details Page**:
-
-  - Displays Current Bike Booking button. , with real-time updates on booked and available Bikes.
-  - Allows users to select a date and time, and book Modal.
-  - Compare current bike with another bike. 
-
-- **Booking Page**:
-
-  - Displays the selected Bike details, and give booking process with current select calender.
-  - Integration with **Stripe** for payment processing.
-
-- **Custom Error Pages**:
-  - A 404 error page is designed to guide users back to safe pages, such as the home or login page.
+  - User can Reset password if they forgot their password. 
 
 ### Admin Pages
 
 - **Admin Dashboard**:
-  - A comprehensive dashboard to manage services, return bike list, Bike management, Coupon Management, and user roles management.
-  - Bike Management: Add, update, or delete Bike with real-time updates.
-  - Return Management: Return booking bikes and calculated Total Duration and Total Cost with discount. 
-  - Coupon Management: Admin can add some coupon code with percentage for user discount that user will be able to get a coupon code for booking bikes. 
-  - User Management: View users, update roles.
-  - Admin can update their personal information.
+  - A comprehensive dashboard to that show total users, posts, premium post, total payment details.
+  - Premium Post: A user after creating a post will be pending untill admin accepted
+  - Payment List: Admin can see all premium post total subscription money. 
+  - User Management: Admin can perform a user block or unblock.
+  - Admin can update their personal Profile with Image.
 
 
 ### User Dashboard
-  - A comprehensive dashboard that show user rental bikes count. and due cost and paid cost. 
-  - Rental management: user can see booking bikes after admin return. user can be able to pay due using stripe. if user paid all money then rental bike will be show in paid list. 
-  - Users can update their personal information.
+  - A comprehensive dashboard that show user all post that they create from creating page.  
+  - Friend Connection: A user can see his/her follower, following, and can send following request.
+  - PDF Generation: Users can generate PDFs outlining nutrition needs based on a pet’s age and weight
+  - Users can update their personal Profile with Image.
 
 ### Additional Features
 
@@ -72,13 +55,13 @@
 - **Secure Authentication**:
   - Token-based authentication ensures secure user sessions and role-based access control.
 -  **About Page**
-  - I Just added about page that show company all details. location. about why choose a user to our bike rental. 
+  - I Just added about page that show purrfectCare all details. location. 
 
 
 ## Technologies Used and Video
 
 - **Video**
-  - Video URL: [Bike Rental Reservation System](https://youtu.be/DQZ-LMn-YaU)
+  - Video URL: [Purrfect Care: Pet Care Tips & Stories](https://youtu.be/iidZuWALJYo)
 
 - **Frontend**:
 

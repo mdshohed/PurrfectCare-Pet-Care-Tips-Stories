@@ -38,11 +38,11 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
   const router = useRouter();
   const { user } = useUser();
 
-  const {
-    mutate: handleCreatePost,
-    isPending: createPostPending,
-    isSuccess,
-  } = useCreatePost();
+  // const {
+  //   mutate: handleCreatePost,
+  //   isPending: createPostPending,
+  //   isSuccess,
+  // } = useCreatePost();
 
   const {
     data: postData,
@@ -115,7 +115,7 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
     }
     // const entries = Array.from(formData.entries());
     // console.log(entries);
-    handleCreatePost(formData);
+    // handleCreatePost(formData);
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -130,13 +130,8 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
     }
   };
 
-  if (!createPostPending && isSuccess) {
-    router.push("/");
-  }
-
   return (
     <>
-      {createPostPending && <Loading />}
       <div className="h-full rounded-xl bg-gradient-to-b from-default-100 px-[73px] py-12">
         <h1 className="text-2xl font-semibold">Update Post</h1>
         <Divider className="mb-5 mt-3" />

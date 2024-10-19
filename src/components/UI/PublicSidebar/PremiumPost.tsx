@@ -41,22 +41,22 @@ export default function PremiumPost({ premiumPosts}: { premiumPosts: IPost[]}) {
               ></img>
 
               <div>
-                <h3 className="font-semibold">{premiumPost.title}</h3>
+                <h3 className="font-semibold line-clamp-1">{premiumPost.title}</h3>
                 <h3 className="font-normal text-sm">
                 <div className="post-preview">
-                {premiumPost.description.length > 20 ? (
+                {/* {premiumPost.description.length > 20 ? (
                   <div 
                     dangerouslySetInnerHTML={{ 
                       __html: `${premiumPost.description.slice(0, 20)}` 
                     }} 
                   />
-                ) : (
-                  <div 
+                ) : ( */}
+                  <div className="line-clamp-1"
                     dangerouslySetInnerHTML={{ 
                       __html: premiumPost.description 
                     }} 
                   />
-                )}
+                {/* )} */}
               </div>
                 </h3>
               </div>
@@ -74,7 +74,7 @@ export default function PremiumPost({ premiumPosts}: { premiumPosts: IPost[]}) {
         </div>
       ))}
       <div className="text-blue-400 text-[15px]">
-        <Link href={"post?premium=all"}>Show More</Link>
+        <Link href={"premium-post"}>Show More</Link>
       </div>
     </div>
   );
