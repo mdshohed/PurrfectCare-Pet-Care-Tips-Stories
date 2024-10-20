@@ -70,9 +70,8 @@ export default function Post({ post, key }: IProps) {
   const [updateComment,setUpdateComment] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  useEffect(() => {
-    console.log(title, likes, comments, isPremium, _id);
-  }, [title, likes, comments, isPremium]);
+  // useEffect(() => {
+  // }, [title, likes, comments, isPremium]);
 
   const {
     mutate: handleUpdateLike,
@@ -80,10 +79,10 @@ export default function Post({ post, key }: IProps) {
     isPending: createPostPending,
   } = useUpdatePostLike();
 
-  const {
-    data: postComments,
-    isPending: postCommentsPending,
-  } = useGetComment(_id);
+  // const {
+  //   data: postComments,
+  //   isPending: postCommentsPending,
+  // } = useGetComment(_id);
 
   const {
     mutate: updateComments,

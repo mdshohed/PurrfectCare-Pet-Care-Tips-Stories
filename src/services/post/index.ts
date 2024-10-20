@@ -47,16 +47,23 @@ export const getSomeOnePosts = async ( param:string) => {
   return data;
 };
 
-// export const getAllPostsWithScroll = async (payload: {page: number,limit: number}) => {
-//   const res = await axiosInstance.post(`/posts/scroll?page=${payload.page}&limit=${payload.limit}`);
-//   return res.data;
-// };
 export const getAllPostsWithScroll = async (payload: {page: number,limit: number}) => {
-  const res = await axiosInstance.post(`/posts/scroll?page=${payload.page}&limit=${payload.limit}`);
-  console.log("data", res);
-  
+  const res = await axiosInstance.get(`/posts/scroll?page=${payload.page}&limit=${payload.limit}`);
   return res.data;
 };
+// export const getAllPostsWithScroll = async (payload: {page: number,limit: number}) => {
+ 
+//   const fetchOptions = {
+//     // cache: "no-store",
+//     next: {
+//       tags: ["posts"],
+//     },
+//   };
+//   const res = fetch(`/posts/scroll?page=${payload.page}&limit=${payload.limit}`, fetchOptions);
+//   console.log("data", res);
+
+//   return (await res).json();
+// };
 
 export const getAllPosts = async () => {
   let fetchOptions = {};

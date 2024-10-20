@@ -10,6 +10,7 @@ export const useUpdateUserFollowing = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey:[ "GET_ALL_USER"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_USER"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_PROFILE"]})
       // toast.success("Success");
     },
     onError: (error) => {
