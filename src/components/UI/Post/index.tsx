@@ -74,21 +74,36 @@ export default function Post({ post, key }: IProps) {
   // }, [title, likes, comments, isPremium]);
 
   const {
-    mutate: handleUpdateLike,
-    data: updateData,
-    isPending: createPostPending,
-  } = useUpdatePostLike();
-
-  // const {
-  //   data: postComments,
-  //   isPending: postCommentsPending,
-  // } = useGetComment(_id);
+    mutate: handleAddComment,
+    isPending,
+    isSuccess: isAddCommentSuccess,
+  } = useAddPostComment();
 
   const {
     mutate: updateComments,
     isPending: commentUpdatePending,
     isSuccess: commentUpdateSuccess, 
   } = useUpdateComment();
+
+  const {
+    mutate: handleUpdateLike,
+    data: updateData,
+    isPending: createPostPending,
+  } = useUpdatePostLike();
+  
+
+  useEffect(()=>{
+    if(commentUpdateSuccess&&!commentUpdatePending){
+      setFlag(-1); 
+      setUpdateComment(""); 
+    }
+  }, [commentUpdateSuccess])
+
+  useEffect(()=>{
+    if(isAddCommentSuccess&&!isPending){
+      setComments(""); 
+    }
+  }, [isAddCommentSuccess])
 
   const {
     mutate: deleteComments,
@@ -125,11 +140,7 @@ export default function Post({ post, key }: IProps) {
     route.push(`/payment?fee=${amount}&PostId=${id}`);
   };
 
-  const {
-    mutate: handleAddComment,
-    isPending,
-    isSuccess: isAddCommentSuccess,
-  } = useAddPostComment();
+  
 
   const handleSaveComments = (postId: string) => {
     if (!loggedInUser) {
@@ -145,7 +156,6 @@ export default function Post({ post, key }: IProps) {
       postId: postId,
     };
     handleAddComment(userComment);
-    setComments("");
   };
   // useEffect(() => {
   //   if (!isPending && isAddCommentSuccess) {
@@ -165,12 +175,8 @@ export default function Post({ post, key }: IProps) {
       text: updateComment
     })
   }
-  useEffect(()=>{
-    if(commentUpdateSuccess&&!commentUpdatePending){
-      setFlag(-1); 
-      setUpdateComment(''); 
-    }
-  }, [commentUpdateSuccess])
+ 
+
   const handleDeleteComment = (index:number) =>{
     const payload = {
       postId: _id, 
@@ -369,6 +375,7 @@ export default function Post({ post, key }: IProps) {
                     color="secondary"
                     placeholder="Add a comment..."
                     labelPlacement="outside"
+                    value={commentsText}
                     onChange={(e) => setComments(e.target.value)}
                   />
                   {/* <Button >Post</Button> */}
@@ -621,6 +628,7 @@ export default function Post({ post, key }: IProps) {
                 color="secondary"
                 placeholder="Add a comment..."
                 labelPlacement="outside"
+                value={commentsText}
                 onChange={(e) => setComments(e.target.value)}
               />
               {/* <Button >Post</Button> */}

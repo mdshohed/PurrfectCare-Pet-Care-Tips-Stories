@@ -15,7 +15,7 @@ import FXInput from "@/components/form/FXInput";
 import FXSelect from "@/components/form/FXSelect";
 import { useGetCategories } from "@/hooks/categoreis.hook";
 import { useUser } from "@/context/user.provider";
-import { useCreatePost, useSinglePost } from "@/hooks/post.hook";
+import { useCreatePost, useSinglePost, useUpdatePost } from "@/hooks/post.hook";
 import Loading from "@/app/loading";
 
 // import ReactQuill from "react-quill";
@@ -23,7 +23,9 @@ import dynamic from "next/dynamic";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
-import { Checkbox, Input } from "@nextui-org/react";
+import { Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
+import { IPost } from "@/types";
+import { title } from "process";
 
 export default function UpdatePost({ searchParams }: { searchParams: any }) {
   const params = new URLSearchParams(searchParams);
@@ -32,35 +34,43 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
   const [descriptionQuill, setDescriptionQuill] = useState("");
-  const [isPremium, setIsPremium] = useState(false);
   const [subscription, setSubscription] = useState<number>(0);
-
+  const [data, setData ] = useState<IPost>({} as IPost)
   const router = useRouter();
   const { user } = useUser();
 
-  // const {
-  //   mutate: handleCreatePost,
-  //   isPending: createPostPending,
-  //   isSuccess,
-  // } = useCreatePost();
+  const {
+    mutate: handleUpdatePost,
+    isPending: updatePostPending,
+    isSuccess: updateSuccess,
+  } = useUpdatePost();
+  useEffect(()=>{
+    if(!updatePostPending&&updateSuccess){
+      router.push('/profile')
+    }
+  },[updateSuccess])
 
   const {
     data: postData,
     isPending: getSinglePostPending,
     isSuccess: getSinglePostSuccess,
   } = useSinglePost(searchTerm ?? "");
-  console.log("updateValue", postData?.data);
 
   const {
     data: categoriesData,
     isLoading: categoryLoading,
-    isSuccess: categorySuccess,
   } = useGetCategories();
 
   // let categoryOption: { key: string; label: string }[] = [];
   const [categoryOptionState, setCategoryOptionState] = useState<
     { key: string; label: string }[]
   >([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const handleChange = (data: any) => {
+    setSelectedCategory(data?.target.value); 
+    console.log(data.target.value);
+    
+  };
 
   useEffect(() => {
     if (categoriesData?.data && !categoryLoading) {
@@ -80,42 +90,33 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
   useEffect(() => {
     if (postData?.data && !getSinglePostPending && getSinglePostSuccess) {
       if (postData?.data.isPremium) {
-        setIsPremium(true);
         setSubscription(postData.data.subscriptionFee);
       }
+      
+      setData(postData?.data);
+      setSelectedCategory( postData?.data.category?._id)
       setImagePreviews(postData?.data.images);
-      methods.setValue("title", postData.data.title);
-      methods.setValue("category", postData?.data?.category?.name);
     }
   }, [postData?.data]);
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    const formData = new FormData();
-
+  const onSubmit: SubmitHandler<FieldValues> = () => {
     let postData = {
-      ...data,
-      user: user!._id,
-      description: descriptionQuill,
-      isPremium: isPremium,
-    };
-    if (isPremium) {
+      title: data?.title,
+      description: data?.description,
+      isPremium: data?.isPremium || false,
+      category: selectedCategory
+    }
+    if (data?.isPremium) {
       const newPostData = {
         ...postData,
-        premiumDetails: {
-          isPending: false,
-          subscriptionFee: subscription,
-        },
+        premiumDetails: {...data?.premiumDetails},
       };
       postData = { ...newPostData };
     }
-    formData.append("data", JSON.stringify(postData));
-
-    for (let image of imageFiles) {
-      formData.append("itemImages", image);
-    }
+    console.log("data", postData, data);
     // const entries = Array.from(formData.entries());
     // console.log(entries);
-    // handleCreatePost(formData);
+    handleUpdatePost({params: data?._id, payload: postData});
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -139,22 +140,42 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-wrap gap-2 py-2">
               <div className="min-w-fit flex-1">
-                <FXInput
+                {/* <FXInput
                   {...methods.register("title")}
                   label="Title"
                   name="title"
-                />
+                  
+                /> */}
+                <Input isRequired variant="bordered" name="title" value={data?.title} label="Title" onChange={(e)=>setData({...data, title: e.target.value})}></Input>
               </div>
             </div>
 
             <div className="flex flex-wrap gap-2 py-2">
               <div className="min-w-fit flex-1">
-                <FXSelect
+                {/* <FXSelect
                   disabled={!categorySuccess}
                   label="Category"
                   name="category"
                   options={categoryOptionState}
-                />
+                /> */}
+                 {
+                  selectedCategory && 
+                  <Select
+                    isRequired
+                    label="Category"
+                    placeholder="Select an Category"
+                    defaultSelectedKeys={[selectedCategory]}
+                    onChange={handleChange}
+                    className="max-w-xs"
+                  >
+                    {categoryOptionState.map((category: any) => (
+                      <SelectItem key={category.key} value={category.label}>
+                        {category.label}
+                      </SelectItem>
+                    ))}
+                 </Select>
+                  } 
+                 
               </div>
               <div className="min-w-fit flex-1">
                 <label
@@ -164,6 +185,7 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
                   Upload image
                 </label>
                 <input
+                  disabled
                   multiple
                   className="hidden"
                   id="image"
@@ -181,6 +203,7 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
                     className="relative size-48 rounded-xl border-2 border-dashed border-default-300 p-2"
                   >
                     <img
+
                       alt="item"
                       className="h-full w-full object-cover object-center rounded-md"
                       src={imageDataUrl}
@@ -195,7 +218,8 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
                 <ReactQuill
                   theme="snow"
                   placeholder="Write something..."
-                  onChange={(content) => setDescriptionQuill(content)}
+                  value={data?.description}
+                  onChange={(e) => setData({...data, description: e})}
                 />
               </div>
             </div>
@@ -203,8 +227,8 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
             <div className="flex justify-between items-center my-5">
               <h1 className="text-xl">Want to add as Premium Post?</h1>
               <Checkbox
-                checked={isPremium}
-                onClick={() => setIsPremium((e) => !e)}
+                isSelected={data.isPremium}
+                onChange={(e) => setData({ ...data, isPremium: e.target.checked })} // Use `checked` instead of `value`
                 size="md"
               ></Checkbox>
               {/* <Button isIconOnly >
@@ -212,16 +236,28 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
             </div>
 
             <div className="space-y-5">
-              {isPremium ? (
+              {data?.isPremium ? (
                 <div className="flex gap-2 items-start flex-col">
                   <p className="text-md">Subscription Fee</p>
                   <Input
-                    label={""}
-                    required={true}
-                    placeholder="Fee"
-                    type="number"
-                    onChange={(e) => setSubscription(parseInt(e.target.value))}
-                  />
+                  label={""}
+                  required={true}
+                  placeholder="Fee"
+                  type="number"
+                  value={data?.isPremium ? String(data?.premiumDetails?.subscriptionFee || 0) : "0"} 
+                  onChange={(e) =>
+                    setData({
+                      ...data,
+                      premiumDetails: {
+                        ...data?.premiumDetails, 
+                        subscriptionFee: parseInt(e.target.value) || 0, 
+                        isPending: data?.premiumDetails?.isPending || false, 
+                        subscribedUser: data?.premiumDetails?.subscribedUser || []
+                      }
+                    })
+                  }
+                />
+
                 </div>
               ) : null}
             </div>

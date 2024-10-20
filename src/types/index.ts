@@ -45,7 +45,7 @@ export interface IPost {
   comments?: TComments
   status?: boolean;
   isPremium?: boolean;
-  premiumDetails?: TPremium;
+  premiumDetails?: TPremium | undefined;
   createdAt: Date;
   updatedAt?: Date;
   __v: number;

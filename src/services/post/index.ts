@@ -36,6 +36,20 @@ export const getPost = async (params: string) => {
   return res.json();
 };
 
+export const updatePost = async ( body: {params: string, payload: any}): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.put(`/posts/${body.params}`, body.payload, {
+      headers: {
+        "Content-Type": "application/json",  
+      },
+      
+    });
+    return data;
+  } catch (error) {
+    throw new Error("Failed to Update Post");
+  }
+};
+
 export const getMyPosts = async () => {
   const user = await getCurrentUser();
   const res = await axiosInstance.get(`/posts/me/${user?._id}`);

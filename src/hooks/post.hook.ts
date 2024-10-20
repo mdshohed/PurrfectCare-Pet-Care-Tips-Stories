@@ -17,6 +17,7 @@ import {
   getSomeOnePosts,
   updateComments,
   updateLikes,
+  updatePost,
   updatePremiumContent,
 } from "../services/post";
 import { queryClient } from "@/lib/Providers";
@@ -116,6 +117,26 @@ export const useGetPremiumPosts = () => {
 };
 
 
+
+export const useUpdatePost = () => {
+  return useMutation<any, Error, {params: string, payload: any}>({
+    mutationKey: ["UPDATE_POST"],
+    mutationFn: async (payload) => await updatePost(payload),
+    onSuccess: () => {
+      toast.success("Post Updated successfully");
+      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_PARAMS"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_MY_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_SOMEONE_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_PREMIUM_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_SCROLL"]})
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
 
 export const useUpdatePremiumContent = () => {
   return useMutation<any, Error, string>({
