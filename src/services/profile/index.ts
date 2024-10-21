@@ -30,6 +30,9 @@ export const getProfile = async () => {
     // fetchOption,
   );
 
+  if (!res.ok) {
+    throw new Error('Failed to fetch profile');
+  }
   const data = res.json();  
   return data; 
 };

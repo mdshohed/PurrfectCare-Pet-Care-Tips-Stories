@@ -32,9 +32,13 @@ export const getPost = async (params: string) => {
     cache: "no-store",
   };
 
-  const res = await fetch(`${envConfig.baseApi}/posts/${params}`, fetchOptions);  
+  const res = await fetch(`${envConfig.baseApi}/posts/${params}`,
+    fetchOptions
+  );  
   return res.json();
 };
+
+
 
 export const updatePost = async ( body: {params: string, payload: any}): Promise<any> => {
   try {
@@ -61,10 +65,7 @@ export const getSomeOnePosts = async ( param:string) => {
   return data;
 };
 
-export const getAllPostsWithScroll = async (payload: {page: number,limit: number}) => {
-  const res = await axiosInstance.get(`/posts/scroll?page=${payload.page}&limit=${payload.limit}`);
-  return res.data;
-};
+
 // export const getAllPostsWithScroll = async (payload: {page: number,limit: number}) => {
  
 //   const fetchOptions = {
@@ -80,18 +81,20 @@ export const getAllPostsWithScroll = async (payload: {page: number,limit: number
 // };
 
 export const getAllPosts = async () => {
-  let fetchOptions = {};
-
-  fetchOptions = {
-    // cache: "no-store",
+  const fetchOptions = {
     next: {
       tags: ["posts"],
     },
   };
 
-  const res = await fetch(`${envConfig.baseApi}/posts`, 
+  const res = await fetch(`${envConfig.baseApi}/posts`
     // fetchOptions
   );  
+  return res.json();
+};
+
+export const getAllPostsWithScroll = async (payload: {page: number,limit: number}) => {  
+  const res = await fetch(`${envConfig.baseApi}/posts/scroll?page=${payload.page}&limit=${payload.limit}`);
   return res.json();
 };
 

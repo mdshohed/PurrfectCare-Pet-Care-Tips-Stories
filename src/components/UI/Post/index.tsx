@@ -7,7 +7,6 @@ import {
   Lock,
   SendHorizontal,
 } from "lucide-react";
-import Link from "next/link";
 import { Button } from "@nextui-org/button";
 
 import {
@@ -21,10 +20,15 @@ import ImageGallery from "./ImageGallery";
 
 import { useUser } from "@/context/user.provider";
 import { IPost, IUser } from "@/types";
-import dateToISO from "@/utils/dateToISO";
 import { useEffect, useState } from "react";
 import { timeDiff } from "@/utils/common";
-import { useAddPostComment, useDeleteComment, useGetComment, useUpdateComment, useUpdatePostLike } from "@/hooks/post.hook";
+import {
+  useAddPostComment,
+  useDeleteComment,
+  useGetComment,
+  useUpdateComment,
+  useUpdatePostLike,
+} from "@/hooks/post.hook";
 import { useRouter } from "next/navigation";
 import { Badge } from "@nextui-org/badge";
 import {
@@ -67,7 +71,7 @@ export default function Post({ post, key }: IProps) {
   const { user: loggedInUser } = useUser();
   const [flag, setFlag] = useState(-1);
   const [commentsText, setComments] = useState("");
-  const [updateComment,setUpdateComment] = useState("");
+  const [updateComment, setUpdateComment] = useState("");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   // useEffect(() => {
@@ -82,7 +86,7 @@ export default function Post({ post, key }: IProps) {
   const {
     mutate: updateComments,
     isPending: commentUpdatePending,
-    isSuccess: commentUpdateSuccess, 
+    isSuccess: commentUpdateSuccess,
   } = useUpdateComment();
 
   const {
@@ -90,27 +94,27 @@ export default function Post({ post, key }: IProps) {
     data: updateData,
     isPending: createPostPending,
   } = useUpdatePostLike();
-  
 
-  useEffect(()=>{
-    if(commentUpdateSuccess&&!commentUpdatePending){
-      setFlag(-1); 
-      setUpdateComment(""); 
+  useEffect(() => {
+    if (commentUpdateSuccess && !commentUpdatePending) {
+      setFlag(-1);
+      setUpdateComment("");
     }
-  }, [commentUpdateSuccess])
+  }, [commentUpdateSuccess]);
 
-  useEffect(()=>{
-    if(isAddCommentSuccess&&!isPending){
-      setComments(""); 
+  useEffect(() => {
+    if (isAddCommentSuccess && !isPending) {
+      setComments("");
     }
-  }, [isAddCommentSuccess])
+  }, [isAddCommentSuccess]);
 
-  const {
-    mutate: deleteComments,
-  } = useDeleteComment();
+  const { mutate: deleteComments } = useDeleteComment();
 
-  const upVote = likes?.upVote?.some((u) => String(u) == String(loggedInUser?._id)) || false
-  const downVote = likes?.downVote.some((u) => String(u) == String(loggedInUser?._id)) ||false
+  const upVote =
+    likes?.upVote?.some((u) => String(u) == String(loggedInUser?._id)) || false;
+  const downVote =
+    likes?.downVote.some((u) => String(u) == String(loggedInUser?._id)) ||
+    false;
 
   // useEffect(() => {
   //   setUpVote(
@@ -122,8 +126,11 @@ export default function Post({ post, key }: IProps) {
   // }, [likes]);
 
   const onSubmitLikes = (id: string, type: string) => {
-    if (!loggedInUser?.role) {
-      route.push("/login");
+    if (!loggedInUser) {
+      route.push(`/login`);
+      return;
+    } else if (loggedInUser?.role === "ADMIN") {
+      toast.error("Your are not User!");
       return;
     }
     handleUpdateLike({ postId: id, type: type });
@@ -139,8 +146,6 @@ export default function Post({ post, key }: IProps) {
     }
     route.push(`/payment?fee=${amount}&PostId=${id}`);
   };
-
-  
 
   const handleSaveComments = (postId: string) => {
     if (!loggedInUser) {
@@ -163,27 +168,26 @@ export default function Post({ post, key }: IProps) {
   //   }
   // }, [isAddCommentSuccess]);
 
-  const handleUpdateComment = (index:number) =>{
+  const handleUpdateComment = (index: number) => {
     const payload = {
-      postId: _id, 
+      postId: _id,
       index: index,
-      text: updateComment
-    }
+      text: updateComment,
+    };
     updateComments({
-      postId: _id, 
+      postId: _id,
       index: index,
-      text: updateComment
-    })
-  }
- 
+      text: updateComment,
+    });
+  };
 
-  const handleDeleteComment = (index:number) =>{
+  const handleDeleteComment = (index: number) => {
     const payload = {
-      postId: _id, 
+      postId: _id,
       index: index,
-    }
-    deleteComments(payload)
-  }
+    };
+    deleteComments(payload);
+  };
 
   return (
     <div key={key} className="mb-2 rounded-md bg-default-100 p-4">
@@ -389,53 +393,6 @@ export default function Post({ post, key }: IProps) {
                     </span>
                   )}
                 </div>
-
-                {/* comment modal  */}
-
-                <Modal
-                  isOpen={isOpen}
-                  onOpenChange={onOpenChange}
-                  scrollBehavior={"inside"}
-                >
-                  <ModalContent>
-                    {(onClose) => (
-                      <>
-                        <ModalHeader className="flex flex-col gap-1 border-b ">
-                          All Comments
-                        </ModalHeader>
-                        <ModalBody>
-                          <div>
-                            {comments?.comment?.length ? (
-                              comments?.comment?.map((comment, index) => (
-                                <div
-                                  key={index}
-                                  className="flex items-center my-2 bg-default-50 rounded-lg "
-                                >
-                                  {/* <span className="me-3"><Avatar isBordered radius="full" size="md" src={comment?.user?.profilePhoto} ></Avatar></span>
-                  <p>{comment?.text}</p> */}
-                                  <User
-                                    avatarProps={{
-                                      radius: "lg",
-                                      src: comment?.user?.profilePhoto,
-                                    }}
-                                    description={comment?.text}
-                                    name={comment?.user?.name}
-                                  ></User>
-                                </div>
-                              ))
-                            ) : (
-                              <div>
-                                <p className="flex justify-center items-center">
-                                  No Comments found!
-                                </p>
-                              </div>
-                            )}
-                          </div>
-                        </ModalBody>
-                      </>
-                    )}
-                  </ModalContent>
-                </Modal>
               </div>
             </div>
           ) : null}
@@ -645,7 +602,7 @@ export default function Post({ post, key }: IProps) {
 
             {/* comment modal  */}
 
-            <Modal
+            {/* <Modal
               isOpen={isOpen}
               onOpenChange={onOpenChange}
               scrollBehavior={"inside"}
@@ -663,6 +620,139 @@ export default function Post({ post, key }: IProps) {
                             let hasUserComment =
                               comment.user?._id.toString() ===
                               loggedInUser?._id;
+                              console.log("comment", hasUserComment);
+                              
+                            return (
+                              <div key={index}>
+                                <div
+                                  key={index}
+                                  className="flex flex-col items-start my-4 bg-default-50 rounded-lg p-2 border"
+                                >
+                                  <div className="flex justify-center items-center gap-3">
+                                    <div>
+                                      <Avatar
+                                        src={comment.user.profilePhoto}
+                                      ></Avatar>
+                                    </div>
+                                    <div>
+                                      <p>{comment.user.name}</p>
+                                      {
+                                        index===flag ? 
+                                        <Input 
+                                          color="secondary" 
+                                          onChange={(e)=>setUpdateComment(e.target.value)} 
+                                          value={updateComment}
+                                        ></Input> : 
+                                        <p>{comment.text}</p>
+                                      }
+                                    </div>
+                                  </div>
+                                  {hasUserComment && (
+                                    <div className="flex  gap-2 mt-2">
+                                      {flag===index ? (
+                                        <p
+                                          onClick={() => handleUpdateComment(index)}
+                                          className="text-xs bg-gray-200 px-4 py-[2px] rounded-lg cursor-pointer"
+                                        >
+                                          Update
+                                        </p>
+                                      ) : (
+                                        <p
+                                          onClick={() =>{ setFlag(index), setUpdateComment(comment.text)}}
+                                          className="text-xs bg-gray-200 px-4 py-[2px] rounded-lg cursor-pointer"
+                                        >
+                                          Edit
+                                        </p>
+                                      )}
+                                      <p onClick={()=>handleDeleteComment(index)} className="text-[16px] cursor-pointer">
+                                        <DeleteIcon className="text-red-500 "></DeleteIcon>
+                                      </p>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <div>
+                            <p className="flex justify-center items-center">
+                              No Comments found!
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </ModalBody>
+                  </>
+                )}
+              </ModalContent>
+            </Modal> */}
+          </div>
+        </div>
+      )}
+
+      {/* comment modal  */}
+      {/* <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        scrollBehavior={"inside"}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 border-b ">
+                All Comments
+              </ModalHeader>
+              <ModalBody>
+                <div>
+                  {comments?.comment?.length ? (
+                    comments?.comment?.map((comment, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center my-2 bg-default-50 rounded-lg "
+                      >
+                        <User
+                          avatarProps={{
+                            radius: "lg",
+                            src: comment?.user?.profilePhoto,
+                          }}
+                          description={comment?.text}
+                          name={comment?.user?.name}
+                        ></User>
+                      </div>
+                    ))
+                  ) : (
+                    <div>
+                      <p className="flex justify-center items-center">
+                        No Comments found!
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal> */}
+      <Modal
+              isOpen={isOpen}
+              onOpenChange={onOpenChange}
+              scrollBehavior={"inside"}
+            >
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader className="flex flex-col gap-1 border-b ">
+                      All Comments
+                    </ModalHeader>
+                    <ModalBody>
+                      <div>
+                        {comments?.comment?.length ? (
+                          comments?.comment?.map((comment, index) => {
+                            let hasUserComment =
+                              comment.user?._id.toString() ===
+                              loggedInUser?._id;
+                              console.log("comment", hasUserComment);
+                              
                             return (
                               <div key={index}>
                                 <div
@@ -727,9 +817,6 @@ export default function Post({ post, key }: IProps) {
                 )}
               </ModalContent>
             </Modal>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

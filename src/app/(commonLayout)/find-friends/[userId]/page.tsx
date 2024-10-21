@@ -3,9 +3,10 @@ import Loading from "@/app/loading";
 import Filtering from "@/components/modules/found-post/Filtering";
 import Container from "@/components/UI/Container";
 import Post from "@/components/UI/Post";
+import { Spinner } from "@/components/UI/spinner";
 import { useUser } from "@/context/user.provider";
 import { useGetSomeOnePosts, useSinglePost } from "@/hooks/post.hook";
-import { useGetSingleUser } from "@/hooks/user.hook";
+import { useGetSingleUser, useUpdateUserFollowing } from "@/hooks/user.hook";
 import { IPost, IUser } from "@/types";
 import { Avatar, Button } from "@nextui-org/react";
 import { useEffect, useState } from "react";
@@ -17,11 +18,20 @@ interface IProps {
 }
 
 const UserDetailPage = ({ params: { userId } }: IProps) => {
-  const { user: currentUser } = useUser();
+  const { user: currentUser, isLoading } = useUser();
   const { data: user, isPending } = useGetSingleUser(userId);
   const { data: posts, isPending: isPostPending } = useGetSomeOnePosts(userId);
   const [isMounted, setIsMounted] = useState(false);
-  
+
+  const {
+    mutate: handleUpdateFollowing,
+    isPending: createUserPending,
+    isSuccess,
+  } = useUpdateUserFollowing();
+
+  const handleSetConnection = async (id: string) => {
+    handleUpdateFollowing(id); 
+  };
   
   useEffect(() => {
     setIsMounted(true);
@@ -62,7 +72,7 @@ const UserDetailPage = ({ params: { userId } }: IProps) => {
               <div className="flex justify-center">
               <Button
                 className={` mt-3
-                  ${user?.following?.some((u:IPost) => String(u?._id) == String(user?._id))
+                  ${user?.follower?.some((u: IUser) => String(u?._id) === String(currentUser?._id))
                     ? "bg-transparent text-foreground border-default-200"
                     : ""}`
                 }
@@ -70,13 +80,13 @@ const UserDetailPage = ({ params: { userId } }: IProps) => {
                 radius="full"
                 size="sm"
                 variant={
-                  user.following?.some((u: IPost) => String(u?._id) == String(user?._id))
+                  user?.follower?.some((u: IUser) => String(u?._id) === String(currentUser?._id))
                     ? "bordered"
                     : "solid"
                 }
-                // onPress={() => handleSetConnection(user._id)}
+                onPress={() => handleSetConnection(user._id)}
               >
-                {user.following?.some((u: IPost) => String(u?._id) == String(user?._id))
+                { user?.follower?.some((u: IUser) => String(u?._id) === String(currentUser?._id))
                   ? "Unfollow"
                   : "Follow"}
               </Button>

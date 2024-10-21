@@ -4,7 +4,7 @@ import React from "react";
 export default function ContactUsPage() {
   return (
     <Container>
-        <div className="flex min-h-screen  rounded-lg flex-col lg:flex-row p-5 bg-gray-100 gap-5">
+        <div className="flex min-h-screen  rounded-lg flex-col lg:flex-row p-10 justify-center bg-gray-100 gap-5">
           {/* Contact Info Section */}
           <div className="lg:w-[50%]">
             <div className="mb-8">

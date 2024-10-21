@@ -21,6 +21,7 @@ export default function ImageGallery({ images }: IProps) {
       elementClassNames={` mt-2 gap-2 grid place-items-center ${images?.length === 1 ? "grid-cols-1" : "grid-cols-2"} `}
       plugins={[lgThumbnail, lgZoom]}
       speed={500}
+      licenseKey="0000-0000-000-0000"
     >
       {images?.map((image, index) => (
         <Link

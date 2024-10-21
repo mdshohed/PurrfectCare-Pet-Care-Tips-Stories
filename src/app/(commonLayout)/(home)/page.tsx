@@ -36,30 +36,9 @@ export default function Home() {
 
   return (
     <div className="flex justify-between items-start">
-      {/* <Landing /> */}
-
       <div>
         <Filtering></Filtering>
-        {/* <Autocomplete
-          label="Filter"
-          placeholder="Select Category"
-          className="max-w-xs"
-          defaultItems={categoryOption}
-        >
-          {(item) => (
-            <AutocompleteItem key={item.key}>{item.label}</AutocompleteItem>
-          )}
-        </Autocomplete> */}
       </div>
-      {/* <div>
-        <Button
-          // as={Link}
-          className="mt-2 w-full rounded-md bg-green-500"
-          onClick={handleNavigate}
-        >
-          Create a post
-        </Button>
-      </div> */}
     </div>
   );
 }

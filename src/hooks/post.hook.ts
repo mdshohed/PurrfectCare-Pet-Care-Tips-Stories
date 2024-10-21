@@ -28,13 +28,11 @@ export const useCreatePost = () => {
     mutationFn: async (postData) => await createPost(postData),
     onSuccess: () => {
       toast.success("Post created successfully");
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_PARAMS"]})
       queryClient.invalidateQueries({queryKey:[ "GET_MY_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SOMEONE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_PREMIUM_POST"]})
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_SCROLL"]})
     },
     onError: (error) => {
       toast.error(error.message);
@@ -58,15 +56,15 @@ export const useGetAllPosts = () => {
 
 export const useGetAllPostsWithParams = (params: {searchTerm: string, category: string}) => {
   return useQuery({
-    queryKey: ["GET_POST_WITH_PARAMS"],
+    queryKey: ["GET_POST"],
     queryFn: async () => await getAllPostsWithParams(params),
   });
 };
 
 export const useGetAllPostsWithScrolls = (page: number,limit: number) => {
   return useQuery({
-    queryKey: ["GET_POST_WITH_SCROLL"],
-    queryFn: async () => await getAllPostsWithScroll({page: page, limit: limit}),
+    queryKey: ["GET_POST", page, limit],
+    queryFn: async () => await getAllPostsWithScroll({page: page, limit: limit})
   });
 };
 // export const useGetAllPostsWithScrolls = () => {
@@ -84,14 +82,14 @@ export const useGetAllPostsWithScrolls = (page: number,limit: number) => {
 
 export const useGetMyPosts = () => {
   return useQuery({
-    queryKey: ["GET_MY_POST"],
+    queryKey: ["GET_POST"],
     queryFn: async () => await getMyPosts(),
   });
 };
 
 export const useGetSomeOnePosts = (param:string) => {
   return useQuery({
-    queryKey: ["GET_SOMEONE_POST"],
+    queryKey: ["GET_POST"],
     queryFn: async () => {
       const res = await getSomeOnePosts(param)
       return res.data; 
@@ -124,7 +122,7 @@ export const useUpdatePost = () => {
     mutationFn: async (payload) => await updatePost(payload),
     onSuccess: () => {
       toast.success("Post Updated successfully");
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_PARAMS"]})
+      
       queryClient.invalidateQueries({queryKey:[ "GET_MY_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SOMEONE_POST"]})
@@ -144,7 +142,7 @@ export const useUpdatePremiumContent = () => {
     mutationFn: async (params) => await updatePremiumContent(params),
     onSuccess: () => {
       toast.success("Post Updated successfully");
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_PARAMS"]})
+      
       queryClient.invalidateQueries({queryKey:[ "GET_MY_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SOMEONE_POST"]})
@@ -164,20 +162,19 @@ export const useUpdatePostLike = () => {
     mutationKey: ["UPDATE_LIKE"],
     mutationFn: async (postData) => await updateLikes(postData),
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_PARAMS"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_SCROLL"]})
+      
       queryClient.invalidateQueries({queryKey:[ "GET_MY_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SOMEONE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_PREMIUM_POST"]})
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_SCROLL"]})
     },
     onError: (error) => {
       toast.error(error.message);
     },
   });
 };
-
 
 
 // comment CRUD
@@ -188,13 +185,14 @@ export const useAddPostComment = () => {
     mutationFn: async (payload) => await addComments(payload),
     onSuccess: () => {
       toast.success("Comment successfully");
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_PARAMS"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_SCROLL"]})
+
+      
       queryClient.invalidateQueries({queryKey:[ "GET_MY_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SOMEONE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_PREMIUM_POST"]})
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_SCROLL"]})
     },
     onError: (error) => {
       toast.error(error.message);
@@ -215,13 +213,13 @@ export const useUpdateComment = () => {
     mutationFn: async (payload) => await updateComments(payload),
     onSuccess: () => {
       toast.success("Comment updated successfully");
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_PARAMS"]})
+
+      
       queryClient.invalidateQueries({queryKey:[ "GET_MY_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SOMEONE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_PREMIUM_POST"]})
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_SCROLL"]})
     },
     onError: (error) => {
       toast.error(error.message);
@@ -235,13 +233,12 @@ export const useDeleteComment = () => {
     mutationFn: async (payload) => await deleteComments(payload),
     onSuccess: () => {
       toast.success("Comment deleted successfully");
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_PARAMS"]})
+      
       queryClient.invalidateQueries({queryKey:[ "GET_MY_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_SOMEONE_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_PREMIUM_POST"]})
-      queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_SCROLL"]})
     },
     onError: (error) => {
       toast.error(error.message);

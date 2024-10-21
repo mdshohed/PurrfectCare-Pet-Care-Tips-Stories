@@ -69,10 +69,6 @@ export default function CreatePost() {
 
   const { control, handleSubmit } = methods;
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "questions",
-  });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const formData = new FormData();
@@ -134,7 +130,7 @@ export default function CreatePost() {
   // };
 
   if (!createPostPending && isSuccess) {
-    router.push("/");
+    router.push("/profile");
   }
 
   return (

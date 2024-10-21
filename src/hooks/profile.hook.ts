@@ -1,7 +1,6 @@
 
 import { queryClient } from "@/lib/Providers";
 import { getProfile, updateProfile } from "@/services/profile";
-import { IUser, IUserUpdate } from "@/types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 

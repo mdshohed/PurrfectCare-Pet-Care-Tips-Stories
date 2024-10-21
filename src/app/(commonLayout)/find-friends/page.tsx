@@ -54,6 +54,8 @@ export default function FriendsPage() {
   };
 
   useEffect(() => {
+    console.log("update",user);
+    
     if (user) {
       const fetchAllUsers = async () => {
         try {

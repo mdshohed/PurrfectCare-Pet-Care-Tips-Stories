@@ -107,8 +107,11 @@ export default function ViewPostPage({ post, key }: IProps) {
   // }, [likes]);
 
   const onSubmitLikes = (id: string, type: string) => {
-    if (!loggedInUser?.role) {
-      route.push("/login");
+    if (!loggedInUser) {
+      route.push(`/login`);
+      return;
+    } else if (loggedInUser?.role === "ADMIN") {
+      toast.error("Your are not User!");
       return;
     }
     handleUpdateLike({ postId: id, type: type });

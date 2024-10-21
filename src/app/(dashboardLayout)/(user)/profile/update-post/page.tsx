@@ -113,9 +113,7 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
       };
       postData = { ...newPostData };
     }
-    console.log("data", postData, data);
-    // const entries = Array.from(formData.entries());
-    // console.log(entries);
+    console.log("data", data, postData);
     handleUpdatePost({params: data?._id, payload: postData});
   };
 
@@ -130,6 +128,11 @@ export default function UpdatePost({ searchParams }: { searchParams: any }) {
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(()=>{
+    console.log("data", data);
+    
+  }, [data])
 
   return (
     <>

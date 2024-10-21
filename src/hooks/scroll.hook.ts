@@ -7,22 +7,28 @@ export const useGetAllPostsWithScroll = () => {
   const [data, setData] = useState<IPost[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [limit, setLimit] = useState<number>(5); // Track the current page
+  const [limit, setLimit] = useState<number>(2); // Track the current page
+  const {data:response, isSuccess, isPending} =  useGetAllPostsWithScrolls(1, limit); 
+  
+  useEffect(()=>{
+    if(response&&response?.data){
+      setData(response?.data)
+    }
+  },[response])
 
   const loadMorePosts = async () => {
     if (!hasMore) return; 
 
     setIsLoading(true);
     try {
-      const response = await getAllPostsWithScroll({page: 1, limit: limit}); 
-      // const {data:response} =  useGetAllPostsWithScrolls(1, limit); 
-      console.log("response", data);
+      // const response = await getAllPostsWithScroll({page: 1, limit: limit}); 
+      // console.log("response", data);
       
       if (response?.data.length === 0) {
         setHasMore(false); 
       } else {
-        setData((prevData) => [...prevData, ...response?.data]);
-        setLimit((prevPage) => prevPage + 2); 
+        // setData((prevData) => [...prevData, ...response?.data]);
+        setLimit((prevPage) => prevPage + 1); 
       }
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -41,6 +47,7 @@ export const useGetAllPostsWithScroll = () => {
     isLoading,
     hasMore,
     limit, 
+    response,
     loadMorePosts,
   };
 };
