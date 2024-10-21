@@ -54,6 +54,20 @@ export const updatePost = async ( body: {params: string, payload: any}): Promise
   }
 };
 
+export const deletePost = async ( param: string ): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.put(`/posts/delete/${param}`, {
+      headers: {
+        "Content-Type": "application/json",  
+      },
+    });
+    // revalidateTag("comments");
+    return data;
+  } catch (error) {
+    throw new Error("Failed to Delete Post");
+  }
+};
+
 export const getMyPosts = async () => {
   const user = await getCurrentUser();
   const res = await axiosInstance.get(`/posts/me/${user?._id}`);

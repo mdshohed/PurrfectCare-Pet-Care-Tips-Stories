@@ -1,7 +1,7 @@
 "use client";
 
 import { DeleteIcon, EditIcon } from "@/assets/icons";
-import { useGetAllPosts, useGetMyPosts, useGetPremiumPosts } from "@/hooks/post.hook";
+import { useDeletePost, useGetAllPosts, useGetMyPosts, useGetPremiumPosts } from "@/hooks/post.hook";
 import { IPost } from "@/types";
 import {
   Table,
@@ -22,10 +22,19 @@ export default function ManagePost() {
     isLoading: postLoading,
     isSuccess: postSuccess,
   } = useGetMyPosts();
+  const {
+    mutate: deletePost,
+    // isLoading: postLoading,
+    // isSuccess: postSuccess,
+  } = useDeletePost();
+
   const handleUpdate = (id: string) => {
     route.push(`/profile/update-post?postId=${id}`)
   };
-  const handleDelete = (id: string) => {};
+  
+  const handleDelete = (id: string) => {
+    deletePost(id); 
+  };
 
   return (
     <div className=" min-h-screen w-full rounded-md bg-default-100 p-5">

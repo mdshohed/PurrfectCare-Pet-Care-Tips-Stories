@@ -6,6 +6,7 @@ import {
   addComments,
   createPost,
   deleteComments,
+  deletePost,
   getAllPosts,
   getAllPostsForAdmin,
   getAllPostsWithParams,
@@ -129,6 +130,24 @@ export const useUpdatePost = () => {
       queryClient.invalidateQueries({queryKey:[ "GET_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_PREMIUM_POST"]})
       queryClient.invalidateQueries({queryKey:[ "GET_POST_WITH_SCROLL"]})
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+export const useDeletePost = () => {
+  return useMutation<any, Error, string>({
+    mutationKey: ["DELETE_POST"],
+    mutationFn: async (param) => await deletePost(param),
+    onSuccess: () => {
+      toast.success("Post deleted successfully");
+      queryClient.invalidateQueries({queryKey:[ "GET_MY_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_SINGLE_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_SOMEONE_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_POST"]})
+      queryClient.invalidateQueries({queryKey:[ "GET_PREMIUM_POST"]})
     },
     onError: (error) => {
       toast.error(error.message);
