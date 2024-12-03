@@ -61,9 +61,6 @@
 
 ## Technologies Used and Video
 
-- **Video**
-  - Video URL: [Purrfect Care: Pet Care Tips & Stories](https://youtu.be/iidZuWALJYo)
-
 - **Frontend**:
 
   - Next.js, NextUI, TypeScript, Tailwind CSS
