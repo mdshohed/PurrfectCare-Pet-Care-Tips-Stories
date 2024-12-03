@@ -98,6 +98,17 @@ export const useGetSomeOnePosts = (param:string) => {
   });
 };
 
+export const useSinglePostWithScroll = () => {
+  return useMutation<any, Error, string>({
+    mutationKey: ["GET_SINGLE_POST_WITH_SCROLL"],
+    mutationFn: async (id) => {
+      const res = await getPost(id)
+      console.log("scroll data",res?.data);
+      return res;
+    },
+  });
+};
+
 export const useSinglePost = (id: string) => {
   return useQuery({
     queryKey: ["GET_SINGLE_POST"],
